@@ -30,6 +30,7 @@ enum eAtomicComponentFlag {
 class CVisibilityPlugins {
 public:
     static inline float ms_pedLodDist{};
+    static inline float ms_pedFadeDist{};
     static inline RwV3d* ms_pCameraPosn{};
 
 public:
@@ -51,4 +52,3 @@ public:
     static void RenderAlphaAtomic(RpAtomic *atomic, int32 alpha);
     static void SetupVehicleVariables(RpClump* clump);
 };
-

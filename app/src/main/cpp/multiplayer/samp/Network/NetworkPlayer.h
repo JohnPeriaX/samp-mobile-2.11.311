@@ -49,6 +49,7 @@ public:
 	uint32_t GetPlayerColor();
 
 	void Process();
+	void ApplyPcLikeFarRenderState();
 	bool Spawn(uint8_t byteTeam, int iSkin, CVector* vecPos, float fRotation,
 		uint32_t dwColor, uint8_t byteFightingStyle);
 	void Remove();

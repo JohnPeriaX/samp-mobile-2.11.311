@@ -1,4 +1,5 @@
 #include <GLES2/gl2.h>
+#include <cmath>
 #include "samp/main.h"
 #include "vendor/patch/patch.h"
 #include "samp/Multiplayer/Multiplayer.h"
@@ -248,8 +249,13 @@ CEntityGTA* CFileLoader__LoadObjectInstance_hook(CFileObjectInstance *pObject, c
 
             float distance = CBuildingRemoval::GetDistanceBetween3DPoints(&pos, &buildingInfo.position);
             if (distance <= buildingInfo.radius) {
-                // Replace with invisible model (19300 is commonly used as invisible model)
+                // PC-like RemoveBuildingForPlayer: keep the IPL loader alive,
+                // but replace the matched building with an invisible model and
+                // detach its LOD link so far LODs do not blink back in later.
                 pObject->m_nModelId = 19300;
+                pObject->m_nLodInstanceIndex = -1;
+                pObject->m_bDontStream = 1;
+                pObject->m_bRedundantStream = 1;
                 break;
             }
         }
@@ -889,25 +895,159 @@ void CPedDamageResponseCalculator__ComputeDamageResponse_hook(CPedDamageResponse
 	CPedDamageResponseCalculator__ComputeDamageResponse(thiz, pPed, a3, a4);
 }
 
+void (*CRenderer_ScanWorld)();
+
+static void RequestPcLikeFarLodStreamingAroundCamera()
+{
+    static uint32_t s_requestFrame = 0;
+    if ((++s_requestFrame & 3U) != 0U)
+        return;
+
+    if (CStreaming::ms_disableStreaming || CRenderer::m_loadingPriority)
+        return;
+
+    CCamera& TheCamera = *reinterpret_cast<CCamera*>(g_libGTASA + 0x9F86F8);
+    const CVector& camPos = TheCamera.GetPosition();
+
+    // Symbol-verified 2.11 path: keep both normal sector models and far LOD
+    // candidates requested around the camera. This mirrors the old 2.10 PC-like
+    // behavior more closely and reduces far object/building flicker.
+    CStreaming::AddModelsToRequestList(&camPos, STREAMING_GAME_REQUIRED);
+    CStreaming::AddLodsToRequestList(&camPos, STREAMING_GAME_REQUIRED | STREAMING_PRIORITY_REQUEST);
+}
+
+void CRenderer_ScanWorld_hook()
+{
+    CRenderer_ScanWorld();
+    RequestPcLikeFarLodStreamingAroundCamera();
+}
+
 void (*CRenderer_RenderEverythingBarRoads)();
+
+static void RenderSampFarObjectsAfterWorld()
+{
+    if (!pNetGame || !pNetGame->GetObjectPool())
+        return;
+
+    CObjectPool* pObjectPool = pNetGame->GetObjectPool();
+    for (OBJECTID i = 0; i < MAX_OBJECTS; ++i)
+    {
+        CObject* pObject = pObjectPool->GetAt(i);
+        if (!pObject || !pObject->ShouldForceRender())
+            continue;
+
+        pObject->RequestModelForFarRender();
+
+        CEntityGTA* pEntity = reinterpret_cast<CEntityGTA*>(pObject->m_pEntity);
+        if (!pEntity || !pEntity->m_pRwObject)
+            continue;
+
+        const bool oldDistanceFade = pEntity->m_bDistanceFade;
+        const bool oldOffscreen = pEntity->m_bOffscreen;
+        const bool oldBeingRendered = pEntity->m_bImBeingRendered;
+
+        pEntity->m_bIsVisible = true;
+        pEntity->m_bDistanceFade = false;
+        pEntity->m_bOffscreen = false;
+        pEntity->m_bImBeingRendered = true;
+
+        // 2.11 LST verified:
+        // CEntity::PreRender(void)           = g_libGTASA + 0x48C31C
+        // CRenderer::RenderOneNonRoad(...)  = g_libGTASA + 0x4B5430
+        CHook::CallFunction<void>(g_libGTASA + 0x48C31C, pEntity);
+        CHook::CallFunction<void>(g_libGTASA + 0x4B5430, pEntity);
+
+        pEntity->m_bDistanceFade = oldDistanceFade;
+        pEntity->m_bOffscreen = oldOffscreen;
+        pEntity->m_bImBeingRendered = oldBeingRendered;
+    }
+}
+
+
+static bool IsPcLikeRemotePedRenderCandidate(CRemotePlayer* remotePlayer, CPlayerPed* playerPed, CPedGTA* ped)
+{
+    if (!remotePlayer || !playerPed || !ped)
+        return false;
+
+    const uint8_t state = remotePlayer->GetState();
+    if (state == PLAYER_STATE_NONE || state == PLAYER_STATE_WASTED)
+        return false;
+
+    const float distance = ped->GetDistanceFromCamera();
+    return std::isfinite(distance) && distance >= 70.0f && distance <= 1000.0f;
+}
+
+static void RenderPcLikeRemotePlayersAfterWorld()
+{
+    if (!pNetGame || !pNetGame->GetPlayerPool())
+        return;
+
+    CPlayerPool* playerPool = pNetGame->GetPlayerPool();
+    for (PLAYERID playerId = 0; playerId < MAX_PLAYERS; ++playerId)
+    {
+        CRemotePlayer* remotePlayer = playerPool->GetAt(playerId);
+        if (!remotePlayer)
+            continue;
+
+        CPlayerPed* playerPed = remotePlayer->GetPlayerPed();
+        CPedGTA* ped = playerPed ? playerPed->m_pPed : nullptr;
+        if (!IsPcLikeRemotePedRenderCandidate(remotePlayer, playerPed, ped))
+            continue;
+
+        remotePlayer->ApplyPcLikeFarRenderState();
+
+        if (!ped->m_pRwObject || !ped->IsAdded())
+            continue;
+
+        const bool oldDistanceFade = ped->m_bDistanceFade;
+        const bool oldOffscreen = ped->m_bOffscreen;
+        const bool oldBeingRendered = ped->m_bImBeingRendered;
+        const bool oldDontRender = ped->bDontRender;
+        const bool oldCullExtraFarAway = ped->bCullExtraFarAway;
+        const bool oldRenderPedInCar = ped->bRenderPedInCar;
+        const float oldPedLodDist = CVisibilityPlugins::ms_pedLodDist;
+        const float oldPedFadeDist = CVisibilityPlugins::ms_pedFadeDist;
+
+        ped->m_bIsVisible = true;
+        ped->m_bDistanceFade = false;
+        ped->m_bOffscreen = false;
+        ped->m_bImBeingRendered = true;
+        ped->bDontRender = false;
+        ped->bCullExtraFarAway = false;
+        ped->bRenderPedInCar = true;
+
+        // RenderOneNonRoad still goes through the ped atomic renderer. Native
+        // SetRenderWareCamera keeps the mobile ped LOD low, so temporarily
+        // raise both ped LOD limits only for this SA-MP remote-player pass.
+        constexpr float kForcedRemotePedDrawDistance = 1000.0f;
+        constexpr float kForcedRemotePedDrawDistanceSq =
+            kForcedRemotePedDrawDistance * kForcedRemotePedDrawDistance;
+        if (CVisibilityPlugins::ms_pedLodDist < kForcedRemotePedDrawDistanceSq)
+            CVisibilityPlugins::ms_pedLodDist = kForcedRemotePedDrawDistanceSq;
+        if (CVisibilityPlugins::ms_pedFadeDist < kForcedRemotePedDrawDistanceSq)
+            CVisibilityPlugins::ms_pedFadeDist = kForcedRemotePedDrawDistanceSq;
+
+        // Reuse the 2.11 verified render path already used for far SAMP objects.
+        // This fixes the PC mismatch where nametag/healthbar are visible but the
+        // remote ped model itself disappears when the mobile renderer culls it.
+        CHook::CallFunction<void>(g_libGTASA + 0x48C31C, reinterpret_cast<CEntityGTA*>(ped));
+        CHook::CallFunction<void>(g_libGTASA + 0x4B5430, reinterpret_cast<CEntityGTA*>(ped));
+
+        ped->m_bDistanceFade = oldDistanceFade;
+        ped->m_bOffscreen = oldOffscreen;
+        ped->m_bImBeingRendered = oldBeingRendered;
+        ped->bDontRender = oldDontRender;
+        ped->bCullExtraFarAway = oldCullExtraFarAway;
+        ped->bRenderPedInCar = oldRenderPedInCar;
+        CVisibilityPlugins::ms_pedLodDist = oldPedLodDist;
+        CVisibilityPlugins::ms_pedFadeDist = oldPedFadeDist;
+    }
+}
+
 void CRenderer_RenderEverythingBarRoads_hook() {
-
 	CRenderer_RenderEverythingBarRoads();
-
-	//if (pNetGame) {
-	//	CObjectPool* pObjectPool = pNetGame->GetObjectPool();
-	//	if (pObjectPool) {
-	//		for (OBJECTID i = 0; i < MAX_OBJECTS; i++) {
-	//			CObject* pObject = pObjectPool->GetAt(i);
-	//			if (pObject && pObject->m_bForceRender) {
-    ///                // CEntity::PreRender
-     //               ((void (*)(CEntityGTA*))(*(void**)(pObject->m_pEntity + (VER_x32 ? 0x48:0x48*2))))(pObject->m_pEntity);
-
-     //               // CRenderer::RenderOneNonRoad
-     //               ((void (*)(CEntityGTA*))(g_libGTASA+ (VER_x32 ? 0x41030C + 1:0x4F56E0)))(pObject->m_pEntity);
-	//			}
-	//		}
-	//	}
+	RenderSampFarObjectsAfterWorld();
+	RenderPcLikeRemotePlayersAfterWorld();
 }
 
 #include "gta-reversed/game_sa/Pickups.h"
@@ -2099,7 +2239,7 @@ void InstallHooks()
     CHook::InlineHook("_ZN7CWeapon18ProcessLineOfSightERK7CVectorS2_R9CColPointRP7CEntity11eWeaponTypeS6_bbbbbbb", &CWeapon__ProcessLineOfSight_hook, &CWeapon__ProcessLineOfSight);
     CHook::InlineHook("_ZN11CBulletInfo9AddBulletEP7CEntity11eWeaponType7CVectorS3_", &CBulletInfo_AddBullet_hook, &CBulletInfo_AddBullet);
 
-   // CHook::InlineHook("_ZN11CFileLoader18LoadObjectInstanceEP19CFileObjectInstancePKc", &CFileLoader__LoadObjectInstance_hook, &CFileLoader__LoadObjectInstance);
+    CHook::InlineHook("_ZN11CFileLoader18LoadObjectInstanceEP19CFileObjectInstancePKc", &CFileLoader__LoadObjectInstance_hook, &CFileLoader__LoadObjectInstance);
 
     CHook::InlineHook("_ZN6CRadar9ClearBlipEi", &CRadar_ClearBlip_hook, &CRadar_ClearBlip);
 
@@ -2131,7 +2271,8 @@ void InstallHooks()
 
     CHook::Redirect("_ZN4CHID12GetInputTypeEv", &GetInputType);
 
-    //CHook::InlineHook("_ZN9CRenderer24RenderEverythingBarRoadsEv", &CRenderer_RenderEverythingBarRoads_hook, &CRenderer_RenderEverythingBarRoads);
+    CHook::InlineHook("_ZN9CRenderer9ScanWorldEv", &CRenderer_ScanWorld_hook, &CRenderer_ScanWorld);
+    CHook::InlineHook("_ZN9CRenderer24RenderEverythingBarRoadsEv", &CRenderer_RenderEverythingBarRoads_hook, &CRenderer_RenderEverythingBarRoads);
 
 #if VER_x32
     CHook::InlineHook("_ZN14CAnimBlendNode12FindKeyFrameEf", &CAnimBlendNode__FindKeyFrame_hook, &CAnimBlendNode__FindKeyFrame);

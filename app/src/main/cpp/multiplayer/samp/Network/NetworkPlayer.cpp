@@ -4,6 +4,8 @@
 #include "NetworkPlayer.h"
 #include "samp/GUI/gui.h"
 #include "vendor/encoding/encoding.h"
+#include "gta-reversed/game_sa/Streaming.h"
+#include "gta-reversed/game_sa/Models/ModelInfo.h"
 
 extern UI* pUI;
 extern CGame *pGame;
@@ -49,6 +51,42 @@ CRemotePlayer::~CRemotePlayer()
 	}
 }
 
+
+void CRemotePlayer::ApplyPcLikeFarRenderState()
+{
+    if (!m_pPlayerPed || !m_pPlayerPed->m_pPed)
+        return;
+
+    CPedGTA* ped = m_pPlayerPed->m_pPed;
+    if (m_byteState == PLAYER_STATE_NONE || m_byteState == PLAYER_STATE_WASTED)
+        return;
+
+    const int32 modelId = ped->m_nModelIndex;
+    if (modelId >= 0 && modelId < RESOURCE_ID_TXD)
+    {
+        CStreaming::RequestModel(modelId, STREAMING_GAME_REQUIRED | STREAMING_KEEP_IN_MEMORY | STREAMING_PRIORITY_REQUEST);
+        if (auto* modelInfo = CModelInfo::GetModelInfo(modelId))
+        {
+            // PC keeps streamed player skins alive while the player exists.
+            // Mobile may evict the RW clump when far/offscreen, leaving only
+            // nametag/healthbar visible. Raise ref count enough to prevent
+            // cleanup without pinning unrelated map models.
+            if (modelInfo->m_nRefCount < 2)
+                modelInfo->m_nRefCount = 2;
+        }
+    }
+
+    ped->m_bStreamingDontDelete = true;
+    ped->m_bDontStream = false;
+    ped->m_bRemoveFromWorld = false;
+    ped->m_bIsVisible = true;
+    ped->m_bDistanceFade = false;
+    ped->m_bOffscreen = false;
+    ped->bRenderPedInCar = true;
+    ped->bDontRender = false;
+    ped->bCullExtraFarAway = false;
+}
+
 void CRemotePlayer::Process()
 {
 	CPlayerPool* pPlayerPool = pNetGame->GetPlayerPool();
@@ -61,6 +99,8 @@ void CRemotePlayer::Process()
 
 	if (IsActive())
 	{
+		ApplyPcLikeFarRenderState();
+
 		// ---- ONFOOT NETWORK PROCESSING ----
 		if (GetState() == PLAYER_STATE_ONFOOT &&
 			m_byteUpdateFromNetwork == UPDATE_TYPE_ONFOOT &&

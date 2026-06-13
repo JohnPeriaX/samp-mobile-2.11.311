@@ -5,6 +5,11 @@
 #include "VisibilityPlugins.h"
 #include "vendor/patch/patch.h"
 
+namespace {
+constexpr uintptr_t kMsCameraPosnGot = 0x83C940;
+constexpr uintptr_t kMsPedLodDistGot = 0x83C990;
+constexpr uintptr_t kMsPedFadeDistGot = 0x83C9A8;
+}
 
 void CVisibilityPlugins::Initialise() {
     CHook::CallFunction<void>(g_libGTASA + 0x6032E0);
@@ -45,8 +50,21 @@ void CVisibilityPlugins::RenderAlphaAtomic(RpAtomic* atomic, int32 alpha) {
 }
 
 void CVisibilityPlugins::InjectHooks() {
-    //CHook::Write(g_libGTASA + (VER_x32 ? 0x00676200 : 0x84A480), &CVisibilityPlugins::ms_pedLodDist);
-    //CHook::Write(g_libGTASA + (VER_x32 ? 0x00676530 : 0x84AAD0), &CVisibilityPlugins::ms_pCameraPosn);
+    if (VER_x32)
+        return;
+
+    // 2.11 arm64 LST verified:
+    // ms_pCameraPosn GOT = g_libGTASA + 0x83C940
+    // ms_pedLodDist GOT = g_libGTASA + 0x83C990
+    // ms_pedFadeDist GOT = g_libGTASA + 0x83C9A8
+    //
+    // Mobile's native ped renderer reads these through the GOT. Pointing them
+    // at the reversed variables keeps ped LOD/camera distance in sync with the
+    // same path used by PC RenderPedCB, instead of leaving remote peds culled
+    // while the SA-MP name tag UI still renders.
+    CHook::Write(g_libGTASA + kMsPedLodDistGot, &CVisibilityPlugins::ms_pedLodDist);
+    CHook::Write(g_libGTASA + kMsPedFadeDistGot, &CVisibilityPlugins::ms_pedFadeDist);
+    CHook::Write(g_libGTASA + kMsCameraPosnGot, &CVisibilityPlugins::ms_pCameraPosn);
 }
 
 void CVisibilityPlugins::SetupVehicleVariables(RpClump *clump) {
@@ -61,5 +79,3 @@ void CVisibilityPlugins::RenderReallyDrawLastObjects() {
 uint16 CVisibilityPlugins::GetAtomicId(RpAtomic* atomic) {
     return CHook::CallFunction<uint16>(g_libGTASA + 0x603AF0, atomic);
 }
-
-

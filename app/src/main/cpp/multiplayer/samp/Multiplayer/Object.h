@@ -38,6 +38,7 @@ public:
 	bool AttachedToMovingEntity();
 	bool ShouldForceRender() const;
 	void RequestModelForFarRender() const;
+	float GetEffectiveDrawDistance() const;
 
 	void SetPos(float x, float y, float z);
 
@@ -65,6 +66,7 @@ public:
 
 	bool		m_bAttachedToPed;
 	bool		m_bForceRender;
+	float		m_fDrawDistance;
 
 	CPhysical		*m_pEntity;
 	uint8_t		m_byteMoving;

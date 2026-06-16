@@ -6,11 +6,25 @@
 #include "gta-reversed/game_sa/Streaming.h"
 #include "gta-reversed/game_sa/Models/ModelInfo.h"
 
+#include <algorithm>
 #include <cmath>
 
 extern CGame* pGame;
 extern CNetGame* pNetGame;
 extern MaterialTextGenerator* pMaterialTextGenerator;
+
+namespace {
+constexpr float kPcLikeDefaultSampObjectDrawDistance = 300.0f;
+constexpr float kPcLikeMaxSampObjectDrawDistance = 1000.0f;
+
+float NormalizeObjectDrawDistance(float drawDistance)
+{
+	if (!std::isfinite(drawDistance) || drawDistance < 0.0f)
+		return 0.0f;
+
+	return std::min(drawDistance, kPcLikeMaxSampObjectDrawDistance);
+}
+}
 
 CObject::CObject(int iModel, CVector vecPos, CVector vecRot, float fDrawDistance, uint8_t bAttached)
 {
@@ -23,6 +37,12 @@ CObject::CObject(int iModel, CVector vecPos, CVector vecRot, float fDrawDistance
 
 	m_pEntity = 0;
 	m_dwGTAId = 0;
+	m_iModel = iModel;
+	m_byteMoving = 0;
+	m_fMoveSpeed = 0.0f;
+	m_bNeedRotate = false;
+	m_bForceRender = false;
+	m_fDrawDistance = NormalizeObjectDrawDistance(fDrawDistance);
 
 	m_vecAttachedPos.x = 0.0f;
 	m_vecAttachedPos.y = 0.0f;
@@ -40,12 +60,6 @@ CObject::CObject(int iModel, CVector vecPos, CVector vecRot, float fDrawDistance
 	m_pEntity = GamePool_Object_GetAt(m_dwGTAId);
 
 	if(!m_pEntity) return;
-
-	m_byteMoving = 0;
-	m_fMoveSpeed = 0.0f;
-	m_bNeedRotate = false;
-
-	m_iModel = iModel;
 
 	/*m_Matrix = m_pEntity->GetMatrix().ToRwMatrix();
     m_Matrix.pos.x = vecPos.x;
@@ -74,14 +88,20 @@ CObject::CObject(int iModel, CVector vecPos, CVector vecRot, float fDrawDistance
 
 	m_bAttachedToPed = bAttached;
 
-	m_bForceRender = false;
+	m_pEntity->m_bIsVisible = true;
+	m_pEntity->m_bDontStream = false;
+	m_pEntity->m_bStreamingDontDelete = true;
+	m_pEntity->m_bUnimportantStream = false;
+	m_pEntity->m_bDistanceFade = false;
 }
 
 CObject::~CObject()
 {
-	if(m_pEntity)
+	if(m_pEntity) {
+		const uint16_t modelId = m_pEntity->m_nModelIndex;
 		ScriptCommand(&destroy_object, m_dwGTAId);
-	CStreaming::RemoveModelIfNoRefs(m_pEntity->m_nModelIndex);
+		CStreaming::RemoveModelIfNoRefs(modelId);
+	}
 
 	for (int i = 0; i < 16; i++)
 	{
@@ -596,13 +616,35 @@ bool CObject::AttachedToMovingEntity()
 
 bool CObject::ShouldForceRender() const
 {
-	return m_bForceRender;
+	if (!m_pEntity)
+		return false;
+
+	const float distance = m_pEntity->GetDistanceFromCamera();
+	return std::isfinite(distance) && distance <= GetEffectiveDrawDistance();
 }
 
 void CObject::RequestModelForFarRender() const
 {
 	if (m_iModel >= 0)
 		CStreaming::RequestModel(m_iModel, STREAMING_GAME_REQUIRED | STREAMING_PRIORITY_REQUEST);
+}
+
+float CObject::GetEffectiveDrawDistance() const
+{
+	if (m_fDrawDistance > 0.0f)
+		return m_fDrawDistance;
+
+	float modelDistance = 0.0f;
+	if (m_iModel >= 0) {
+		if (CBaseModelInfo* modelInfo = CModelInfo::GetModelInfo(m_iModel)) {
+			modelDistance = modelInfo->m_fDrawDistance;
+		}
+	}
+
+	if (!std::isfinite(modelDistance) || modelDistance <= 0.0f)
+		modelDistance = kPcLikeDefaultSampObjectDrawDistance;
+
+	return std::min(std::max(modelDistance, kPcLikeDefaultSampObjectDrawDistance), kPcLikeMaxSampObjectDrawDistance);
 }
 
 void CObject::SetPos(float x, float y, float z)

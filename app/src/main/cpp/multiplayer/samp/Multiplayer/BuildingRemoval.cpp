@@ -17,8 +17,12 @@ void CBuildingRemoval::RemoveBuildingByPtr(CEntityGTA* pEntity) {
 
     // Set removal flags
     pEntity->m_bRemoveFromWorld = true;
+    pEntity->m_bIsVisible = false;
     pEntity->m_nAreaCode = AREA_CODE_1;
     pEntity->m_bUsesCollision = false;
+    pEntity->m_bDontStream = true;
+    pEntity->m_bDisplayedSuperLowLOD = false;
+    pEntity->m_bStreamingDontDelete = false;
 
     // Handle matrix position
     if (pEntity->m_matrix) {
@@ -44,6 +48,38 @@ bool CBuildingRemoval::IsEntityValidForRemoval(CEntityGTA* entity) {
 
 
     return true;
+}
+
+bool CBuildingRemoval::DoesRemoveRuleMatch(uint32_t removeModelId, const CVector& removePos, float removeRadius, uint32_t entityModelId, const CVector& entityPos) {
+    if (removeRadius < 0.0f) {
+        return false;
+    }
+
+    if (removeModelId != static_cast<uint32_t>(-1) && removeModelId != entityModelId) {
+        return false;
+    }
+
+    const float distance = GetDistanceBetween3DPoints(&removePos, &entityPos);
+    return std::isfinite(distance) && distance <= removeRadius;
+}
+
+bool CBuildingRemoval::ShouldRemoveObjectInstance(uint32_t modelId, const CVector& pos) {
+    for (int i = 0; i < m_TotalRemovedObjects; i++) {
+        const auto& rule = m_RemoveBuildings[i];
+        if (DoesRemoveRuleMatch(rule.modelId, rule.position, rule.radius, modelId, pos)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool CBuildingRemoval::ShouldRemoveEntity(CEntityGTA* entity, uint32_t removeModelId, const CVector& pos, float radius) {
+    if (!IsEntityValidForRemoval(entity)) {
+        return false;
+    }
+
+    return DoesRemoveRuleMatch(removeModelId, pos, radius, entity->m_nModelIndex, entity->GetPosition());
 }
 
 float CBuildingRemoval::GetDistanceBetween3DPoints(const CVector* point1, const CVector* point2) {
@@ -81,9 +117,34 @@ void CBuildingRemoval::RemoveOccluders(const CVector& position, float radius) {
     }
 }
 
+void CBuildingRemoval::AddRemoveBuilding(uint32_t modelId, const CVector& pos, float radius) {
+    if (modelId == 19300 || radius < 0.0f) {
+        return;
+    }
+
+    for (int i = 0; i < m_TotalRemovedObjects; i++) {
+        const auto& rule = m_RemoveBuildings[i];
+        if (rule.modelId == modelId &&
+            rule.radius == radius &&
+            rule.position.x == pos.x &&
+            rule.position.y == pos.y &&
+            rule.position.z == pos.z) {
+            ProcessRemoveBuilding(modelId, pos, radius);
+            return;
+        }
+    }
+
+    if (m_TotalRemovedObjects >= MAX_REMOVALS) {
+        FLog("RemoveBuildingForPlayer limit reached: %d", MAX_REMOVALS);
+        return;
+    }
+
+    m_RemoveBuildings[m_TotalRemovedObjects++] = { modelId, pos, radius };
+    ProcessRemoveBuilding(modelId, pos, radius);
+}
+
 void CBuildingRemoval::ProcessRemoveBuilding(uint32_t modelId, const CVector& pos, float radius) {
-    // Remove occluders with larger radius for safety
-    RemoveOccluders(pos, 500.0f);
+    RemoveOccluders(pos, radius);
 
     // Use template function for all pools
     RemoveBuildingsInPool(GetBuildingPool(), modelId, pos, radius);
@@ -98,14 +159,8 @@ void CBuildingRemoval::RemoveBuildingsInPool(PoolT* pool, uint32_t uiModel, cons
 
     for (int i = 0; i < pool->GetSize(); i++) {
         auto* entity = pool->GetAt(i);
-        if (!IsEntityValidForRemoval(entity)) continue;
-
-        // Check model match (or -1 for all models)
-        if (entity->m_nModelIndex == uiModel || uiModel == static_cast<uint32_t>(-1)) {
-            float distance = GetDistanceBetween3DPoints(&pos, &entity->GetPosition());
-            if (distance <= radius) {
-                RemoveBuildingByPtr(entity);
-            }
+        if (ShouldRemoveEntity(entity, uiModel, pos, radius)) {
+            RemoveBuildingByPtr(entity);
         }
     }
 }

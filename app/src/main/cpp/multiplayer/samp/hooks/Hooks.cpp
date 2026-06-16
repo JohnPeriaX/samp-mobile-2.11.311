@@ -234,32 +234,20 @@ VALIDATE_SIZE(stLoadObjectInstance, 0x28);
 CEntityGTA* (*CFileLoader__LoadObjectInstance)(CFileObjectInstance *pObject, const char *pName);
 CEntityGTA* CFileLoader__LoadObjectInstance_hook(CFileObjectInstance *pObject, const char *pName)
 {
-    // Check if this building should be removed
-    for (int i = 0; i < CBuildingRemoval::m_TotalRemovedObjects; i++)
-    {
-        const auto& buildingInfo = CBuildingRemoval::m_RemoveBuildings[i];
-        // Check model ID match (or -1 for all models)
-        if (pObject->m_nModelId == buildingInfo.modelId || buildingInfo.modelId == static_cast<uint32_t>(-1))
-        {
-            CVector pos;
+    CVector pos;
+    pos.x = pObject->m_vecPosition.x;
+    pos.y = pObject->m_vecPosition.y;
+    pos.z = pObject->m_vecPosition.z;
 
-            pos.x = pObject->m_vecPosition.x;
-            pos.y = pObject->m_vecPosition.y;
-            pos.z = pObject->m_vecPosition.z;
-
-            float distance = CBuildingRemoval::GetDistanceBetween3DPoints(&pos, &buildingInfo.position);
-            if (distance <= buildingInfo.radius) {
-                // PC-like RemoveBuildingForPlayer: keep the IPL loader alive,
-                // but replace the matched building with an invisible model and
-                // detach its LOD link so far LODs do not blink back in later.
-                pObject->m_nModelId = 19300;
-                pObject->m_nLodInstanceIndex = -1;
-                pObject->m_bDontStream = 1;
-                pObject->m_bRedundantStream = 1;
-                break;
-            }
-        }
+    if (CBuildingRemoval::ShouldRemoveObjectInstance(pObject->m_nModelId, pos)) {
+        // PC RemoveBuildingForPlayer suppresses only the matching model, or
+        // every model when the server sends -1, inside the requested radius.
+        pObject->m_nModelId = 19300;
+        pObject->m_nLodInstanceIndex = -1;
+        pObject->m_bDontStream = 1;
+        pObject->m_bRedundantStream = 1;
     }
+
     return CFileLoader__LoadObjectInstance(pObject, pName);
 }
 
@@ -911,6 +899,21 @@ void CRenderer_ScanWorld_hook()
 
 void (*CRenderer_RenderEverythingBarRoads)();
 
+static void ApplyPcLikeCameraDrawDistanceState()
+{
+    CCamera& TheCamera = *reinterpret_cast<CCamera*>(g_libGTASA + 0x9F86F8);
+
+    if (TheCamera.m_fLODDistMultiplier < 1.0f)
+        TheCamera.m_fLODDistMultiplier = 1.0f;
+    if (TheCamera.GenerationDistMultiplier < 1.0f)
+        TheCamera.GenerationDistMultiplier = 1.0f;
+
+    if (TheCamera.m_pRwCamera) {
+        RwCameraSetFarClipPlane(TheCamera.m_pRwCamera, 2000.0f);
+        CVisibilityPlugins::ms_pCameraPosn = reinterpret_cast<RwV3d*>(&TheCamera.GetPosition());
+    }
+}
+
 static void RenderSampFarObjectsAfterWorld()
 {
     if (!pNetGame || !pNetGame->GetObjectPool())
@@ -932,11 +935,15 @@ static void RenderSampFarObjectsAfterWorld()
         const bool oldDistanceFade = pEntity->m_bDistanceFade;
         const bool oldOffscreen = pEntity->m_bOffscreen;
         const bool oldBeingRendered = pEntity->m_bImBeingRendered;
+        const bool oldStreamingDontDelete = pEntity->m_bStreamingDontDelete;
+        const bool oldUnimportantStream = pEntity->m_bUnimportantStream;
 
         pEntity->m_bIsVisible = true;
         pEntity->m_bDistanceFade = false;
         pEntity->m_bOffscreen = false;
         pEntity->m_bImBeingRendered = true;
+        pEntity->m_bStreamingDontDelete = true;
+        pEntity->m_bUnimportantStream = false;
 
         // 2.11 LST verified:
         // CEntity::PreRender(void)           = g_libGTASA + 0x48C31C
@@ -947,6 +954,8 @@ static void RenderSampFarObjectsAfterWorld()
         pEntity->m_bDistanceFade = oldDistanceFade;
         pEntity->m_bOffscreen = oldOffscreen;
         pEntity->m_bImBeingRendered = oldBeingRendered;
+        pEntity->m_bStreamingDontDelete = oldStreamingDontDelete;
+        pEntity->m_bUnimportantStream = oldUnimportantStream;
     }
 }
 
@@ -1033,6 +1042,7 @@ static void RenderPcLikeRemotePlayersAfterWorld()
 
 void CRenderer_RenderEverythingBarRoads_hook() {
 	CRenderer_RenderEverythingBarRoads();
+    ApplyPcLikeCameraDrawDistanceState();
 	RenderSampFarObjectsAfterWorld();
 	RenderPcLikeRemotePlayersAfterWorld();
 }
@@ -1951,6 +1961,8 @@ void InjectHooks()
     CTimer::InjectHooks(); //
     CPools::InjectHooks(); //
     CStreaming::InjectHooks();
+    CRenderer::InjectHooks();
+    CVisibilityPlugins::InjectHooks();
     CTouchInterface::InjectHooks(); //
     CWidgetGta::InjectHooks();
     CGame::InjectHooks();

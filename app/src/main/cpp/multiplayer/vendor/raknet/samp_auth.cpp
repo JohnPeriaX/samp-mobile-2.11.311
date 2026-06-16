@@ -14,8 +14,8 @@
 #define ROTR(value, shift) ((value >> shift) | (value << (sizeof(value)*8 - shift)))
 #define swap(x,y,T) {T tmp = x; x = y; y = tmp;}
 
-// 64-bit architecture only
-typedef uint64_t arch_ulong;
+// SA-MP auth hashes are defined on 32-bit SHA1 words even in an arm64 build.
+typedef uint32_t arch_ulong;
 typedef uint64_t arch_ulonglong;
 
 void *aligned_alloc_fallback(size_t alignment, size_t size) {

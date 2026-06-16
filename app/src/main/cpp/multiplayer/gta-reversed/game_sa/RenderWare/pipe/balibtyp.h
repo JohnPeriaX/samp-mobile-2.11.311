@@ -98,7 +98,7 @@ struct RwGlobals
         /* All of the frames which have been updated */
         RwLinkList          dirtyFrameList;
 
-        uint8_t fileFuncs[(VER_x32 ? 0x2C : 0x58)];
+        uint8_t fileFuncs[0x58];
 
         /* The string functions */
         RwStringFunctions   stringFuncs;
@@ -167,7 +167,7 @@ struct RwGlobals
 #endif // defined WIN32
 //@} DDonSS
 };
-static_assert(sizeof(RwGlobals) == (VER_x32 ? 0x150 : 0x288));
+static_assert(sizeof(RwGlobals) == 0x288);
 
 
 typedef struct RwModuleInfo RwModuleInfo;

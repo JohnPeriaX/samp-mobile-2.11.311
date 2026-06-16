@@ -89,5 +89,5 @@ public:
 };
 #pragma pack(pop)
 
-VALIDATE_SIZE(CObjectGta, (VER_x32 ? 0x184 : 0x1F8));
+VALIDATE_SIZE(CObjectGta, 0x1F8);
 

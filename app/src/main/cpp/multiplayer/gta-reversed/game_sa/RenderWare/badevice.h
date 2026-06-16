@@ -170,7 +170,7 @@ struct RwEngineOpenParams
 {
     void    *displayID;     /**< Display Identifier */
 };
-static_assert(sizeof(RwEngineOpenParams) == (VER_x32 ? 0x4 : 0x8));
+static_assert(sizeof(RwEngineOpenParams) == 0x8);
 
 /* nOption is one of a list of possible System defines (see above) */
 typedef RwBool
@@ -258,7 +258,7 @@ struct RwDevice
     RwIm3DRenderPrimitiveFunction           fpIm3DRenderPrimitive; /* Internal Use */
     RwIm3DRenderIndexedPrimitiveFunction    fpIm3DRenderIndexedPrimitive; /* Internal Use */
 };
-static_assert(sizeof(RwDevice) == (VER_x32 ? 0x38 : 0x68));
+static_assert(sizeof(RwDevice) == 0x68);
 
 #endif /* (!defined(DOXYGEN)) */
 

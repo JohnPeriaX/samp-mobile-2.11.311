@@ -36,6 +36,8 @@ public:
 	void ProcessMaterialText();
 
 	bool AttachedToMovingEntity();
+	bool ShouldForceRender() const;
+	void RequestModelForFarRender() const;
 
 	void SetPos(float x, float y, float z);
 

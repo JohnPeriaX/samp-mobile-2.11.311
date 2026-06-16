@@ -123,7 +123,7 @@ public:
         }
 
     } * m_pVehicleStruct;
-    VALIDATE_SIZE(CVehicleStructure, (VER_x32 ? 0x32C : 0x360));
+    VALIDATE_SIZE(CVehicleStructure, 0x360);
 
     RpMaterial* m_firstColour[49];
     RpMaterial* m_secondColour[33];
@@ -203,4 +203,4 @@ static inline void AddStoredMaterial(Addr addr)
 }
 
 
-static_assert(sizeof(CVehicleModelInfo) == (VER_x32 ? 0x3a8 : 0x6B0), "Invalid size cTransmission");
+static_assert(sizeof(CVehicleModelInfo) == 0x6B0, "Invalid size cTransmission");

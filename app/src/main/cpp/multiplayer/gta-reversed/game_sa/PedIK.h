@@ -50,4 +50,4 @@ public:
     };
 };
 
-VALIDATE_SIZE(CPedIK, (VER_x32 ? 0x20 : 0x28));
+VALIDATE_SIZE(CPedIK, 0x28);

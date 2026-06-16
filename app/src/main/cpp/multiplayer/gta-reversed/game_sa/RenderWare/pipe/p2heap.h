@@ -15,7 +15,7 @@ struct rxHeapFreeBlock
     RwUInt32            size;
     rxHeapBlockHeader   *ptr;
 };
-static_assert(sizeof(rxHeapFreeBlock) == (VER_x32 ? 0x8 : 0x10));
+static_assert(sizeof(rxHeapFreeBlock) == 0x10);
 
 struct rxHeapSuperBlockDescriptor
 {
@@ -23,7 +23,7 @@ struct rxHeapSuperBlockDescriptor
     RwUInt32 size;
     rxHeapSuperBlockDescriptor *next;
 };
-static_assert(sizeof(rxHeapSuperBlockDescriptor) == (VER_x32 ? 0xC : 0x18));
+static_assert(sizeof(rxHeapSuperBlockDescriptor) == 0x18);
 
 /**
  * \ingroup rwcoregeneric
@@ -44,7 +44,7 @@ struct RxHeap
     RwBool              dirty;          /**< Internally used boolean, flags whether
                                          *   the heap needs resetting or not. */
 };
-static_assert(sizeof(RxHeap) == (VER_x32 ? 0x1C : 0x30));
+static_assert(sizeof(RxHeap) == 0x30);
 
 
 struct rxHeapBlockHeader
@@ -55,7 +55,7 @@ struct rxHeapBlockHeader
     rxHeapFreeBlock     *freeEntry; /* (or null) */
     RwUInt32            pad[4]; /* alignment padding to 32 bytes */
 };
-static_assert(sizeof(rxHeapBlockHeader) == (VER_x32 ? 0x20 : 0x30));
+static_assert(sizeof(rxHeapBlockHeader) == 0x30);
 
 /* This wrapper cheaply early-outs when a heap doesn't *need* resetting */
 #define RxHeapReset(heap) \

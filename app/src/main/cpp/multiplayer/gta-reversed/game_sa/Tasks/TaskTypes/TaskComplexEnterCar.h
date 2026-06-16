@@ -55,4 +55,4 @@ public:
 
 private:
 };
-VALIDATE_SIZE(CTaskComplexEnterCar, (VER_x32 ? 0x50 : 0x70));
+VALIDATE_SIZE(CTaskComplexEnterCar, 0x70);

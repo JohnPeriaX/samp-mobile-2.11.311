@@ -140,7 +140,7 @@ void CEntityGTA::DeleteRwObject()
 {
     if(!*(uintptr*)this) return;
 
-    (( void (*)(CEntityGTA*))(*(void**)(*(uintptr*)this + (VER_x32 ? 0x24 : 0x24*2))))(this);
+    (( void (*)(CEntityGTA*))(*(void**)(*(uintptr*)this + 0x48)))(this);
 }
 
 void CEntityGTA::UpdateRW() {

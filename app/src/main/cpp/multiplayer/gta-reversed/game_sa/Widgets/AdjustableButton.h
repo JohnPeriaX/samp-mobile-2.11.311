@@ -20,4 +20,4 @@ struct __attribute__((aligned(4))) AdjustableButton
     bool m_bEnabled;
     uint8 pad0[2];
 };
-VALIDATE_SIZE(AdjustableButton, (VER_x32 ? 0x28 : 0x30));
+VALIDATE_SIZE(AdjustableButton, 0x30);

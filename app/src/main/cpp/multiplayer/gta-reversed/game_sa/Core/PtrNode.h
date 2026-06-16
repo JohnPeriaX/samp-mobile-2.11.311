@@ -20,4 +20,4 @@ public:
     T* ItemAs() { return reinterpret_cast<T*>(m_item); }
 };
 
-VALIDATE_SIZE(CPtrNode, (VER_x32 ? 0x8 : 0x10));
+VALIDATE_SIZE(CPtrNode, 0x10);

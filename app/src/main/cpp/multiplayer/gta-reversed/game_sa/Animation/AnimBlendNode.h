@@ -52,4 +52,4 @@ public:
     bool UpdateTime();
 };
 
-VALIDATE_SIZE(CAnimBlendNode, (VER_x32 ? 0x18 : 0x20));
+VALIDATE_SIZE(CAnimBlendNode, 0x20);

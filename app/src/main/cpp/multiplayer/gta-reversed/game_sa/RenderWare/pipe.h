@@ -31,7 +31,7 @@ struct rwPipeGlobals
     RxPipeline          *platformWorldSectorPipeline;
     RxPipeline          *platformMaterialPipeline;
 };
-static_assert(sizeof(rwPipeGlobals) == (VER_x32 ?0x60 : 0x98));
+static_assert(sizeof(rwPipeGlobals) == 0x98);
 
 typedef struct rwPipeGlobals rwPipeGlobals;
 

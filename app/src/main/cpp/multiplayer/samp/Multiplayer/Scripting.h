@@ -160,7 +160,7 @@ private:
 //    [[maybe_unused]] uint8_t         m_CmpFlag;
 //    [[maybe_unused]] uint8_t         _pad4[26];
 };
-VALIDATE_SIZE(CRunningScript, (VER_x32 ? 0x100 : 0x130));
+VALIDATE_SIZE(CRunningScript, 0x130);
 
 struct SCRIPT_COMMAND {
     uint16_t    Opcode;

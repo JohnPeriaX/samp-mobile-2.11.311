@@ -24,4 +24,4 @@ public:
     bool IsEmpty() const { return !m_node; }
 };
 
-VALIDATE_SIZE(CPtrList, (VER_x32 ? 0x4 : 0x8));
+VALIDATE_SIZE(CPtrList, 0x8);

@@ -36,4 +36,4 @@ public:
     auto GetHashKey() const noexcept { return m_pHierarchy->m_hashKey; }
 };
 
-VALIDATE_SIZE(CAnimBlendStaticAssociation, (VER_x32 ? 0x14 : 0x20));
+VALIDATE_SIZE(CAnimBlendStaticAssociation, 0x20);

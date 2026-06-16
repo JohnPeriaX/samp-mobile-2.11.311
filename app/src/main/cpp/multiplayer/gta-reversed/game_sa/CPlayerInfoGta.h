@@ -86,5 +86,5 @@ struct CPlayerInfoGta {
     bool m_bParachuteReferenced;
     uint32 m_nRequireParachuteTimer;
 };
-VALIDATE_SIZE(CPlayerInfoGta, (VER_x32 ? 0x194 : 0x1D8));
+VALIDATE_SIZE(CPlayerInfoGta, 0x1D8);
 

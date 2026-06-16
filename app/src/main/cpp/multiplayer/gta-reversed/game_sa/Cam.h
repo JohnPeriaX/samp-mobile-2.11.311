@@ -124,4 +124,4 @@ struct CCam
 };
 
 
-VALIDATE_SIZE(CCam, (VER_x32 ? 0x210 : 0x228));
+VALIDATE_SIZE(CCam, 0x228);

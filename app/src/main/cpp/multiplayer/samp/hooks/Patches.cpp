@@ -20,11 +20,6 @@ void ApplyFPSPatch(uint8_t fps)
     if (targetFPS < 30) targetFPS = 30;
     if (targetFPS > 120) targetFPS = 120;
 
-#if VER_x32
-    // 2.11 arm32 FPS addresses were not confirmed in the provided LST set.
-    // Do not patch guessed offsets. Keep this branch intentionally safe.
-    FLog("FPS patch skipped for arm32: address mapping is not confirmed");
-#else
     auto makeMovWImm = [](uint8_t reg, uint16_t imm) -> uint32_t {
         return 0x52800000u | ((static_cast<uint32_t>(imm) & 0xFFFFu) << 5u) | (reg & 0x1Fu);
     };
@@ -38,7 +33,6 @@ void ApplyFPSPatch(uint8_t fps)
     CHook::WriteMemory(g_libGTASA + 0x3685B8, &movW9Fps, sizeof(movW9Fps));
     CHook::WriteMemory(g_libGTASA + 0x368924, &movW8Fps, sizeof(movW8Fps));
 
-#endif
 
     FLog("New fps limit = %d", targetFPS);
 }
@@ -65,8 +59,8 @@ void ApplySAMPPatchesInGame()
     CHook::WriteMemory(g_libGTASA + 0x5B5510, (uintptr_t)"\x34\x00\x80\x52", 4);
 
     // radar draw blips
-    CHook::NOP(g_libGTASA + (VER_x32 ? 0x0043FE5A : 0x51A314), 2);
-    CHook::NOP(g_libGTASA + (VER_x32 ? 0x004409AE : 0x51B11C), 2);
+    CHook::NOP(g_libGTASA + 0x51A314, 2);
+    CHook::NOP(g_libGTASA + 0x51B11C, 2);
 
     CHook::RET("_ZN4CPed31RemoveWeaponWhenEnteringVehicleEi"); // CPed::RemoveWeaponWhenEnteringVehicle
 
@@ -131,10 +125,7 @@ void ApplyPatches_level0()
     CHook::WriteMemory(g_libGTASA + 0x77584C, (uintptr_t)"\x22\x00\x80\x52", 4);
 
 
-/*
-#if VER_x32
-    CHook::WriteMemory(g_libGTASA + 0x002D9724, (uintptr_t)0x6061F44F, 4);
-#endif */
+/* 32-bit-only patch removed for 64-bit build. */
 
     DisableAutoAim();
 
@@ -284,16 +275,11 @@ void ApplyGlobalPatches()
 
 /*
  * //uncomplete
- * main address in 2.11.32 of openglaallinoneatomic is 0x7857F4
-#if !VER_x32
+ * main address in 2.11 arm64 of openglaallinoneatomic is 0x7857F4
     // openglSkinAllInOneAtomicInstanceCB
     CHook::Write32(g_libGTASA + 0x785A28, ARMv8::MOVBits::Create(1, 27, false));
     CHook::NOP(g_libGTASA + 0x25C28C, 1);
     CHook::Write32(g_libGTASA + 0x25C290, ARMv8::MOVBits::Create(1, 27, false));
-#else
-    CHook::WriteMemory(g_libGTASA + 0x1C8064, (uintptr_t)"\x01", 1);
-    CHook::WriteMemory(g_libGTASA + 0x1C8082, (uintptr_t)"\x01", 1);
-#endif
 
  */
     CHook::RET("_ZN10CPlayerPed14AnnoyPlayerPedEb"); // CPedSamp::AnnoyPlayerPed

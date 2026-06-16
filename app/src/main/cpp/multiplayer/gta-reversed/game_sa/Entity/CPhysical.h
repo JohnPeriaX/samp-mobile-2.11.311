@@ -120,4 +120,4 @@ public:
     void ApplyTurnForce(CVector force, CVector point);
 };
 
-static_assert(sizeof(CPhysical) == (VER_x32 ? 0x13C : 0x198), "Invalid size CPhysical");
+static_assert(sizeof(CPhysical) == 0x198, "Invalid size CPhysical");

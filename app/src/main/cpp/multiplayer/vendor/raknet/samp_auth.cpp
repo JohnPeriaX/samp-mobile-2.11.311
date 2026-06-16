@@ -14,15 +14,9 @@
 #define ROTR(value, shift) ((value >> shift) | (value << (sizeof(value)*8 - shift)))
 #define swap(x,y,T) {T tmp = x; x = y; y = tmp;}
 
-#ifdef VER_x32
-// Use uint32_t for 32-bit architecture
-typedef uint32_t arch_ulong;
-typedef uint64_t arch_ulonglong;
-#else
-// Use uint64_t for 64-bit architecture
+// 64-bit architecture only
 typedef uint64_t arch_ulong;
 typedef uint64_t arch_ulonglong;
-#endif
 
 void *aligned_alloc_fallback(size_t alignment, size_t size) {
     void *ptr = NULL;

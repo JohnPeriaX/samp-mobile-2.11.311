@@ -191,7 +191,7 @@ private:
     friend CMatrix operator+(const CMatrix& a, const CMatrix& b);
     // static CMatrix* impl_operatorAdd(CMatrix* out, const CMatrix& a, const CMatrix& b);
 };
-static_assert(sizeof(CMatrix) == (VER_x32 ? 0x48 : 0x50));
+static_assert(sizeof(CMatrix) == 0x50);
 
 CMatrix operator*(const CMatrix& a, const CMatrix& b);
 CVector operator*(const CMatrix& a, const CVector& b);

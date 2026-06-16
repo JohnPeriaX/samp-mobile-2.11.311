@@ -105,4 +105,4 @@ public:
     }
 };
 
-VALIDATE_SIZE(List_c, (VER_x32 ? 0xC : 0x18));
+VALIDATE_SIZE(List_c, 0x18);

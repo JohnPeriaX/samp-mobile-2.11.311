@@ -246,11 +246,7 @@ public:
     RwCamera        *m_pRwCamera;
     uintptr_t         *pTargetEntity;
     uintptr_t         *pAttachedEntity;
-#if VER_x32
-    uint8           m_arrPathArray[0x10];
-#else
     uint8           m_arrPathArray[0x20];
-#endif
 
     bool            m_bMirrorActive;
     bool            m_bResetOldMatrix;
@@ -419,9 +415,9 @@ public:
     static CCamera& Get() {
         static CCamera* pCamera = nullptr;
         if (!pCamera) {
-            pCamera = reinterpret_cast<CCamera*>(g_libGTASA + (VER_x32 ? 0x00951FA8 : 0xBBA8D0));
+            pCamera = reinterpret_cast<CCamera*>(g_libGTASA + 0xBBA8D0);
         }
         return *pCamera;
     }
 };
-VALIDATE_SIZE(CCamera, (VER_x32 ? 0xD00 : 0xDB0));
+VALIDATE_SIZE(CCamera, 0xDB0);

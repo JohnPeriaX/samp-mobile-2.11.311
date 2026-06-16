@@ -45,7 +45,7 @@ struct RwFrame
 //    char          pluginData[8];                               // padding
 //    char          szName[RW_FRAME_NAME_LENGTH + 1];            // name (as stored in the frame extension)
 };
-static_assert(sizeof(RwFrame) == (VER_x32 ? 0xA4 : 0xC8));
+static_assert(sizeof(RwFrame) == 0xC8);
 
 
 #include "raster.h"
@@ -350,7 +350,7 @@ struct RwObjectHasFrame
     RwObjectHasFrameSyncFunction sync;
 };
 #endif /* (!defined(DOXYGEN)) */
-static_assert(sizeof(RwObjectHasFrame) == (VER_x32 ? 0x14 : 0x28));
+static_assert(sizeof(RwObjectHasFrame) == 0x28);
 
 /* Frames */
 extern void _rwObjectHasFrameSetFrame(void *object, RwFrame *frame);
@@ -496,7 +496,7 @@ struct RwFrustumPlane
     RwUInt8             closestZ;
     RwUInt8             pad;
 };
-static_assert(sizeof(RwFrustumPlane) == (VER_x32 ? 0x14 : 0x14));
+static_assert(sizeof(RwFrustumPlane) == 0x14);
 
 struct RwCamera
 {
@@ -539,7 +539,7 @@ struct RwCamera
     RwV3d               frustumCorners[8];
 };
 #endif /* (!defined(DOXYGEN)) */
-static_assert(sizeof(RwCamera) == (VER_x32 ? 0x188 : 0x1B0));
+static_assert(sizeof(RwCamera) == 0x1B0);
 
 /**
  * \ingroup rwcamera
@@ -577,7 +577,7 @@ struct RwTexture
 
     RwInt32             refCount; /* Reference count, surprisingly enough */              //+84
 };
-static_assert(sizeof(RwTexture) == (VER_x32 ? 0x58 : 0x68));
+static_assert(sizeof(RwTexture) == 0x68);
 
 /* Type ID */
 #define rwTEXDICTIONARY 6

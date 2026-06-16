@@ -30,4 +30,4 @@ public:
     void SetNumberOfBones(int32 numBones);
 };
 
-VALIDATE_SIZE(CAnimBlendClumpData, (VER_x32 ? 0x14 : 0x28));
+VALIDATE_SIZE(CAnimBlendClumpData, 0x28);

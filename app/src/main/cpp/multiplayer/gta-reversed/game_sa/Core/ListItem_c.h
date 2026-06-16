@@ -22,4 +22,4 @@ protected:
 
     friend class List_c;
 };
-VALIDATE_SIZE(ListItem_c, (VER_x32 ? 0x8 : 0x10));
+VALIDATE_SIZE(ListItem_c, 0x10);

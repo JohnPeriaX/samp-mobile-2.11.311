@@ -328,4 +328,4 @@ private:
     }
 };
 
-VALIDATE_SIZE(CTaskManager, (VER_x32 ? 0x30 : 0x60));
+VALIDATE_SIZE(CTaskManager, 0x60);

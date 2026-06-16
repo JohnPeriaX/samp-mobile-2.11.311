@@ -176,4 +176,4 @@ public:
 
     void CleanUpOldReference(CEntityGTA** entity); // See helper SafeCleanUpOldReference
 };
-static_assert(sizeof(CEntityGTA) == (VER_x32 ? 0x3C : 0x60));
+static_assert(sizeof(CEntityGTA) == 0x60);

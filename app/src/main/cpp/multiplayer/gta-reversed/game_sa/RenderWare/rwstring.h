@@ -118,7 +118,7 @@ struct RwStringFunctions
     vecStrtokFunc   vecStrtok;
     vecSscanfFunc   vecSscanf;
 };
-static_assert(sizeof(RwStringFunctions) == (VER_x32 ? 0x3C : 0x78));
+static_assert(sizeof(RwStringFunctions) == 0x78);
 
 /****************************************************************************
  Function prototypes

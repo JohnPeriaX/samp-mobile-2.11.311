@@ -37,4 +37,4 @@ public:
     void TickStoredEvent(CPedGTA* ped);
 };
 
-VALIDATE_SIZE(CEventHandlerHistory, (VER_x32 ? 0x1C : 0x30));
+VALIDATE_SIZE(CEventHandlerHistory, 0x30);

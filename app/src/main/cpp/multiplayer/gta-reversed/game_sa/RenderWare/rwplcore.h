@@ -417,7 +417,7 @@ struct RpMaterial
 	RwInt16             refCount;          /* C.f. rwsdk/world/bageomet.h:RpGeometry */
 	RwInt16             pad;
 };
-static_assert(sizeof(RpMaterial) == (VER_x32 ? 0x1C : 0x28));
+static_assert(sizeof(RpMaterial) == 0x28);
 
 struct RpMaterialList
 {
@@ -425,7 +425,7 @@ struct RpMaterialList
 	RwInt32         numMaterials;
 	RwInt32         space;
 };
-static_assert(sizeof(RpMaterialList) == (VER_x32 ? 0xC : 0x10));
+static_assert(sizeof(RpMaterialList) == 0x10);
 
 /* Doubly linked list. End marked as start (its a ring) */
 
@@ -487,7 +487,7 @@ struct RpGeometry
 
     struct RpMorphTarget* morphTarget;    /* The Morph Target */
 };
-static_assert(sizeof(RpGeometry) == (VER_x32 ? 0x64 : 0xA8));
+static_assert(sizeof(RpGeometry) == 0xA8);
 
 enum RwOpCombineType
 {

@@ -42,4 +42,4 @@ private:
     static void InjectHooks();
 
 };
-VALIDATE_SIZE(CTaskSimpleRunNamedAnim, (VER_x32 ? 0x64 : 0x78));
+VALIDATE_SIZE(CTaskSimpleRunNamedAnim, 0x78);

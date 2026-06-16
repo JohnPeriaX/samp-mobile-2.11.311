@@ -19,4 +19,4 @@ public:
     void AddToList(CEntryInfoNode* pNext); //Fully inlined in final game
 };
 
-VALIDATE_SIZE(CEntryInfoNode, (VER_x32 ? 0x14 : 0x28));
+VALIDATE_SIZE(CEntryInfoNode, 0x28);

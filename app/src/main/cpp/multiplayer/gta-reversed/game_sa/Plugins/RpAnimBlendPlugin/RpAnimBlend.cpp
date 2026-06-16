@@ -200,7 +200,7 @@ void RpAnimBlendFrameSetName(RwFrame* frame, char* name) {
 
 // 0x4D6AB0
 CAnimBlendAssociation* RpAnimBlendGetNextAssociation(CAnimBlendAssociation* association) {
-    return CHook::CallFunction<CAnimBlendAssociation*>(g_libGTASA + 0x76654, association);
+    return CHook::CallFunction<CAnimBlendAssociation*>(g_libGTASA + 0x376654, association);
 }
 
 // 0x4D6AD0

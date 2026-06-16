@@ -20,4 +20,4 @@ public:
     virtual bool ProcessPed(CPedGTA* ped) = 0;
     virtual bool SetPedPosition(CPedGTA* ped);
 };
-static_assert(sizeof(CTaskSimple) == (VER_x32 ? 0x8 : 0x10));
+static_assert(sizeof(CTaskSimple) == 0x10);

@@ -57,4 +57,4 @@ public:
     auto CalculateIntensity(float scrZ, float farClip) const -> float;
 };
 
-VALIDATE_SIZE(CRegisteredCorona, (VER_x32 ? 0x3C : 0x50));
+VALIDATE_SIZE(CRegisteredCorona, 0x50);

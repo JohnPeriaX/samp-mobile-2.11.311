@@ -50,9 +50,6 @@ void CVisibilityPlugins::RenderAlphaAtomic(RpAtomic* atomic, int32 alpha) {
 }
 
 void CVisibilityPlugins::InjectHooks() {
-    if (VER_x32)
-        return;
-
     // 2.11 arm64 LST verified:
     // ms_pCameraPosn GOT = g_libGTASA + 0x83C940
     // ms_pedLodDist GOT = g_libGTASA + 0x83C990

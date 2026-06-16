@@ -617,7 +617,7 @@ struct RwMemoryFunctions
          *          there is insufficient memory available.
          */
 };
-static_assert(sizeof(RwMemoryFunctions) == (VER_x32 ? 0x10 : 0x20));
+static_assert(sizeof(RwMemoryFunctions) == 0x20);
 
 typedef struct RwMemoryFunctions RwMemoryFunctions;
 
@@ -675,7 +675,7 @@ struct RwFreeList
 #endif // defined USE_THREADSAFE_FREELIST
 //@} DDonSS
 };
-static_assert(sizeof(RwFreeList) == (VER_x32 ? 0x24 : 0x38));
+static_assert(sizeof(RwFreeList) == 0x38);
 
 #ifndef RWADOXYGENEXTERNAL
 /**

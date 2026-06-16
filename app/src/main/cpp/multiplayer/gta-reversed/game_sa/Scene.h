@@ -13,6 +13,6 @@ public:
     RpWorld*  m_pRpWorld;
     RwCamera* m_pRwCamera;
 };
-VALIDATE_SIZE(CScene, (VER_x32 ? 0x8 : 0x10));
+VALIDATE_SIZE(CScene, 0x10);
 
 extern CScene Scene;

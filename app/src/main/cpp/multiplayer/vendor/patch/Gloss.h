@@ -4,8 +4,8 @@
 #ifndef __ANDROID__
 #error GlossHook only support android
 #else
-#if !(defined __arm__) && !(defined __aarch64__)
-#error GlossHook only support arm and arm64
+#ifndef __aarch64__
+#error GlossHook only support arm64
 #endif
 #endif
 
@@ -23,9 +23,6 @@
 extern "C" {
 #endif
 
-#ifdef __arm__
-#define GET_INST_SET(addr) (addr & 1 ? i_set::I_THUMB : i_set::I_ARM) // check addr is arm or thumb (arm: addr thumb: addr + 1)
-#endif 
 
 	typedef enum { I_NONE = 0, I_THUMB, I_ARM, I_ARM64 } i_set; // inst mode
 
@@ -48,14 +45,7 @@ extern "C" {
 	{
 		// pc register cannot be changed, only read
 		// x18 register is occupied by a jump instruction, cannot be changed
-#ifdef __arm__
-		enum e_reg { R0 = 0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, FP = R11, R12, IP = R12, R13, SP = R13, R14, LR = R14, R15, PC = R15, CPSR, MAX_REG };
-
-		union {
-			uint32_t r[MAX_REG];
-			struct { uint32_t r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, sp, lr, pc, cpsr; } regs;
-		};
-#elif __aarch64__
+#ifdef __aarch64__
 		enum e_reg {
 			X0 = 0, X1, X2, X3, X4, X5, X6, X7, X8, X9, X10, X11, X12, X13, X14, X15, X16, X17, X18, X19, X20, X21, X22, X23, X24, X25, X26, X27, X28, X29, FP = X29,
 			X30, LR = X30, X31, SP = X31, PC, CPSR, MAX_REG,
@@ -556,9 +546,6 @@ extern "C" {
 	* @return The hook handle. (failed: NULL)
 	*/
 	GLOSS_API GHook GlossHookBranchBL(void* branch_addr, void* new_func, void** old_func, i_set mode);
-#ifdef __arm__
-	GLOSS_API GHook GlossHookBranchBLX(void* branch_addr, void* new_func, void** old_func, i_set mode);
-#endif 
 
 	/*
 	* GlossHookInternalCallback - Internal hook callback function.
@@ -893,133 +880,7 @@ extern "C" {
 			*/
 			GLOSS_API Branchs GetBranch(uintptr_t addr, i_set mode);
 
-#ifdef __arm__
-
-			/*
-			* IsThumb32 - Check if addr is thumb32 instruction.
-			*
-			* @param addr - Address to check.
-			* @return - True if addr is thumb32 instruction, otherwise false.
-			*/
-			GLOSS_API bool IsThumb32(uint32_t addr);
-
-			/*
-			* MakeNOP - Make nop instruction. (thumb16/32)
-			*
-			* @param addr - Address to make nop instruction.
-			* @param size - The byte size of the instruction.
-			*/
-			GLOSS_API void MakeThumb16NOP(uint32_t addr, size_t size);
-			GLOSS_API void MakeThumb32NOP(uint32_t addr, size_t size);
-
-			/*
-			* MakeRET - Make function return instruction. (thumb16)
-			*
-			* @param addr - Address to make return instruction.
-			* @param type - The instruction type. ( 1: BX LR, 0: MOV PC, LR)
-			*/
-			GLOSS_API void MakeThumbRET(uint32_t addr, uint8_t type);
-
-			/*
-			* MakeBranch - Make branch instruction. (thumb16/32 B BC BL BLX)
-			*
-			* @param addr - Address to make branch instruction.
-			* @param dest - The branch destination.
-			* @param cond - The branch condition. (see conds)
-			* @return - The branch instruction.
-			*/
-			GLOSS_API uint16_t MakeThumb16B(uint32_t addr, uint32_t dest);
-			GLOSS_API uint16_t MakeThumb16BCond(uint32_t addr, uint32_t dest, Conds cond);
-			GLOSS_API uint32_t MakeThumb32B(uint32_t addr, uint32_t dest);
-			GLOSS_API uint32_t MakeThumb32BCond(uint32_t addr, uint32_t dest, Conds cond);
-			GLOSS_API uint32_t MakeThumbBL(uint32_t addr, uint32_t func);
-			GLOSS_API uint32_t MakeThumbBL_W(uint32_t addr, uint32_t func);
-			GLOSS_API uint32_t MakeThumbBLX(uint32_t addr, uint32_t func);
-			GLOSS_API uint32_t MakeThumbBLX_W(uint32_t addr, uint32_t func);
-
-			/*
-			* MakeCB - Make conditional branch instruction. (thumb16)
-			*
-			* @param addr - Address to make conditional branch instruction.
-			* @param dest - The branch destination.
-			* @param reg - The condition register. (see gloss_reg::e_reg)
-			* @param is_cbnz - True if the instruction is CBNZ, otherwise CBZ.
-			* @return - The conditional branch instruction.
-			*/
-			GLOSS_API uint16_t MakeThumbCB(uint32_t addr, uint32_t dest, gloss_reg::e_reg reg, bool is_cbnz);
-
-			/*
-			* MakeAbsoluteJump - Make absolute jump instruction. (thumb32)
-			*
-			* Inst;
-			* addr[0] LDR.W PC, [PC, #0]
-			* addr[4] dest
-			*
-			* @param addr - Address to make absolute jump instruction.
-			* @param dest - The absolute jump destination.
-			* @return - The absolute jump instruction byte size.
-			*/
-			GLOSS_API int8_t MakeThumbAbsoluteJump(uint32_t addr, uint32_t dest);
-
-			/*
-			* GetBranchDestination - Get branch destination. (thumb16/32)
-			*
-			* @param addr - Address to get branch destination.
-			* @return - The branch destination address.
-			*/
-			GLOSS_API uint32_t GetThumb16BranchDestination(uint32_t addr);
-			GLOSS_API uint32_t GetThumb32BranchDestination(uint32_t addr);
-
-			/*
-			* MakeNOP - Make nop instruction. (arm)
-			*
-			* @param addr - Address to make nop instruction.
-			* @param size - The byte size of the instruction.
-			*/
-			GLOSS_API void MakeArmNOP(uint32_t addr, size_t size);
-
-			/*
-			* MakeRET - Make function return instruction. (arm)
-			*
-			* @param addr - Address to make return instruction.
-			* @param type - The instruction type. ( 1: BX LR, 0: MOV PC, LR)
-			*/
-			GLOSS_API void MakeArmRET(uint32_t addr, uint8_t type);
-
-			/*
-			* MakeBranch - Make branch instruction. (arm B BC BL BLX)
-			*
-			* @param addr - Address to make branch instruction.
-			* @param dest - The branch destination.
-			* @param cond - The branch condition. (see conds)
-			* @return - The branch instruction.
-			*/
-			GLOSS_API uint32_t MakeArmB(uint32_t addr, uint32_t dest, Conds cond = Conds::AL);
-			GLOSS_API uint32_t MakeArmBL(uint32_t addr, uint32_t func, Conds cond = Conds::AL);
-			GLOSS_API uint32_t MakeArmBLX(uint32_t addr, uint32_t func);
-
-			/*
-			* MakeAbsoluteJump - Make absolute jump instruction. (arm)
-			*
-			* Inst;
-			* addr[0] LDR PC, [PC, #-4]
-			* addr[4] dest
-			*
-			* @param addr - Address to make absolute jump instruction.
-			* @param dest - The absolute jump destination.
-			* @return - The absolute jump instruction byte size.
-			*/
-			GLOSS_API int8_t MakeArmAbsoluteJump(uint32_t addr, uint32_t dest);
-
-			/*
-			* GetBranchDestination - Get branch destination. (arm)
-			*
-			* @param addr - Address to get branch destination.
-			* @return - The branch destination address.
-			*/
-			GLOSS_API uint32_t GetArmBranchDestination(uint32_t addr);
-
-#elif __aarch64__
+#ifdef __aarch64__
 
 			/*
 			* MakeNOP - Make nop instruction. (aarch64)

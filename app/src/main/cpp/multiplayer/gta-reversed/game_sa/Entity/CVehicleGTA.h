@@ -37,11 +37,7 @@ enum eCarLock : uint32 {
 };
 
 struct CVehicleGTA : CPhysical {
-#if VER_x32
-    uint8_t m_VehicleAudioEntity[588];
-#else
     uint8_t m_VehicleAudioEntity[0x310];
-#endif
     tHandlingData* m_pHandlingData;
     uintptr_t* pFlyingHandling;
     union{
@@ -77,12 +73,8 @@ struct CVehicleGTA : CPhysical {
             uint32_t bSwingingChassis : 1;
         } handlingFlags;
     };
-#if VER_x32
-    uint8_t AutoPilot[152];
-#else
     uint32_t padflagsx64;
     uint8_t AutoPilot[0xA8];
-#endif
     union
     {
         struct
@@ -351,4 +343,4 @@ public:
     void RemoveVehicleUpgrade(int32 upgradeModelIndex);
 };
 
-VALIDATE_SIZE(CVehicleGTA, (VER_x32 ? 0x5B4 : 0x758));
+VALIDATE_SIZE(CVehicleGTA, 0x758);

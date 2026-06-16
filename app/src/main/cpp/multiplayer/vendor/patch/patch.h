@@ -9,13 +9,7 @@
 #include <sys/cachectl.h>
 #include <sys/mman.h>
 
-#ifdef __arm__
-#define __32BIT
-#define DETHUMB(_a) (((uintptr_t)_a) & ~0x1)
-#define RETHUMB(_a) (((uintptr_t)_a) | 0x1)
-#define THUMBMODE(_a) ((((uintptr_t)_a) & 0x1)||(((uintptr_t)_a) & 0x2)||(CHook::GetAddrBaseXDL((uintptr_t)_a) & 0x1))
-extern "C" bool MSHookFunction(void* symbol, void* replace, void** result);
-#elif defined __aarch64__
+#ifdef __aarch64__
 #define __64BIT
     #define DETHUMB(_a)
     #define RETHUMB(_a)
@@ -25,13 +19,11 @@ extern "C" bool MSHookFunction(void* symbol, void* replace, void** result);
     #error This lib is supposed to work on ARM only!
 #endif
 
-//#if VER_x32
 #define GET_LR(dwRetAddr) \
     do { \
         uintptr_t lr = reinterpret_cast<uintptr_t>(__builtin_return_address(0)); \
         dwRetAddr = lr - g_libGTASA; \
     } while (0)
-//#endif
 
 
 #define SET_TO(__a1, __a2) *(void**)&(__a1) = (void*)(__a2)
@@ -69,17 +61,10 @@ public:
     }
 
     static void UnFuck(uintptr_t ptr, uint64_t len = PAGE_SIZE) {
-#if VER_x32
-        if(mprotect((void*)(ptr & 0xFFFFF000), len, PROT_READ | PROT_WRITE | PROT_EXEC) == 0)
-            return;
-
-        mprotect((void*)(ptr & 0xFFFFF000), len, PROT_READ | PROT_WRITE);
-#else
         if(mprotect((void*)(ptr & 0xFFFFFFFFFFFFF000), len, PROT_READ | PROT_WRITE | PROT_EXEC) == 0)
             return;
 
         mprotect((void*)(ptr & 0xFFFFFFFFFFFFF000), len, PROT_READ | PROT_WRITE);
-#endif
     }
 
     static uintptr_t GetAddrBaseXDL(uintptr_t addr)
@@ -99,18 +84,6 @@ public:
     {
         // fully check
         auto addr = (uintptr)(adr);
-#if VER_x32
-        int bytesCount = 2 * count;
-        uintptr_t endAddr = addr + bytesCount;
-        UnFuck(addr, bytesCount);
-        for (uintptr_t p = addr; p != endAddr; p += 2)
-        {
-            (*(char*)(p + 0)) = 0x00;
-            (*(char*)(p + 1)) = 0xBF;
-        }
-        cacheflush(addr, endAddr, 0);
-
-#else
         if(count > 1)
             count /= 2;
 
@@ -125,7 +98,6 @@ public:
             (*(char*)(p + 3)) = 0xD5;
         }
         cacheflush(addr, endAddr, 0);
-#endif
     }
 
     static void RET(const char* sym)
@@ -139,18 +111,7 @@ public:
     static void RET(uintptr addr)
     {
         // fully check
-        #if VER_x32
-        if(THUMBMODE(addr))
-        {
-            WriteMemory(DETHUMB(addr), (uintptr_t)"\x70\x47", 2);
-        }
-        else
-        {
-            WriteMemory(addr, (uintptr_t)"\x1E\xFF\x2F\xE1", 4);
-        }
-        #else
             WriteMemory(addr, (uintptr_t)"\xC0\x03\x5F\xD6", 4);
-        #endif
     }
 
     template <typename Src>
@@ -283,21 +244,8 @@ public:
     template <typename Ptr, typename Func>
     static void Redirect(Ptr ptr, Func func)
     {
-#ifdef __32BIT
-        uint32_t hook[2] = {0xE51FF004, reinterpret_cast<uintptr_t>(func)};
-        if (THUMBMODE(ptr)) {
-            ptr &= ~0x1;
-            if (ptr & 0x2) {
-                NOP(RETHUMB(ptr), 1);
-                ptr += 2;
-            }
-            hook[0] = 0xF000F8DF;
-        }
-        WriteMemory(DETHUMB(ptr), reinterpret_cast<uintptr_t>(hook), sizeof(hook));
-#elif defined __64BIT
         UnFuck(ptr, 16);
         uint64_t hook[2] = {0xD61F022058000051, reinterpret_cast<uintptr_t>(func)};
         WriteMemory(ptr, reinterpret_cast<uintptr_t>(hook), sizeof(hook));
-#endif
     }
 };

@@ -113,4 +113,4 @@ public:
     auto& GetHistory() { return m_history; }
 };
 
-VALIDATE_SIZE(CEventHandler, (VER_x32 ? 0x34 : 0x60));
+VALIDATE_SIZE(CEventHandler, 0x60);

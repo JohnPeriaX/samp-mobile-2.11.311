@@ -124,4 +124,4 @@ private:
 
     friend class CColModel;
 };
-VALIDATE_SIZE(CCollisionData, (VER_x32 ? 0x34 : 0x58));
+VALIDATE_SIZE(CCollisionData, 0x58);

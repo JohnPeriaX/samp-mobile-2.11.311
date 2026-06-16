@@ -27,7 +27,7 @@ bool RQShader::BuildSource(uint32 flags, const char **pixelSource, const char **
 
 void RQShader::InjectHooks() {
     //co we need this?
-    //CHook::Write(g_libGTASA + (VER_x32 ? 0x679320 : 0x850668), &curShaderStateFlags);
+    //CHook::Write(g_libGTASA + 0x850668, &curShaderStateFlags);
 
    // CHook::Redirect("_ZN8RQShader11BuildSourceEjPPKcS2_", &BuildSource);
 }
@@ -37,7 +37,7 @@ int OS_SystemChip(){
 }
 
 void BuildPixelSource(uint32 flags) {
-    RQCapabilities* RQCaps = (RQCapabilities*)(g_libGTASA + (VER_x32 ? 0x6B8B9C : 0x896130));
+    RQCapabilities* RQCaps = (RQCapabilities*)(g_libGTASA + 0x896130);
 
     int ped_spec = 0;
     std::ostringstream buff;
@@ -211,8 +211,8 @@ int GetMobileEffectSetting() {
 }
 
 void BuildVertexSource(uint32 flags) {
-    int& RQMaxBones = *(int(*))(g_libGTASA + (VER_x32 ? 0x6B8BAC : 0x896140));
-    RQCapabilities* RQCaps = (RQCapabilities*)(g_libGTASA + (VER_x32 ? 0x6B8B9C : 0x896130));
+    int& RQMaxBones = *(int(*))(g_libGTASA + 0x896140);
+    RQCapabilities* RQCaps = (RQCapabilities*)(g_libGTASA + 0x896130);
 
     char* vertexColor;
     //int ped_spec = (FLAG_BONE3 | FLAG_BONE4); //  (FLAG_BONE3 | FLAG_BONE4)

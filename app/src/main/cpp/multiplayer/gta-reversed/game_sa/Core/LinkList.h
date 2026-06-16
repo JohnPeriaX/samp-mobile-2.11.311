@@ -84,4 +84,4 @@ public:
     auto& GetHeadLink() { return usedListHead; }
 };
 
-VALIDATE_SIZE(CLinkList<void*>, (VER_x32 ? 0x34 : 0x68));
+VALIDATE_SIZE(CLinkList<void*>, 0x68);

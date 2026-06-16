@@ -58,4 +58,4 @@ public:
     CCollisionData* GetData() const { return m_pColData; }
 };
 
-VALIDATE_SIZE(CColModel, (VER_x32 ? 0x30 : 0x38));
+VALIDATE_SIZE(CColModel, 0x38);

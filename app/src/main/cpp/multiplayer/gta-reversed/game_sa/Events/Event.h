@@ -17,11 +17,11 @@ public:
 
 public:
     static void* operator new(size_t size) {
-        return ((CEvent * (__cdecl*)(uint32))(g_libGTASA + (VER_x32 ? 0x0036FB60 + 1 : 0x441324)))(size);
+        return ((CEvent * (__cdecl*)(uint32))(g_libGTASA + 0x441324))(size);
     }
 
     static void operator delete(void* object) {
-        ((void(__cdecl*)(void*))(g_libGTASA + (VER_x32 ? 0x0036FBC4 + 1 : 0x4413A8)))(object);
+        ((void(__cdecl*)(void*))(g_libGTASA + 0x4413A8))(object);
     }
 
     CEvent();
@@ -57,4 +57,4 @@ public:
         return nullptr;
     }
 };
-VALIDATE_SIZE(CEvent, (VER_x32 ? 0xC : 0x10));
+VALIDATE_SIZE(CEvent, 0x10);

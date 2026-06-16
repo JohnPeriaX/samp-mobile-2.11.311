@@ -39,4 +39,4 @@ public:
     static void InjectHooks();
     bool MakeAbortable_Reversed(CPedGTA* ped, eAbortPriority priority, const CEvent* event);
 };
-static_assert(sizeof(CTaskSimpleAnim) == (VER_x32 ? 0x10 : 0x20));
+static_assert(sizeof(CTaskSimpleAnim) == 0x20);

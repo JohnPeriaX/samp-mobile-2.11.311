@@ -54,5 +54,5 @@ private:
     CAnimBlendHierarchy* Destructor() { this->CAnimBlendHierarchy::~CAnimBlendHierarchy(); return this; }
 };
 
-VALIDATE_SIZE(CAnimBlendHierarchy, (VER_x32 ? 0x18 : 0x28));
+VALIDATE_SIZE(CAnimBlendHierarchy, 0x28);
 

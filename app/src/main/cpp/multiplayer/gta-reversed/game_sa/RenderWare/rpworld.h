@@ -264,7 +264,7 @@ struct RpClump
     RwUInt16 pad;
 };
 
-static_assert(sizeof(RpClump) == (VER_x32 ? 0x30 : 0x60));
+static_assert(sizeof(RpClump) == 0x60);
 
 /**
  * \ingroup rpatomic
@@ -322,7 +322,7 @@ struct RpAtomic
     /* The Atomic object pipeline for this Atomic */
     RxPipeline         *pipeline;
 };
-static_assert(sizeof(RpAtomic) == (VER_x32 ? 0x70 : 0xA8));
+static_assert(sizeof(RpAtomic) == 0xA8);
 
 /**
  * \ingroup rpatomic

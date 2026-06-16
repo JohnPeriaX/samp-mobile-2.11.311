@@ -58,7 +58,7 @@ struct CustomEnvMapPipeMaterialData {
         renderFrameCounter = 0;
     };
 };
-VALIDATE_SIZE(CustomEnvMapPipeMaterialData, (VER_x32 ? 0xC : 0x10));
+VALIDATE_SIZE(CustomEnvMapPipeMaterialData, 0x10);
 
 struct CustomEnvMapPipeAtomicData {
     float lastTrans;
@@ -76,7 +76,7 @@ struct CustomSpecMapPipeMaterialData {
     float specularity;
     RwTexture* texture;
 };
-VALIDATE_SIZE(CustomSpecMapPipeMaterialData, (VER_x32 ? 0x8 : 0x10));
+VALIDATE_SIZE(CustomSpecMapPipeMaterialData, 0x10);
 
 typedef CPool<CustomEnvMapPipeMaterialData, CustomEnvMapPipeMaterialData, true>     CustomEnvMapPipeMaterialDataPool;
 typedef CPool<CustomEnvMapPipeAtomicData, CustomEnvMapPipeAtomicData, true>         CustomEnvMapPipeAtomicDataPool;

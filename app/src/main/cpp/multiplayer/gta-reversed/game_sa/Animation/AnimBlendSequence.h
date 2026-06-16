@@ -55,4 +55,4 @@ public:
     CAnimBlendSequence* Destructor() { CAnimBlendSequence::~CAnimBlendSequence(); return this; }
 };
 
-VALIDATE_SIZE(CAnimBlendSequence, (VER_x32 ? 0xC : 0x10));
+VALIDATE_SIZE(CAnimBlendSequence, 0x10);

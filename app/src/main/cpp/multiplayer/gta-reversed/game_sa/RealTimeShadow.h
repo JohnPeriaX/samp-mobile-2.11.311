@@ -76,4 +76,4 @@ public: // Eventually make this private
 //    }
 };
 
-VALIDATE_SIZE(CRealTimeShadow, (VER_x32 ? 0x40 : 0x50));
+VALIDATE_SIZE(CRealTimeShadow, 0x50);

@@ -41,7 +41,7 @@ struct PoolAllocator {
         uint32_t top;
         uint32_t bInitialized;
     };
-    static_assert(sizeof(Pool) == (VER_x32 ? 0x14 : 0x20));
+    static_assert(sizeof(Pool) == 0x20);
 
     static Pool* Allocate(size_t count, size_t size) {
 
@@ -309,4 +309,4 @@ public:
 };
 
 
-VALIDATE_SIZE(CPool<int32>, (VER_x32 ? 0x14 : 0x20));
+VALIDATE_SIZE(CPool<int32>, 0x20);

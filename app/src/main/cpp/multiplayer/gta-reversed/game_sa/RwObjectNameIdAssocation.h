@@ -86,4 +86,4 @@ public:
     }
 };
 
-VALIDATE_SIZE(RwObjectNameIdAssocation, (VER_x32 ? 0xC : 0x10));
+VALIDATE_SIZE(RwObjectNameIdAssocation, 0x10);

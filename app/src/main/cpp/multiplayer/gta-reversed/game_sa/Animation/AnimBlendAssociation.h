@@ -157,4 +157,4 @@ private:
     CAnimBlendAssociation* Constructor1(RpClump* clump, CAnimBlendHierarchy* animHierarchy) { CAnimBlendAssociation(clump, animHierarchy); return this; }
 
 };
-VALIDATE_SIZE(CAnimBlendAssociation, (VER_x32 ? 0x3C : 0x60));
+VALIDATE_SIZE(CAnimBlendAssociation, 0x60);

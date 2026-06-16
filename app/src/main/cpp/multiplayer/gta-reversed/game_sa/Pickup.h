@@ -88,5 +88,5 @@ public:
 };
 #pragma pack(pop)
 
-VALIDATE_SIZE(CPickup, (VER_x32 ? 0x20 : 0x24));
+VALIDATE_SIZE(CPickup, 0x24);
 

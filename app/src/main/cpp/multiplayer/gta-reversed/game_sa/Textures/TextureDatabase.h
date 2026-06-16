@@ -36,7 +36,7 @@ struct TextureCategory
     uint16 defaultFormat;
     uint16 defaultStreamMode;
 };
-VALIDATE_SIZE(TextureCategory, (VER_x32 ? 0x14 : 0x18));
+VALIDATE_SIZE(TextureCategory, 0x18);
 
 
 class TextureDatabase {
@@ -57,4 +57,4 @@ public:
     bool LoadDataFile(const char *filename, std::vector<TextureListingContainer> *intoArray);
     void GetPNGFilename(char *pngBuffer, const char *entryName);
 };
-VALIDATE_SIZE(TextureDatabase, (VER_x32 ? 0x78 : 0xA8));
+VALIDATE_SIZE(TextureDatabase, 0xA8);

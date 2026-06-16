@@ -42,7 +42,7 @@ struct RwImage
         RwUInt8            *cpPixels;
         RwRGBA             *palette;
 };
-static_assert(sizeof(RwImage) == (VER_x32 ? 0x1C : 0x28));
+static_assert(sizeof(RwImage) == 0x28);
 
 /**
  * \ingroup rwimage
@@ -91,7 +91,7 @@ struct rwImageFormat
         RwImageCallBackWrite writeImage;
         rwImageFormat      *nextFormat;
 };
-static_assert(sizeof(rwImageFormat) == (VER_x32 ? 0x34 : 0x40));
+static_assert(sizeof(rwImageFormat) == 0x40);
 
 typedef struct rwImageGlobals rwImageGlobals;
 struct rwImageGlobals
@@ -110,7 +110,7 @@ struct rwImageGlobals
         RwFreeList         *imageFormatFreeList;
         rwImageFormat      *imageFormats;
 };
-static_assert(sizeof(rwImageFormat) == (VER_x32 ? 0x220 : 0x238));
+static_assert(sizeof(rwImageFormat) == 0x238);
 
 /* RWPUBLIC */
 

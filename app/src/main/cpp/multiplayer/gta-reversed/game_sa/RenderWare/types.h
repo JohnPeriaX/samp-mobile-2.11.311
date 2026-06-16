@@ -132,7 +132,7 @@ struct RwObject
     void   *parent;              /**< Internal Use */
     /* Often a Frame  */
 };
-static_assert(sizeof(RwObject) == (VER_x32 ? 0x8 : 0x10));
+static_assert(sizeof(RwObject) == 0x10);
 
 /**
  * \ingroup rwobject

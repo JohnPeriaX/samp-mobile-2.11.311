@@ -40,6 +40,6 @@ public:
     void ReApplyMoveAnims();
 };
 
-VALIDATE_SIZE(CPlayerPedGta, (VER_x32 ? 0x7AC : 0x998));
+VALIDATE_SIZE(CPlayerPedGta, 0x998);
 
 

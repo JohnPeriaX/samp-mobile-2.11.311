@@ -228,7 +228,7 @@ struct RxClusterDefinition
      * RWPUBLIC     */
     const RwChar         *attributeSet;           /**< Attribute set */
 };
-static_assert(sizeof(RxClusterDefinition) == (VER_x32 ? 0x10 : 0x18));
+static_assert(sizeof(RxClusterDefinition) == 0x18);
 /* RWPUBLICEND */
 
 /*
@@ -253,7 +253,7 @@ struct rxReq
         /* back pointer (to "owning" RxPipelineNode) */
     RxPipelineNode       *node;
 };
-static_assert(sizeof(rxReq) == (VER_x32 ? 0x14 : 0x20));
+static_assert(sizeof(rxReq) == 0x20);
 
 /*
  * RwReqEntry: describes the requirements of a node with respect to a
@@ -281,7 +281,7 @@ struct RwReqEntry
          * requirement originated */
     RxPipelineNode      *originatingNode;
 };
-static_assert(sizeof(RwReqEntry) == (VER_x32 ? 0x24 : 0x38));
+static_assert(sizeof(RwReqEntry) == 0x38);
 
 /* RwScopeTrace:
  *
@@ -342,7 +342,7 @@ struct RwScopeTrace
          * we are a child (= previously merged) trace */
     RwScopeTrace        *parent;
 };
-static_assert(sizeof(RwScopeTrace) == (VER_x32 ? 0x10 : 0x20));
+static_assert(sizeof(RwScopeTrace) == 0x20);
 /* RWPUBLIC */
 
 /***************************************************************************
@@ -377,7 +377,7 @@ struct RxOutputSpec
      * RWPUBLIC     */
      RxClusterValid      allOtherClusters;      /**< States of clusters not of interest on output */
 };
-static_assert(sizeof(RxOutputSpec) == (VER_x32 ? 0xC : 0x18));
+static_assert(sizeof(RxOutputSpec) == 0x18);
 /* RWPUBLICEND
  * [note inserted in a random location]
  *
@@ -426,7 +426,7 @@ struct RxClusterRef
     RxClusterForcePresent forcePresent;         /**< Specifies whether the cluster should be forced present */
     RwUInt32              reserved;             /**< Omit or initialize to zero */
 };
-static_assert(sizeof(RxClusterRef) == (VER_x32 ? 0xC : 0x10));
+static_assert(sizeof(RxClusterRef) == 0x10);
 
 #define rxCLRESERVED       ((RwUInt32)0)
 
@@ -450,7 +450,7 @@ struct RxIoSpec
      * RWPUBLIC     */
     RxOutputSpec         *outputs;              /**< Output specification array */
 };
-static_assert(sizeof(RxIoSpec) == (VER_x32 ? 0x14 : 0x28));
+static_assert(sizeof(RxIoSpec) == 0x28);
 
 /**
  * \ingroup rwcoregeneric
@@ -595,7 +595,7 @@ struct RxNodeMethods
     RxPipelineNodeConfigFn pipelineNodeConfig;  /**< Pipleline node configuation function */
     RxConfigMsgHandlerFn configMsgHandler;      /**< Configuaraton message handler function */
 };
-static_assert(sizeof(RxNodeMethods) == (VER_x32 ? 0x1C : 0x38));
+static_assert(sizeof(RxNodeMethods) == 0x38);
 
 /* RWPUBLICEND
  * See RxNodeDefinition below
@@ -646,7 +646,7 @@ struct RxNodeDefinition
      * RWPUBLIC     */
     RwInt32             InputPipesCnt;          /**< Count of the unlocked pipelines containing this node */
 };
-static_assert(sizeof(RxNodeDefinition) == (VER_x32 ? 0x40 : 0x78));
+static_assert(sizeof(RxNodeDefinition) == 0x78);
 /***************************************************************************
  *
  * P I P E L I N E - E X E C U T I O N - T I M E   S T R U C T S
@@ -667,7 +667,7 @@ struct RxPipelineCluster
     RxClusterDefinition *clusterRef;            /**< Cluster refererence */
     RwUInt32             creationAttributes;    /**< Creation Attributes */
 };
-static_assert(sizeof(RxPipelineCluster) == (VER_x32 ? 0x8 : 0x10));
+static_assert(sizeof(RxPipelineCluster) == 0x10);
 
 /**
  * \ingroup rwcoregeneric
@@ -706,7 +706,7 @@ struct RxCluster
     RwUInt32 pad[1];                            /**< Alignment padding */
 #endif
 };
-static_assert(sizeof(RxCluster) == (VER_x32 ? 0x1C : 0x30));
+static_assert(sizeof(RxCluster) == 0x30);
 
 /**
  * \ingroup rwcoregeneric
@@ -752,7 +752,7 @@ struct RxPacket
      * enough RwClusters for the 'widest' part of the pipeline
      * RWPUBLIC     */
 };
-static_assert(sizeof(RxPacket) == (VER_x32 ? 0x30 : 0x58));
+static_assert(sizeof(RxPacket) == 0x58);
 
 /**
  * \ingroup rwcoregeneric
@@ -803,7 +803,7 @@ struct RxPipelineNode
     RwUInt32        initializationDataSize; /**< Present so that if the node is cloned
                                              * we can copy the initialisation data. */
 };
-static_assert(sizeof(RxPipelineNode) == (VER_x32 ? 0x28 : 0x50));
+static_assert(sizeof(RxPipelineNode) == 0x50);
 
 /**
  * \ingroup rwcoregeneric
@@ -819,7 +819,7 @@ struct RxPipelineNodeTopSortData
     rxReq              *req;                    /**< Req used in dependencies propagation/cluster
                                                  * slot allocation */
 };
-static_assert(sizeof(RxPipelineNodeTopSortData) == (VER_x32 ? 0xC : 0x10));
+static_assert(sizeof(RxPipelineNodeTopSortData) == 0x10);
 
 /**
  * \ingroup rwcoregeneric
@@ -838,7 +838,7 @@ struct RxPipelineNodeParam
     void   *dataParam;   /**< The data pointer passed in to \ref RxPipelineExecute */
     RxHeap *heap;        /**< The heap associated with the current pipeline exeuction */
 };
-static_assert(sizeof(RxPipelineNodeParam) == (VER_x32 ? 0x8 : 0x10));
+static_assert(sizeof(RxPipelineNodeParam) == 0x10);
 
 /* RWPUBLICEND
  * TODO: These should go into pacekt flags now that
@@ -886,7 +886,7 @@ struct RxExecutionContext
     RxPipelineNodeParam   params;       /**< The parameters passed to node bodies */
     /*RwUInt32              pad[2];*/
 };
-static_assert(sizeof(RxExecutionContext) == (VER_x32 ? 0x18 : 0x28));
+static_assert(sizeof(RxExecutionContext) == 0x28);
 
 /**
  * \ingroup rwcoregeneric
@@ -898,7 +898,7 @@ struct RxPipelineRequiresCluster
     RxClusterValidityReq rqdOrOpt;      /**< Cluster validity requirement (rxCLREQ_DONTWANT, rxCLREQ_REQUIRED or rxCLREQ_OPTIONAL) */
     RwUInt32             slotIndex;     /**< Index into the packet's cluster array within this pipeline */
 };
-static_assert(sizeof(RxPipelineRequiresCluster) == (VER_x32 ? 0xC : 0x10));
+static_assert(sizeof(RxPipelineRequiresCluster) == 0x10);
 
 /**
  * \ingroup rwcoregeneric
@@ -940,7 +940,7 @@ struct RxPipeline
     RwUInt32                   pluginId;              /**< If required, the Id of the plugin owning this pipeline, or 0 */
     RwUInt32                   pluginData;            /**< Rights callback extra data */
 };
-static_assert(sizeof(RxPipeline) == (VER_x32 ? 0x34 : 0x48));
+static_assert(sizeof(RxPipeline) == 0x48);
 /****************************************************************************
  * Global Prototypes
  */

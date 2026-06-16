@@ -44,7 +44,7 @@ void CFont::SetCentreSize(float size)
 void Font_SetRightJustifyWrap(float wrap)
 {
 	//?wrong address
-	//((int (*)(float))(g_libGTASA + (VER_x32 ? 0x05AB268 + 1 : 0x0053384C)))(wrap);
+	//((int (*)(float))(g_libGTASA + 0x0053384C))(wrap);
 	//0053384C
 }
 

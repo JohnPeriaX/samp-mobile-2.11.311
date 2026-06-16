@@ -36,6 +36,6 @@ public:
     inline CMatrixLink* GetOldestLink() { return m_tail.m_pPrev; }
 };
 
-VALIDATE_SIZE(CMatrixLinkList, (VER_x32 ? 0x1FC : 0x278));
+VALIDATE_SIZE(CMatrixLinkList, 0x278);
 
 extern CMatrixLinkList gMatrixList;

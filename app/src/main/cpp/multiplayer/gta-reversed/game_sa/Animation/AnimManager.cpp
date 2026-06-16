@@ -319,7 +319,7 @@ void CAnimManager::CreateAnimAssocGroups() {
         RpClump* clump = nullptr;
         if (def->modelIndex != MODEL_INVALID) {
             auto model = CModelInfo::GetModelInfo(def->modelIndex);
-            clump = CHook::CallFunction<RpClump*>(*(uintptr_t*)(model->vtable + (VER_x32 ? 0x2C : 0x2C*2)), model);
+            clump = CHook::CallFunction<RpClump*>(*(uintptr_t*)(model->vtable + 0x58), model);
             RpAnimBlendClumpInit(clump);
         }
 

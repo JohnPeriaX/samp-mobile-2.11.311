@@ -57,10 +57,10 @@ TextureDatabaseRuntime* TextureDatabaseRuntime::GetDatabase(const char *dbName) 
 }
 
 void TextureDatabaseRuntime::InjectHooks() {
-//    CHook::Write(g_libGTASA + (VER_x32 ? 0x675FCC : 0x84A020), &detailTextures);
-//    CHook::Write(g_libGTASA + (VER_x32 ? 0x676720 : 0x84AEB0), &storedTexels);
-//    CHook::Write(g_libGTASA + (VER_x32 ? 0x679768 : 0x850EE8), &loaded);
-//    CHook::Write(g_libGTASA + (VER_x32 ? 0x679E70 : 0x851CF8), &registered);
+//    CHook::Write(g_libGTASA + 0x84A020, &detailTextures);
+//    CHook::Write(g_libGTASA + 0x84AEB0, &storedTexels);
+//    CHook::Write(g_libGTASA + 0x850EE8, &loaded);
+//    CHook::Write(g_libGTASA + 0x851CF8, &registered);
 }
 
 RwBool TextureAnnihilate(RwTexture *texture) {

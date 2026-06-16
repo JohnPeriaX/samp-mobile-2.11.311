@@ -83,7 +83,7 @@ struct RwStreamMemory
     RwUInt32            nSize;  /* Space allocated currently */
     RwUInt8            *memBlock; /* Current memory block pointer */
 };
-static_assert(sizeof(RwStreamMemory) == (VER_x32 ? 0xC : 0x10));
+static_assert(sizeof(RwStreamMemory) == 0x10);
 #endif /* (!defined(DOXYGEN)) */
 
 
@@ -130,7 +130,7 @@ struct RwStreamCustom
     rwCustomStreamFnSkip sfnskip;
     void               *data;
 };
-static_assert(sizeof(RwStreamCustom) == (VER_x32 ? 0x14 : 0x28));
+static_assert(sizeof(RwStreamCustom) == 0x28);
 #endif /* (!defined(DOXYGEN)) */
 
 /* Stream */
@@ -165,7 +165,7 @@ struct RwStream
     RwStreamUnion       Type;
     RwBool              rwOwned;
 };
-static_assert(sizeof(RwStream) == (VER_x32 ? 0x24 : 0x40));
+static_assert(sizeof(RwStream) == 0x40);
 #endif /* (!defined(DOXYGEN)) */
 
 
@@ -182,7 +182,7 @@ struct RwMemory
     RwUInt8     *start; /**< Starting address. */
     RwUInt32    length; /**< Length in bytes. */
 };
-static_assert(sizeof(RwMemory) == (VER_x32 ? 0x8 : 0x10));
+static_assert(sizeof(RwMemory) == 0x10);
 
 /* RWPUBLICEND */
 
@@ -191,7 +191,7 @@ struct rwStreamGlobals
 {
     RwFreeList         *streamFreeList;
 };
-static_assert(sizeof(rwStreamGlobals) == (VER_x32 ? 0x4 : 0x8));
+static_assert(sizeof(rwStreamGlobals) == 0x8);
 
 /* RWPUBLIC */
 

@@ -33,11 +33,7 @@ public:
     uint8   m_iHighestPriorityEventPriority;
     uint8   pad0;
 
-#if VER_x32
-    uint8   m_vehicleScanner[0x1C8];
-#else
     uint8   pad1[0x2C8];
-#endif
 
 public:
     static void InjectHooks();
@@ -54,5 +50,5 @@ public:
 
     CTaskSimpleJetPack* GetTaskJetPack();
 };
-VALIDATE_SIZE(CPedIntelligence, (VER_x32 ? 0x298 : 0x440));
+VALIDATE_SIZE(CPedIntelligence, 0x440);
 

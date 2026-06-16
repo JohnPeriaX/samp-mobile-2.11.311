@@ -190,7 +190,7 @@ void CWidgetGta::SetTexture(const char *name) {
 }
 
 bool CWidgetGta::IsReleased(CVector2D *pVecOut) {
-    return CHook::CallFunction<bool>(g_libGTASA + (VER_x32 ? 0x002B3484 + 1 : 0x372794), this, pVecOut);
+    return CHook::CallFunction<bool>(g_libGTASA + 0x372794, this, pVecOut);
 }
 
 bool CWidgetGta::IsTouched(CVector2D *pVecOut) {

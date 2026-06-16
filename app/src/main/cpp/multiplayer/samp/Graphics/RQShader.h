@@ -102,4 +102,4 @@ struct ES2Shader : RQShader
     GLuint fullProgram;
     GLuint flags;
 };
-VALIDATE_SIZE(ES2Shader, (VER_x32 ? 0x3F0 : 0x3F8));
+VALIDATE_SIZE(ES2Shader, 0x3F8);

@@ -64,4 +64,4 @@ public:
 };
 #pragma pack(pop)
 
-VALIDATE_SIZE(CPlaceable, (VER_x32 ? 0x18 : 0x20));
+VALIDATE_SIZE(CPlaceable, 0x20);

@@ -39,5 +39,5 @@ public:
     void SetFrameIds(RwObjectNameIdAssocation* data);
 };
 
-static_assert(sizeof(CClumpModelInfo) == (VER_x32 ? 0x3c : 0x50));
+static_assert(sizeof(CClumpModelInfo) == 0x50);
 

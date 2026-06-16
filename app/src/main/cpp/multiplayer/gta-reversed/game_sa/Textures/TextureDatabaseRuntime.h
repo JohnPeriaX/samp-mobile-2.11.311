@@ -42,5 +42,5 @@ public:
 
     static RwTexture *GetTexture(const char *name);
 };
-VALIDATE_SIZE(TextureDatabaseRuntime, (VER_x32 ? 0xC8 : 0x118));
-VALIDATE_SIZE(TDBArray<TextureDatabaseRuntime*>, (VER_x32 ? 0xC : 0x10));
+VALIDATE_SIZE(TextureDatabaseRuntime, 0x118);
+VALIDATE_SIZE(TDBArray<TextureDatabaseRuntime*>, 0x10);

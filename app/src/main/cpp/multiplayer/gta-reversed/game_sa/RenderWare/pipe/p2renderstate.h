@@ -41,7 +41,7 @@ struct RxRenderStateVector
     RwFogType            FogType;       /**< Select the type of fogging to use */
     RwRGBA               FogColor;      /**< Color used for fogging */
 };
-static_assert(sizeof(RxRenderStateVector) == (VER_x32 ? 0x2C : 0x30));
+static_assert(sizeof(RxRenderStateVector) == 0x30);
 
 #undef RxRenderStateVectorAssign
 #define RxRenderStateVectorAssign(_target, _source) ( *(_target) = *(_source) )

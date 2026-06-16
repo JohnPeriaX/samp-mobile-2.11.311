@@ -16,4 +16,4 @@ class CCutsceneObject : public CObjectGta {
     CVector     m_vForce;
 };
 
-VALIDATE_SIZE(CCutsceneObject, (VER_x32 ? 0x1A4 : 0x220));
+VALIDATE_SIZE(CCutsceneObject, 0x220);

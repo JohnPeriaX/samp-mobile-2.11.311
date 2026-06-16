@@ -26,7 +26,7 @@ public:
     void Insert(CMatrixLink* pWhere);
     void Remove();
 };
-static_assert(sizeof(CMatrixLink) == (VER_x32 ? 0x54 : 0x68));
+static_assert(sizeof(CMatrixLink) == 0x68);
 
 
 

@@ -216,7 +216,7 @@ struct RwPluginRegistry
     RwPluginRegEntry *firstRegEntry;
     RwPluginRegEntry *lastRegEntry;
 };
-static_assert(sizeof(RwPluginRegistry) == (VER_x32 ? 0x18 : 0x20));
+static_assert(sizeof(RwPluginRegistry) == 0x20);
 
 struct RwPluginRegEntry
 {
@@ -236,7 +236,7 @@ struct RwPluginRegEntry
     RwPluginRegEntry *prevRegEntry;
     RwPluginRegistry *parentRegistry;
 };
-static_assert(sizeof(RwPluginRegEntry) == (VER_x32 ? 0x3C : 0x70));
+static_assert(sizeof(RwPluginRegEntry) == 0x70);
 #endif /* (!defined(DOXYGEN)) */
 
 

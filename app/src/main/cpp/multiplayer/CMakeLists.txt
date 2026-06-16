@@ -6,13 +6,11 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-if(${ANDROID_ABI} STREQUAL "armeabi-v7a")
-    add_definitions(-DVER_x32=true)
-    set(GLOSSHOOK_ABI "ARM")
-elseif(${ANDROID_ABI} STREQUAL "arm64-v8a")
-    add_definitions(-DVER_x32=false)
-    set(GLOSSHOOK_ABI "ARM64")
+if(NOT "${ANDROID_ABI}" STREQUAL "arm64-v8a")
+    message(FATAL_ERROR "Only arm64-v8a is supported for GTA SA Android 2.11.311")
 endif()
+
+set(GLOSSHOOK_ABI "ARM64")
 
 # Reordered multiplayer tree based on the provided cpp.zip SRC layout.
 # Header rule from user: keep headers as .h only.

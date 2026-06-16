@@ -21,7 +21,7 @@ public:
 //    static void InjectHooks();
 };
 
-static_assert(sizeof(CDummy) == (VER_x32 ? 0x3C : 0x60));
+static_assert(sizeof(CDummy) == 0x60);
 
 
 bool IsDummyPointerValid(CDummy* dummy);

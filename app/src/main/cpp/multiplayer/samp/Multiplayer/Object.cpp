@@ -234,7 +234,7 @@ void CObject::Process(float fElapsedTime)
 		}
 
 		// CPhysical::Remove
-		((void (*)(CEntityGTA*))(*(uintptr_t*)( *(uintptr*)(m_pEntity) + (VER_x32 ? 0x10 : 0x10*2) )))(m_pEntity);
+		((void (*)(CEntityGTA*))(*(uintptr_t*)( *(uintptr*)(m_pEntity) + 0x20 )))(m_pEntity);
 
 		m_pEntity->SetMatrix((CMatrix&)matEnt);
 		m_pEntity->UpdateRW();
@@ -270,7 +270,7 @@ void CObject::InstantRotate(float x, float y, float z)
 	z = DegreesToRadians(z);
 
 	// CPhysical::Remove
-	((void (*)(CEntityGTA*))(*(uintptr_t*)( *(uintptr*)(m_pEntity) + (VER_x32 ? 0x10 : 0x10*2) )))(m_pEntity);
+	((void (*)(CEntityGTA*))(*(uintptr_t*)( *(uintptr*)(m_pEntity) + 0x20 )))(m_pEntity);
 
 	m_pEntity->SetOrientation(x, y, z);
 
@@ -417,7 +417,7 @@ void CObject::MoveTo(float fX, float fY, float fZ, float fSpeed, float fRotX, fl
 		}
 
 		// CPhysical::Remove
-		((void (*)(CEntityGTA*))(*(uintptr_t*)( *(uintptr*)(m_pEntity) + (VER_x32 ? 0x10 : 0x10*2) )))(m_pEntity);
+		((void (*)(CEntityGTA*))(*(uintptr_t*)( *(uintptr*)(m_pEntity) + 0x20 )))(m_pEntity);
 
 		m_pEntity->SetMatrix((CMatrix&)mat);
 		m_pEntity->UpdateRW();
@@ -592,6 +592,17 @@ bool CObject::AttachedToMovingEntity()
 	}
 
 	return false;
+}
+
+bool CObject::ShouldForceRender() const
+{
+	return m_bForceRender;
+}
+
+void CObject::RequestModelForFarRender() const
+{
+	if (m_iModel >= 0)
+		CStreaming::RequestModel(m_iModel, STREAMING_GAME_REQUIRED | STREAMING_PRIORITY_REQUEST);
 }
 
 void CObject::SetPos(float x, float y, float z)

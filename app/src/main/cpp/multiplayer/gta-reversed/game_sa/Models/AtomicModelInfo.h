@@ -14,4 +14,4 @@ struct CAtomicModelInfo : public CBaseModelInfo {
 
 void SetAtomicModelInfoFlags(CAtomicModelInfo* modelInfo, uint32 dwFlags);
 
-VALIDATE_SIZE(CAtomicModelInfo, (VER_x32 ? 0x38 : 0x48));
+VALIDATE_SIZE(CAtomicModelInfo, 0x48);

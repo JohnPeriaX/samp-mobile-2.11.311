@@ -19,5 +19,5 @@ public:
 
     RwRaster *CreateRaster(const TextureDatabaseEntry *forEntry);
 };
-VALIDATE_SIZE(TextureListingContainer, (VER_x32 ? 0x11 : 0x15));
+VALIDATE_SIZE(TextureListingContainer, 0x15);
 

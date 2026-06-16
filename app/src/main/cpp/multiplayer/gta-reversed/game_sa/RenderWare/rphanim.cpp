@@ -4,7 +4,7 @@
 #include "vendor/patch/patch.h"
 
 void RpHAnimHierarchySetFreeListCreateParams(RwInt32 blockSize, RwInt32 numBlocksToPrealloc) {
-    CHook::CallFunction<void>(g_libGTASA + 0x7DA60, blockSize, numBlocksToPrealloc);
+    CHook::CallFunction<void>(g_libGTASA + 0x77DA60, blockSize, numBlocksToPrealloc);
 }
 
 RpHAnimHierarchy* RpHAnimHierarchyCreate(RwInt32 numNodes, RwUInt32* nodeFlags, RwInt32* nodeIDs, RpHAnimHierarchyFlag flags, RwInt32 maxInterpKeyFrameSize) {

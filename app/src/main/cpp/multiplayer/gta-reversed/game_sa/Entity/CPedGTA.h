@@ -71,21 +71,9 @@ enum ePedCreatedBy : uint8 {
 };
 
 struct CPedGTA : public CPhysical {
-#if VER_x32
-    uint8_t             m_PedAudioEntity[0x15C];
-#else
     uint8_t             m_PedAudioEntity[0x1A8];
-#endif
-#if VER_x32
-    uint8_t             m_PedSpeechAudioEntity[0x100];
-#else
     uint8_t             m_PedSpeechAudioEntity[0x130];
-#endif
-#if VER_x32
-    uint8_t             m_PedWeaponAudioEntity[0xA8];
-#else
     uint8_t             m_PedWeaponAudioEntity[0xC8];
-#endif
 
     CPedIntelligence*  m_pIntelligence;
     CPlayerPedData*     m_pPlayerData;
@@ -343,4 +331,4 @@ public:
     void RemoveFromVehicle();
 };
 
-VALIDATE_SIZE(CPedGTA, (VER_x32 ? 0x7A4 : 0x988));
+VALIDATE_SIZE(CPedGTA, 0x988);

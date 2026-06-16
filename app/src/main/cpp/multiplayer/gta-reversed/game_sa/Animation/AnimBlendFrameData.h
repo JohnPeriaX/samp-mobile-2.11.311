@@ -41,4 +41,4 @@ public:
     CQuaternion& GetFrameOrientation() const { return m_pIFrame->orientation; }
     CVector& GetFrameTranslation() const { return m_pIFrame->translation; }
 };
-VALIDATE_SIZE(AnimBlendFrameData, (VER_x32 ? 0x18 : 0x20));
+VALIDATE_SIZE(AnimBlendFrameData, 0x20);

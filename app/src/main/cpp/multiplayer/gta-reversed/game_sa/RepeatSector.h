@@ -28,4 +28,4 @@ public:
     CPtrListDoubleLink m_lists[3];
 };
 
-VALIDATE_SIZE(CRepeatSector, (VER_x32 ? 0xC : 0x18));
+VALIDATE_SIZE(CRepeatSector, 0x18);

@@ -24,4 +24,4 @@ public:
     void AddToList(class CPtrListSingleLink* list);
 };
 
-VALIDATE_SIZE(CPtrNodeSingleLink, (VER_x32 ? 0x8 : 0x10));
+VALIDATE_SIZE(CPtrNodeSingleLink, 0x10);

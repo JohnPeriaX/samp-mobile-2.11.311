@@ -24,4 +24,4 @@ public:
     CPtrNodeDoubleLink* GetNode() const { return reinterpret_cast<CPtrNodeDoubleLink*>(m_node); }
 };
 
-VALIDATE_SIZE(CPtrListDoubleLink, (VER_x32 ? 0x4 : 0x8));
+VALIDATE_SIZE(CPtrListDoubleLink, 0x8);

@@ -33,4 +33,4 @@ public:
     ~CAnimBlendAssocGroup();
 };
 
-VALIDATE_SIZE(CAnimBlendAssocGroup, (VER_x32 ? 0x14 : 0x20));
+VALIDATE_SIZE(CAnimBlendAssocGroup, 0x20);

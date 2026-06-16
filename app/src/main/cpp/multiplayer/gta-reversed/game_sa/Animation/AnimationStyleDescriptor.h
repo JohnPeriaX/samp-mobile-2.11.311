@@ -16,4 +16,4 @@ struct AnimAssocDefinition {
     const char**    animNames{};
     AnimDescriptor* animDesc{};
 };
-VALIDATE_SIZE(AnimAssocDefinition, (VER_x32 ? 0x30 : 0x38));
+VALIDATE_SIZE(AnimAssocDefinition, 0x38);

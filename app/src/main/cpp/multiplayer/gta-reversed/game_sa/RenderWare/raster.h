@@ -185,7 +185,7 @@ struct RwRaster
     class TextureDatabaseEntry    *dbEntry;
     RwUInt16                privateFlags;
 };
-static_assert(sizeof(RwRaster) == (VER_x32 ? 0x34 : 0x48));
+static_assert(sizeof(RwRaster) == 0x48);
 
 #endif /* (!defined(DOXYGEN)) */
 
@@ -200,7 +200,7 @@ struct rwRasterGlobals
 
     RwFreeList         *rasterFreeList;
 };
-static_assert(sizeof(rwRasterGlobals) == (VER_x32 ? 0x64 : 0xA8));
+static_assert(sizeof(rwRasterGlobals) == 0xA8);
 
 /****************************************************************************
  <macro/inline functionality

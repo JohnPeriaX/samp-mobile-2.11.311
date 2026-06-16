@@ -66,7 +66,7 @@ void CGame::StartGame()
 	FLog("Starting game..");
 
 	// OnNewGameCheck
-    //(( void (*)())(g_libGTASA + (VER_x32 ? 0x002A7270 + 1 : 0x365EA0)))();
+    //(( void (*)())(g_libGTASA + 0x365EA0))();
 
 	//*(int*)(g_libGTASA + 0xA987C8) = 8;
 	//*(char*)(g_libGTASA + 0x96B514) = 0;
@@ -334,11 +334,7 @@ void CGame::UpdateGlobalTimer(uint32_t dwTimer)
 // 0.3.7
 void CGame::SetGravity(float fGravity)
 {
-#if VER_x32
-	//dangerous 32bit code please convert this later
-    //CHook::UnFuck(g_libGTASA + (VER_2_1 ? 0x003FE810 : 0x3A0B64));
-    //*(float*)(g_libGTASA + (VER_2_1 ? 0x003FE810 : 0x3A0B64)) = fGravity;
-#endif
+// 32-bit gravity patch removed for 64-bit build.
 }
 
 bool CGame::IsGamePaused()
@@ -643,7 +639,7 @@ void CGame::SetWantedLevel(uint8_t level)
     // 1. ถ้ายังไม่เคยเก็บค่าเดิม ให้เก็บไว้ก่อน (Backup)
     if (!bIsFakeWantedActive)
     {
-        CHook::ReadMemory(addr, VER_x32 ? (void*)originalWantedCode32 : (void*)originalWantedCode64, 4);
+        CHook::ReadMemory(addr, (void*)originalWantedCode64, 4);
         bIsFakeWantedActive = true;
     }
 
@@ -690,21 +686,7 @@ int CGame::GetLocalMoney()
 // 0.3.7
 void CGame::DisableEnterExits()
 {
-	//dangerous 32bit
-	/*
-#if VER_x32
-    uintptr_t addr = *(uintptr_t*)(g_libGTASA + (VER_2_1 ? 0x007A1E20 : 0x700120));
-    int count = *(uint32_t*)(addr+8);
-
-    addr = *(uintptr_t*)addr;
-
-    for(int i=0; i<count; i++)
-    {
-        *(uint16_t*)(addr+0x30) = 0;
-        addr += 0x3C;
-    }
-#endif
-	 */
+	// 32-bit enter/exit patch removed for 64-bit build.
 }
 
 void CGame::ToggleCJWalk(bool bUseCJWalk)
@@ -921,7 +903,7 @@ void CGame::Process() {
         // CPathFind::UpdateStreaming
 
         CHook::CallFunction<void>(g_libGTASA+0x6D4218);// CTrain::UpdateTrains();
-        //CHook::CallFunction<void>(g_libGTASA+(VER_x32?0x572EBC+1:0x695608));// CHeli::UpdatHelis
+        //CHook::CallFunction<void>(g_libGTASA+0x695608);// CHeli::UpdatHelis
         // CDarkel::Update()
         ((void(*)())(g_libGTASA + 0x5EC704))(); // CSkidmarks::Update();
         ((void(*)())(g_libGTASA + 0x5D8578))(); // CGlass::Update()
@@ -1001,7 +983,7 @@ void CGame::Process() {
         ((void (*)()) (g_libGTASA + 0x6EF688))(); // CWaterLevel::PreRenderWater()
     }
 
-    //CHook::CallFunction<void>(g_libGTASA+(VER_x32?0x572EBC+1:0x695608));
+    //CHook::CallFunction<void>(g_libGTASA+0x695608);
 //	CCheat::ProcessAllCheats();
     static bool once = false;
     if (!once)

@@ -21,4 +21,4 @@ public:
     eTaskType GetTaskType() const override { return Type; }
     CTask*    Clone()       const override { return new CTaskComplexEnterCarAsDriver{*this}; }
 };
-VALIDATE_SIZE(CTaskComplexEnterCarAsDriver, (VER_x32 ? 0x50 : 0x70));
+VALIDATE_SIZE(CTaskComplexEnterCarAsDriver, 0x70);

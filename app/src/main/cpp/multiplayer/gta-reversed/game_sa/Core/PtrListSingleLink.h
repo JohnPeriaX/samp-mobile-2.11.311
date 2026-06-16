@@ -23,4 +23,4 @@ public:
     CPtrNodeSingleLink* GetNode() { return reinterpret_cast<CPtrNodeSingleLink*>(m_node); }
 };
 
-VALIDATE_SIZE(CPtrListSingleLink, (VER_x32 ? 0x4 : 0x8));
+VALIDATE_SIZE(CPtrListSingleLink, 0x8);

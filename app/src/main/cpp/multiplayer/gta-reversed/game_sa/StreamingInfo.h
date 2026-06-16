@@ -124,4 +124,4 @@ public:
     [[nodiscard]] bool IsMissionOrGameRequired() const noexcept { return IsMissionRequired() || IsGameRequired(); }
     [[nodiscard]] bool IsRequiredToBeKept() const noexcept      { return IsMissionOrGameRequired() || DoKeepInMemory(); } // GameRequired || MissionRequired || KeepInMemory
 };
-VALIDATE_SIZE(CStreamingInfo, (VER_x32 ? 0x14 : 0x14));
+VALIDATE_SIZE(CStreamingInfo, 0x14);

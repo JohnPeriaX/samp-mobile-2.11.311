@@ -29,4 +29,4 @@ public:
 private:
     static void InjectHooks();
 };
-VALIDATE_SIZE(CTaskSimpleSlideToCoord, (VER_x32 ? 0x80 : 0x90));
+VALIDATE_SIZE(CTaskSimpleSlideToCoord, 0x90);

@@ -21,4 +21,4 @@ public:
     bool        keepCPU;
 };
 
-VALIDATE_SIZE(TxdDef, VER_x32 ? 0x38 : 0x40);
+VALIDATE_SIZE(TxdDef, 0x40);

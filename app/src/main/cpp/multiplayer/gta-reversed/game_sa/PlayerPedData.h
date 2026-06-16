@@ -86,7 +86,7 @@ public:
     uintptr*  m_pLastProstituteShagged;
 };
 
-VALIDATE_SIZE(CPlayerPedData, (VER_x32 ? 0xAC : 0xD8));
+VALIDATE_SIZE(CPlayerPedData, 0xD8);
 
 
 #endif //LIVERUSSIA_PLAYERPEDDATA_H

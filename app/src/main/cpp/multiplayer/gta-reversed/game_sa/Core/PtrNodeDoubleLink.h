@@ -29,4 +29,4 @@ public:
     auto GetItem() const { return static_cast<T*>(m_item); }
 };
 
-VALIDATE_SIZE(CPtrNodeDoubleLink, (VER_x32 ? 0xC : 0x18));
+VALIDATE_SIZE(CPtrNodeDoubleLink, 0x18);

@@ -14,7 +14,7 @@ void CVehicleModelInfo::CVehicleModelInfo__SetClump(RpClump* clump)
     CClumpModelInfo__SetClump(clump);
     SetAtomicRenderCallbacks();
 
-    RwObjectNameIdAssocation* (&ms_vehicleDescs)[NUM_VEHICLE_MODEL_DESCS] = *(RwObjectNameIdAssocation*(*)[NUM_VEHICLE_MODEL_DESCS])(g_libGTASA + (VER_x32 ? 0x00687C7C : 0x8614C0));
+    RwObjectNameIdAssocation* (&ms_vehicleDescs)[NUM_VEHICLE_MODEL_DESCS] = *(RwObjectNameIdAssocation*(*)[NUM_VEHICLE_MODEL_DESCS])(g_libGTASA + 0x8614C0);
     CClumpModelInfo::SetFrameIds(ms_vehicleDescs[m_nVehicleType]);
     SetRenderPipelines();
     PreprocessHierarchy();
@@ -88,12 +88,12 @@ void CVehicleModelInfo::CVehicleStructure::operator delete(void* data)
 }
 
 void CVehicleModelInfo::InjectHooks() {
-    //CHook::Write(g_libGTASA + (VER_x32 ? 0x679D00 : 0x851A18), &ms_pLightsTexture);
-    //CHook::Write(g_libGTASA + (VER_x32 ? 0x67820C : 0x84E440), &ms_pLightsOnTexture);
-    //CHook::Write(g_libGTASA + (VER_x32 ? 0x676CD4 : 0x84BA08), &ms_lightsOn);
+    //CHook::Write(g_libGTASA + 0x851A18, &ms_pLightsTexture);
+    //CHook::Write(g_libGTASA + 0x84E440, &ms_pLightsOnTexture);
+    //CHook::Write(g_libGTASA + 0x84BA08, &ms_lightsOn);
 
-    //CHook::InstallPLT(g_libGTASA + (VER_x32 ? 0x66E910 : 0x83DEE0), &SetEditableMaterials);
-    //CHook::InstallPLT(g_libGTASA + (VER_x32 ? 0x675E30 : 0x849D10), &ResetEditableMaterials);
+    //CHook::InstallPLT(g_libGTASA + 0x83DEE0, &SetEditableMaterials);
+    //CHook::InstallPLT(g_libGTASA + 0x849D10, &ResetEditableMaterials);
 
 //    CVehicleStructure::m_pInfoPool = new CPool<CVehicleStructure>(CModelInfo::NUM_VEHICLE_MODEL_INFOS, "VehicleStruct");
 //

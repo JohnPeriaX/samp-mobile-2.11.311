@@ -20,7 +20,7 @@ public:
     void ReplaceWithNewModel(int32 newModelIndex);
 };
 
-VALIDATE_SIZE(CBuilding, (VER_x32 ? 0x3C : 0x60));
+VALIDATE_SIZE(CBuilding, 0x60);
 
 bool IsBuildingPointerValid(CBuilding* building);
 

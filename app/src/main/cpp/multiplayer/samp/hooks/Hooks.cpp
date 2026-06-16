@@ -229,7 +229,7 @@ typedef struct {
     };
     int32 m_nLodInstanceIndex; // -1 - without LOD model
 } stLoadObjectInstance;
-VALIDATE_SIZE(stLoadObjectInstance, (VER_x32 ? 0x28 : 0x28));
+VALIDATE_SIZE(stLoadObjectInstance, 0x28);
 
 CEntityGTA* (*CFileLoader__LoadObjectInstance)(CFileObjectInstance *pObject, const char *pName);
 CEntityGTA* CFileLoader__LoadObjectInstance_hook(CFileObjectInstance *pObject, const char *pName)
@@ -311,7 +311,7 @@ void CObject_Render_hook(CObjectGta* thiz)
         CObject_Render(object);
     }
 
-    //((void (*)(void))(g_libGTASA + (VER_x32 ? 0x005D1F98 + 1 : 0x6F6664)))();
+    //((void (*)(void))(g_libGTASA + 0x6F6664))();
     //((void (*)(void))(g_libGTASA + 0x5D1F5C + 1))();
 }
 
@@ -368,13 +368,13 @@ int TaskEnterVehicleHook(uintptr_t a1, uintptr_t a2)
     }
 
     // CTask::operator new
-    uintptr_t pTask = ((uintptr_t (*)(void))(g_libGTASA + (VER_x32 ? 0x4D6A70:0x5D7414)))();
+    uintptr_t pTask = ((uintptr_t (*)(void))(g_libGTASA + 0x5D7414))();
 
     // CTaskComplexEnterCarAsDriver::CTaskComplexEnterCarAsDriver
-    ((void (__fastcall *)(uintptr_t, uintptr_t))(g_libGTASA + (VER_x32 ? 0x4F6FE0:0x6007E0)))(pTask, a1);
+    ((void (__fastcall *)(uintptr_t, uintptr_t))(g_libGTASA + 0x6007E0))(pTask, a1);
 
     // CTaskManager::SetTask
-    ((int (__fastcall *)(uintptr_t, uintptr_t, int, int))(g_libGTASA + (VER_x32 ? 0x53397A:0x64E084)))(a2, pTask, 3, 0);
+    ((int (__fastcall *)(uintptr_t, uintptr_t, int, int))(g_libGTASA + 0x64E084))(a2, pTask, 3, 0);
 
     return true;
 }
@@ -425,17 +425,10 @@ uint32_t CRadar__GetRadarTraceColor(uint32_t color, uint8_t bright, uint8_t frie
     return TranslateColorCodeToRGBA(color);
 }
 
-#if VER_x32
-uint32_t CHudColours__GetIntColour(uint32 colour_id)
-{
-	return TranslateColorCodeToRGBA(colour_id);
-}
-#else
 uint32_t CHudColours__GetIntColour(uintptr* thiz, uint8 colour_id)
 {
     return TranslateColorCodeToRGBA(colour_id);
 }
-#endif
 
 /* =============================================================================== */
 
@@ -868,14 +861,8 @@ void CCam__Process_hook(uintptr_t thiz)
             if (auto localPlayer = playerPool->GetLocalPlayer()) {
                 CPlayerPed* pPed = localPlayer->GetPlayerPed();
                 if (pPed) {
-#if VER_x32
-                    *(uint32_t*)(g_libGTASA + 0x00951FA8 + 120) = 0xFFFFFFFF;
-                    *(uint32_t*)(g_libGTASA + 0x00951FA8 + 124) = 0xFFFFFFFF;
-                    *(uint8_t*)(g_libGTASA + 0x00951FA8 + 40) = 0;
-#else
                     *(uint32_t*)(g_libGTASA + 0x9F86F8 + 128) = 0xFFFFFFFFFFFFFFFFLL;
                     *(uint8_t*)(g_libGTASA + 0x9F86F8 + 48) = 0;
-#endif
                     CFirstPersonCamera::ProcessCameraInVeh(thiz, pPed, pVeh);
                 }
             }
@@ -1318,14 +1305,14 @@ void(*DrawRadarMask)();
 void DrawRadarMask_hook()
 {
     //the bss for this has been detached
-    //CHook::UnFuck(g_libGTASA + (VER_x32? 0x444510 : 0x710A20));
+    //CHook::UnFuck(g_libGTASA + 0x710A20);
    // if(m_bUseSquareRadar)
-  //      *(float*)(g_libGTASA + (VER_x32? 0x444510 : 0x710A20)) = 0.0001f;
+  //      *(float*)(g_libGTASA + 0x710A20) = 0.0001f;
   //  else
-  //      *(float*)(g_libGTASA + (VER_x32? 0x444510 : 0x710A20)) = 1.5708f;
+  //      *(float*)(g_libGTASA + 0x710A20) = 1.5708f;
 
     DrawRadarMask();
-//#if !VER_x32
+
  //   *(float*)(g_libGTASA + 0x710A20) = 1.5708f;
 //#endif
 }
@@ -1613,11 +1600,7 @@ stFile* NvFOpen(const char *r1)
 
 
 
-#if VER_x32
-    auto *st = (stFile*)malloc(8);
-#else
     auto *st = (stFile*)malloc(0x10);
-#endif
     st->isFileExist = false;
 
     FILE *f  = fopen(path, "rb");
@@ -1962,10 +1945,8 @@ int mpg123_param_hook(void* mh, int key, long val, int ZERO, double fval)
 void InjectHooks()
 {
     FLog("InjectHooks");
-#if !VER_x32 // mb all.. wtf crash x64?
     CHook::RET("_ZN11CPlayerInfo14LoadPlayerSkinEv");
     CHook::RET("_ZN11CPopulation10InitialiseEv");
-#endif
     CModelInfo::injectHooks(); //
     CTimer::InjectHooks(); //
     CPools::InjectHooks(); //
@@ -2060,8 +2041,8 @@ void InstallCrashFixHooks()
     //CHook::InlineHook(g_libGTASA + 0x38BCF8, (uintptr_t)CustomPipeRenderCB_hook, (uintptr_t*)&CustomPipeRenderCB);
 
     CHook::InstallPLT(g_libGTASA + 0x848CD0, &rpMaterialListDeinitialize_hook, &rpMaterialListDeinitialize);
-    //CHook::InstallPLT(g_libGTASA + (VER_x32 ? 0x6778A8:0x84D188), (uintptr_t)rxOpenGLDefaultAllInOneRenderCB_hook, (uintptr_t*)&rxOpenGLDefaultAllInOneRenderCB);
-    //CHook::InstallPLT(g_libGTASA + (VER_x32 ? 0x677CAC:0x84D988), (uintptr_t)CustomPipeRenderCB_hook, (uintptr_t*)&CustomPipeRenderCB);
+    //CHook::InstallPLT(g_libGTASA + 0x84D188, (uintptr_t)rxOpenGLDefaultAllInOneRenderCB_hook, (uintptr_t*)&rxOpenGLDefaultAllInOneRenderCB);
+    //CHook::InstallPLT(g_libGTASA + 0x84D988, (uintptr_t)CustomPipeRenderCB_hook, (uintptr_t*)&CustomPipeRenderCB);
     CHook::InlineHook("_ZN9EmuShader6SelectEb", &EmuShader_Select_hook, &EmuShader_Select);
 
     CHook::InlineHook("_ZN12CAnimManager19UncompressAnimationEP19CAnimBlendHierarchy", &CAnimManager_UncompressAnimation_hook,&CAnimManager_UncompressAnimation);
@@ -2101,7 +2082,7 @@ void InstallSpecialHooks()
 
     CHook::RET("_ZN4CPed31RemoveWeaponWhenEnteringVehicleEi"); // CPed::RemoveWeaponWhenEnteringVehicle
 
-    //CHook::InstallPLT(g_libGTASA + (VER_x32 ? 0x6701D4 : 0x840708), &RLEDecompress_hook, &RLEDecompress);
+    //CHook::InstallPLT(g_libGTASA + 0x840708, &RLEDecompress_hook, &RLEDecompress);
 
    // CHook::InlineHook("_Z11OS_FileReadPvS_i", &OS_FileRead_hook, &OS_FileRead);
 
@@ -2273,11 +2254,6 @@ void InstallHooks()
 
     CHook::InlineHook("_ZN9CRenderer9ScanWorldEv", &CRenderer_ScanWorld_hook, &CRenderer_ScanWorld);
     CHook::InlineHook("_ZN9CRenderer24RenderEverythingBarRoadsEv", &CRenderer_RenderEverythingBarRoads_hook, &CRenderer_RenderEverythingBarRoads);
-
-#if VER_x32
-    CHook::InlineHook("_ZN14CAnimBlendNode12FindKeyFrameEf", &CAnimBlendNode__FindKeyFrame_hook, &CAnimBlendNode__FindKeyFrame);
-    CHook::InlineHook("_ZN15CClumpModelInfo14GetFrameFromIdEP7RpClumpi", &CClumpModelInfo_GetFrameFromId_hook, &CClumpModelInfo_GetFrameFromId);
-#endif
 
 
     CHook::InlineHook("_Z23RwResourcesFreeResEntryP10RwResEntry", &RwResourcesFreeResEntry_hook,

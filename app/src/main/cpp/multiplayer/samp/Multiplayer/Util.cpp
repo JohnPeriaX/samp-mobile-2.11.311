@@ -1956,7 +1956,7 @@ bool IsValidModel(int iModelID)
 // 0.3.7
 int GetModelRefCounts(int iModel)
 {
-	uint16_t* p = (uint16_t*)(GetModelInfoByID(iModel) + (VER_x32 ? 30:30*2));
+	uint16_t* p = (uint16_t*)(GetModelInfoByID(iModel) + 60);
 	return *p;
 }
 // 0.3.7
@@ -2484,7 +2484,7 @@ RwObject* ModelInfoCreateInstance(int iModel)
     auto modelInfo = CModelInfo::GetModelInfo(iModel);
     if (modelInfo)
     {
-        return ((RwObject*(*)(CBaseModelInfo*))(*(uintptr_t*)(modelInfo->vtable + (VER_x32 ? 0x2C : 0x2C*2))))(modelInfo);
+        return ((RwObject*(*)(CBaseModelInfo*))(*(uintptr_t*)(modelInfo->vtable + 0x58)))(modelInfo);
     }
 
     return nullptr;
@@ -2893,7 +2893,7 @@ void RenderEntity(CEntityGTA* entity)
     }
 
     // CEntity::PreRender
-    ((void (*)(CEntityGTA*))(*(uintptr_t*)( *(uintptr*)(entity) + (VER_x32 ? 0x48 : 0x48*2) )))(entity);
+    ((void (*)(CEntityGTA*))(*(uintptr_t*)( *(uintptr*)(entity) + 0x90 )))(entity);
 
     // CRenderer::RenderOneNonRoad
     (( void (*)(CEntityGTA*))(g_libGTASA + 0x4B5430))(entity);

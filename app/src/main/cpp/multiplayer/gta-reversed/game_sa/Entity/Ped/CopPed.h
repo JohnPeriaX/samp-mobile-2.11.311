@@ -34,5 +34,5 @@ public:
 
 };
 
-VALIDATE_SIZE(CCopPed, (VER_x32 ? 0x7CC : 0x9C8));
+VALIDATE_SIZE(CCopPed, 0x9C8);
 

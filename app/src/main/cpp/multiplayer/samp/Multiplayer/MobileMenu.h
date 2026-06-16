@@ -70,8 +70,8 @@ public:
     static void InjectHooks();
 
 };
-VALIDATE_SIZE(OSArray<MenuScreen*>, (VER_x32 ? 0xC : 0x10));
-VALIDATE_SIZE(CMobileMenu, (VER_x32 ? 0xB0 : 0xD0));
+VALIDATE_SIZE(OSArray<MenuScreen*>, 0x10);
+VALIDATE_SIZE(CMobileMenu, 0xD0);
 
 extern CMobileMenu* gMobileMenu;
 extern bool g_bMenuActive;

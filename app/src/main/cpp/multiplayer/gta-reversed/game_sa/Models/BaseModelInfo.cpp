@@ -10,13 +10,13 @@ void CBaseModelInfo::SetTexDictionary(const char* txdName, const char *dbName) {
 }
 
 ModelInfoType CBaseModelInfo::GetModelType() {
-    return CHook::CallFunction<ModelInfoType>(*(uintptr_t*)(vtable + (VER_x32 ? 0x14 : 0x14*2)), this);
+    return CHook::CallFunction<ModelInfoType>(*(uintptr_t*)(vtable + 0x28), this);
 }
 
 int32 CBaseModelInfo::GetAnimFileIndex() {
-    return CHook::CallFunction<int32>(*(uintptr_t*)(vtable + (VER_x32 ? 0x3C : 0x3C*2)), this);
+    return CHook::CallFunction<int32>(*(uintptr_t*)(vtable + 0x78), this);
 }
 
 void CBaseModelInfo::DeleteRwObject() {
-    CHook::CallFunction<void>(*(uintptr_t*)(vtable + (VER_x32 ? 0x24 : 0x24*2)), this);
+    CHook::CallFunction<void>(*(uintptr_t*)(vtable + 0x48), this);
 }

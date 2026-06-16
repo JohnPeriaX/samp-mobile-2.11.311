@@ -389,7 +389,21 @@ void ScrSetObjectMaterial(RPCParameters* rpcParams)
 // 0.3.7
 void ScrRemoveBuilding(RPCParameters *rpcParams)
 {
+    unsigned char* Data = reinterpret_cast<unsigned char*>(rpcParams->input);
+    int iBitLength = rpcParams->numberOfBitsOfData;
 
+    int32_t modelId;
+    CVector pos;
+    float radius;
+
+    RakNet::BitStream bsData(Data, (iBitLength / 8) + 1, false);
+    bsData.Read(modelId);
+    bsData.Read(pos.x);
+    bsData.Read(pos.y);
+    bsData.Read(pos.z);
+    bsData.Read(radius);
+
+    CBuildingRemoval::AddRemoveBuilding(static_cast<uint32_t>(modelId), pos, radius);
 }
 // 0.3.7
 void ScrSetPlayerSkin(RPCParameters* rpcParams)

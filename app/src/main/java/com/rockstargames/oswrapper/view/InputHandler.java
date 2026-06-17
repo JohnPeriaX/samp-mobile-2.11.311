@@ -3,6 +3,7 @@ package com.rockstargames.oswrapper.view;
 import android.graphics.PointF;
 import android.util.Log;
 import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -46,6 +47,7 @@ public class InputHandler implements GameViewHandler {
     private static   int OSXP_GP_MENU = 15;
     private static   int OSXP_MENU    = 12;
     private static   int OSXP_SEARCH  = 13;
+    private static final int MAX_TOUCH_POINTERS = 4;
 
     private boolean dpadUpPressed;
     private boolean dpadDownPressed;
@@ -53,6 +55,7 @@ public class InputHandler implements GameViewHandler {
     private boolean dpadRightPressed;
 
     private   SparseArray<PointF> touches = new SparseArray<>();
+    private final SparseIntArray pointerSlots = new SparseIntArray();
 
     private InputHandler() {}
 
@@ -219,6 +222,28 @@ public class InputHandler implements GameViewHandler {
     // Touch events
     // -----------------------------------------------------------------------
 
+    private int acquireTouchSlot(int pointerId) {
+        int currentSlot = this.pointerSlots.get(pointerId, -1);
+        if (currentSlot != -1) {
+            return currentSlot;
+        }
+        for (int slot = 0; slot < MAX_TOUCH_POINTERS; slot++) {
+            if (this.touches.get(slot) == null) {
+                this.pointerSlots.put(pointerId, slot);
+                return slot;
+            }
+        }
+        return -1;
+    }
+
+    private int getTouchSlot(int pointerId) {
+        return this.pointerSlots.get(pointerId, -1);
+    }
+
+    private void releaseTouchSlot(int pointerId) {
+        this.pointerSlots.delete(pointerId);
+    }
+
     public final boolean onTouchEvent(MotionEvent event) {
         Intrinsics.checkNotNullParameter(event, "event");
         int actionIndex = event.getActionIndex();
@@ -227,46 +252,64 @@ public class InputHandler implements GameViewHandler {
         switch (event.getActionMasked()) {
             case 0:
             case 5:
+                int slot = acquireTouchSlot(pointerId);
+                if (slot == -1) {
+                    return true;
+                }
                 float x = event.getX(actionIndex);
                 float y = event.getY(actionIndex);
                 PointF pointF = new PointF();
                 pointF.x = x;
                 pointF.y = y;
-                this.touches.put(pointerId, pointF);
-                GameThread.INSTANCE.onTouchStart(pointerId, x, y);
+                this.touches.put(slot, pointF);
+                GameThread.INSTANCE.onTouchStart(slot, x, y);
                 return true;
             case 1:
             case 4:
             case 6:
-                PointF pointF2 = this.touches.get(pointerId);
-                if (pointF2 != null) {
-                    GameThread.INSTANCE.onTouchEnd(pointerId, pointF2.x, pointF2.y);
+                int releasedSlot = getTouchSlot(pointerId);
+                if (releasedSlot == -1) {
+                    return true;
                 }
-                this.touches.remove(pointerId);
+                PointF pointF2 = this.touches.get(releasedSlot);
+                if (pointF2 != null) {
+                    GameThread.INSTANCE.onTouchEnd(releasedSlot, pointF2.x, pointF2.y);
+                }
+                this.touches.remove(releasedSlot);
+                releaseTouchSlot(pointerId);
                 return true;
             case 2:
                 while (i < event.getPointerCount()) {
+                    int pointerId2 = event.getPointerId(i);
+                    int moveSlot = getTouchSlot(pointerId2);
+                    if (moveSlot == -1) {
+                        moveSlot = acquireTouchSlot(pointerId2);
+                    }
+                    if (moveSlot == -1) {
+                        i++;
+                        continue;
+                    }
                     float x2 = event.getX(i);
                     float y2 = event.getY(i);
                     PointF pointF3 = new PointF();
                     pointF3.x = x2;
                     pointF3.y = y2;
-                    int pointerId2 = event.getPointerId(i);
-                    this.touches.put(pointerId2, pointF3);
-                    GameThread.INSTANCE.onTouchMove(pointerId2, x2, y2);
+                    this.touches.put(moveSlot, pointF3);
+                    GameThread.INSTANCE.onTouchMove(moveSlot, x2, y2);
                     i++;
                 }
                 return true;
             case 3:
                 while (i < this.touches.size()) {
-                    int iKeyAt = this.touches.keyAt(i);
-                    PointF pointF4 = this.touches.get(iKeyAt);
+                    int slotKey = this.touches.keyAt(i);
+                    PointF pointF4 = this.touches.get(slotKey);
                     if (pointF4 != null) {
-                        GameThread.INSTANCE.onTouchEnd(iKeyAt, pointF4.x, pointF4.y);
+                        GameThread.INSTANCE.onTouchEnd(slotKey, pointF4.x, pointF4.y);
                     }
                     i++;
                 }
                 this.touches.clear();
+                this.pointerSlots.clear();
                 return true;
             default:
                 return false;

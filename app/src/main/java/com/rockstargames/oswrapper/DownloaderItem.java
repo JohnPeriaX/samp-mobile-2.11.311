@@ -11,7 +11,6 @@ import com.kurdish.roleplay.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import kotlin.Metadata;
 import kotlin.jvm.internal.Intrinsics;
 final class DownloaderItem {
     private static final String TAG = "DownloaderItem";

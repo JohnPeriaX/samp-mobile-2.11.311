@@ -149,7 +149,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="v1.0.0"
+            android:text="v2.11.311"
             android:textColor="#80FFFFFF"
             android:textSize="8sp"
             android:textStyle="bold" />

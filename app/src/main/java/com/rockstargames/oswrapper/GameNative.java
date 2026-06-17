@@ -49,7 +49,13 @@ public class GameNative {
     public static   native void implOnGamepadButtonUp(int controllerId, int buttonId);
 
      
-    public static   native void implOnGamepadCountChanged(int count);
+    public static   native void implOnGamepadConnected(int controllerId);
+
+     
+    public static   native void implOnGamepadDisconnected(int controllerId);
+
+     
+    public static   native void implOnGamepadResume(int[] controllerIds);
 
      
     public static   native void implOnHttpRequestData(int id, byte[] data);

@@ -1,10 +1,12 @@
 package com.rockstargames.oswrapper.view;
 
 import android.graphics.PointF;
+import android.hardware.input.InputManager;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.InputDevice;
+import android.view.InputEvent;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
@@ -13,14 +15,9 @@ import com.rockstargames.oswrapper.GameThread;
 import com.rockstargames.oswrapper.UtilsKt;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
-import kotlin.collections.CollectionsKt;
 import kotlin.jvm.internal.Intrinsics;
 
-public class InputHandler implements GameViewHandler {
+public class InputHandler implements GameViewHandler, InputManager.InputDeviceListener {
 
     public static  InputHandler INSTANCE = new InputHandler();
 
@@ -53,35 +50,44 @@ public class InputHandler implements GameViewHandler {
     private boolean dpadDownPressed;
     private boolean dpadLeftPressed;
     private boolean dpadRightPressed;
+    private boolean processing;
 
     private   SparseArray<PointF> touches = new SparseArray<>();
     private final SparseIntArray pointerSlots = new SparseIntArray();
+    private InputManager inputManager;
 
     private InputHandler() {}
 
     // -----------------------------------------------------------------------
-    // Controller count (replaces Kotlin Companion)
+    // Controller helpers
     // -----------------------------------------------------------------------
 
-    public final int getControllerCount() {
+    private boolean isGamepad(InputDevice device) {
+        return device != null && device.getControllerNumber() > 0 && (device.getSources() & 16778257) != 0;
+    }
+
+    private boolean isGamepad(int deviceId) {
+        return inputManager != null && isGamepad(inputManager.getInputDevice(deviceId));
+    }
+
+    private boolean isGamepadEvent(InputEvent event) {
+        return event != null && isGamepad(event.getDevice());
+    }
+
+    private int[] getConnectedGamepads() {
         int[] deviceIds = InputDevice.getDeviceIds();
         Intrinsics.checkNotNullExpressionValue(deviceIds, "getDeviceIds(...)");
-        ArrayList arrayList = new ArrayList(deviceIds.length);
+        ArrayList<Integer> connected = new ArrayList<>();
         for (int i : deviceIds) {
-            arrayList.add(InputDevice.getDevice(i));
-        }
-        List listFilterNotNull = CollectionsKt.filterNotNull(arrayList);
-        if ((listFilterNotNull instanceof Collection) && listFilterNotNull.isEmpty()) {
-            return 0;
-        }
-        Iterator it = listFilterNotNull.iterator();
-        int i2 = 0;
-        while (it.hasNext()) {
-            if (((((InputDevice) it.next()).getSources() & 16778257) != 0) && (i2 = i2 + 1) < 0) {
-                CollectionsKt.throwCountOverflow();
+            if (isGamepad(i)) {
+                connected.add(i);
             }
         }
-        return i2;
+        int[] result = new int[connected.size()];
+        for (int i = 0; i < connected.size(); i++) {
+            result[i] = connected.get(i);
+        }
+        return result;
     }
 
 
@@ -144,25 +150,25 @@ public class InputHandler implements GameViewHandler {
     // -----------------------------------------------------------------------
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        boolean isGamepad = ((event != null ? event.getSource() : 0) & 16) != 0;
+        boolean isGamepad = isGamepadEvent(event);
         if (keyCode == 4 && !isGamepad) {
             return true; // consume, handle on up
         }
         int button = toGamepadButton(keyCode);
-        if (button == -1) return false;
-        GameThread.INSTANCE.onGamepadButtonDown(0, button);
+        if (event == null || button == -1) return false;
+        GameThread.INSTANCE.onGamepadButtonDown(event.getDeviceId(), button);
         return true;
     }
 
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        boolean isGamepad = ((event != null ? event.getSource() : 0) & 16) != 0;
+        boolean isGamepad = isGamepadEvent(event);
         if (keyCode == 4 && !isGamepad) {
             onBackPressed();
             return true;
         }
         int button = toGamepadButton(keyCode);
-        if (button == -1) return false;
-        GameThread.INSTANCE.onGamepadButtonUp(0, button);
+        if (event == null || button == -1) return false;
+        GameThread.INSTANCE.onGamepadButtonUp(event.getDeviceId(), button);
         return true;
     }
 
@@ -171,9 +177,10 @@ public class InputHandler implements GameViewHandler {
     // -----------------------------------------------------------------------
 
     public final boolean onGenericMotionEvent(MotionEvent event) {
-        if (event == null || (event.getSource() & 16) == 0) {
+        if (!processing || event == null || !isGamepadEvent(event)) {
             return false;
         }
+        int deviceId = event.getDeviceId();
         float axisValue = event.getAxisValue(0);
         float axisValue2 = event.getAxisValue(1);
         float axisValue3 = event.getAxisValue(11);
@@ -181,39 +188,39 @@ public class InputHandler implements GameViewHandler {
         float axisValue5 = event.getAxisValue(15);
         float axisValue6 = event.getAxisValue(16);
         if (axisValue5 > 0.2f) {
-            GameThread.INSTANCE.onGamepadButtonDown(0, 11);
+            GameThread.INSTANCE.onGamepadButtonDown(deviceId, 11);
             this.dpadRightPressed = true;
         } else if (axisValue5 < -0.2f) {
-            GameThread.INSTANCE.onGamepadButtonDown(0, 10);
+            GameThread.INSTANCE.onGamepadButtonDown(deviceId, 10);
             this.dpadLeftPressed = true;
         } else {
             if (this.dpadLeftPressed) {
-                GameThread.INSTANCE.onGamepadButtonUp(0, 10);
+                GameThread.INSTANCE.onGamepadButtonUp(deviceId, 10);
             }
             if (this.dpadRightPressed) {
-                GameThread.INSTANCE.onGamepadButtonUp(0, 11);
+                GameThread.INSTANCE.onGamepadButtonUp(deviceId, 11);
             }
             this.dpadLeftPressed = false;
             this.dpadRightPressed = false;
         }
         if (axisValue6 < -0.2f) {
-            GameThread.INSTANCE.onGamepadButtonDown(0, 8);
+            GameThread.INSTANCE.onGamepadButtonDown(deviceId, 8);
             this.dpadUpPressed = true;
         } else if (axisValue6 > 0.2f) {
-            GameThread.INSTANCE.onGamepadButtonDown(0, 9);
+            GameThread.INSTANCE.onGamepadButtonDown(deviceId, 9);
             this.dpadDownPressed = true;
         } else {
             if (this.dpadUpPressed) {
-                GameThread.INSTANCE.onGamepadButtonUp(0, 8);
+                GameThread.INSTANCE.onGamepadButtonUp(deviceId, 8);
             }
             if (this.dpadDownPressed) {
-                GameThread.INSTANCE.onGamepadButtonUp(0, 9);
+                GameThread.INSTANCE.onGamepadButtonUp(deviceId, 9);
             }
             this.dpadUpPressed = false;
             this.dpadDownPressed = false;
         }
         float fMax3 = UtilsKt.max3(event.getAxisValue(18), event.getAxisValue(19), event.getAxisValue(22));
-        GameThread.INSTANCE.onGamepadAxesChanged(0, axisValue, axisValue2, axisValue3, axisValue4, Math.max(event.getAxisValue(17), event.getAxisValue(23)), fMax3);
+        GameThread.INSTANCE.onGamepadAxesChanged(deviceId, axisValue, axisValue2, axisValue3, axisValue4, Math.max(event.getAxisValue(17), event.getAxisValue(23)), fMax3);
         return true;
     }
 
@@ -324,14 +331,51 @@ public class InputHandler implements GameViewHandler {
 
     @Override
     public void setup(GameActivityBase activity) {
-        // nothing needed
+        Intrinsics.checkNotNullParameter(activity, "activity");
+        Object service = activity.getSystemService(InputManager.class);
+        if (service instanceof InputManager) {
+            this.inputManager = (InputManager) service;
+        }
     }
 
     @Override
-    public void onPause() {}
+    public void onPause() {
+        this.processing = false;
+        if (this.inputManager != null) {
+            this.inputManager.unregisterInputDeviceListener(this);
+        }
+    }
 
     @Override
-    public void onResume() {}
+    public void onResume() {
+        this.processing = true;
+        if (this.inputManager != null) {
+            this.inputManager.registerInputDeviceListener(this, null);
+        }
+        GameThread.INSTANCE.onGamepadResume(getConnectedGamepads());
+    }
+
+    @Override
+    public void onInputDeviceAdded(int deviceId) {
+        if (this.processing && isGamepad(deviceId)) {
+            InputDevice device = this.inputManager != null ? this.inputManager.getInputDevice(deviceId) : null;
+            Log.i(TAG, "[!!] [pad] Newly connected gamepad: " + deviceId + ": " + (device != null ? device.getName() : "unknown"));
+            GameThread.INSTANCE.onGamepadConnected(deviceId);
+        }
+    }
+
+    @Override
+    public void onInputDeviceChanged(int deviceId) {
+        onInputDeviceAdded(deviceId);
+    }
+
+    @Override
+    public void onInputDeviceRemoved(int deviceId) {
+        if (this.processing) {
+            Log.i(TAG, "[!!] [pad] Disconnected gamepad: " + deviceId);
+            GameThread.INSTANCE.onGamepadDisconnected(deviceId);
+        }
+    }
 
     // -----------------------------------------------------------------------
     // Helpers

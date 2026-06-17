@@ -657,16 +657,46 @@ public final class GameThread {
 
     }
 
-    public void onGamepadCountChanged(final int count) {
-        Log.i(TAG, "[!!] onGamepadCountChanged: " + count);
-        queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onGamepadCountChanged.1
+    public void onGamepadConnected(final int controllerId) {
+        Log.i(TAG, "[!!] onGamepadConnected: " + controllerId);
+        queueEvent(new Function0<Unit>() {
     @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
             public final void invoke2() {
-                GameNative.implOnGamepadCountChanged(count);
+                GameNative.implOnGamepadConnected(controllerId);
+            }
+        });
+
+    }
+
+    public void onGamepadDisconnected(final int controllerId) {
+        Log.i(TAG, "[!!] onGamepadDisconnected: " + controllerId);
+        queueEvent(new Function0<Unit>() {
+    @Override
+            public /* bridge */ /* synthetic */ Unit invoke() {
+                invoke2();
+                return Unit.INSTANCE;
+            }
+            public final void invoke2() {
+                GameNative.implOnGamepadDisconnected(controllerId);
+            }
+        });
+
+    }
+
+    public void onGamepadResume(final int[] connected) {
+        Intrinsics.checkNotNullParameter(connected, "connected");
+        queueEvent(new Function0<Unit>() {
+    @Override
+            public /* bridge */ /* synthetic */ Unit invoke() {
+                invoke2();
+                return Unit.INSTANCE;
+            }
+            public final void invoke2() {
+                GameNative.implOnGamepadResume(connected);
             }
         });
 

@@ -8,6 +8,4 @@ public final class BuildConfig {
     public static final boolean GAME_SDK_RESET_SETTINGS = false;
     public static final boolean GAME_SKIP_MOVIES = false;
     public static final String LIBRARY_PACKAGE_NAME = "com.rockstargames.oswrapper";
-    public static final boolean RSMOBILE_DEV = false;
-    public static final boolean RSMOBILE_SDK_ENABLED = true;
 }

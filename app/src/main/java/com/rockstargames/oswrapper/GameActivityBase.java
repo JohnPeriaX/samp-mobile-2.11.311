@@ -28,7 +28,6 @@ import com.kurdish.roleplay.launcher.util.GameStorage;
 import com.nvidia.devtech.NvAPKFile;
 import com.nvidia.devtech.NvAPKFileHelper;
 import com.nvidia.devtech.NvUtil;
-import com.rockstargames.gtasa.MainActivity;
 import com.kurdish.roleplay.R;
 
 
@@ -184,7 +183,6 @@ public abstract class GameActivityBase extends AppCompatActivity {
         Log.i(TAG, "[!!] onCreate");
         super.onCreate(savedInstanceState);
 
-        //AssetUtils.extractAssets(this);
         handler = new Handler();
         // Resolve storage paths
         File extDir = getExternalFilesDir(null);

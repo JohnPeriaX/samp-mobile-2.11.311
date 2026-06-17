@@ -181,7 +181,7 @@ public final class MovieHandler implements GameViewHandler {
                 moviePlayer = new MediaPlayer();
 
                 moviePlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() { // from class: com.rockstargames.oswrapper.view.MovieHandler$$ExternalSyntheticLambda3
-                    @Override // android.media.MediaPlayer.OnPreparedListener
+    @Override
                     public final void onPrepared(MediaPlayer mediaPlayer3) {
                         MovieHandler.movieTryStartPlayback$lambda$9$lambda$5(MovieHandler.this, mediaPlayer3);
                     }
@@ -189,7 +189,7 @@ public final class MovieHandler implements GameViewHandler {
 
 
                 moviePlayer.setOnSeekCompleteListener(new MediaPlayer.OnSeekCompleteListener() { // from class: com.rockstargames.oswrapper.view.MovieHandler$$ExternalSyntheticLambda4
-                    @Override // android.media.MediaPlayer.OnSeekCompleteListener
+    @Override
                     public final void onSeekComplete(MediaPlayer mediaPlayer3) {
                         MovieHandler.movieTryStartPlayback$lambda$9$lambda$6(mediaPlayer3);
                     }
@@ -197,7 +197,7 @@ public final class MovieHandler implements GameViewHandler {
 
 
                 moviePlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() { // from class: com.rockstargames.oswrapper.view.MovieHandler$$ExternalSyntheticLambda5
-                    @Override // android.media.MediaPlayer.OnErrorListener
+    @Override
                     public final boolean onError(MediaPlayer mediaPlayer3, int i, int i2) {
                         try {
                             return MovieHandler.movieTryStartPlayback$lambda$9$lambda$7(MovieHandler.this, mediaPlayer3, i, i2);
@@ -207,7 +207,7 @@ public final class MovieHandler implements GameViewHandler {
                     }
                 });
                 moviePlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() { // from class: com.rockstargames.oswrapper.view.MovieHandler$$ExternalSyntheticLambda6
-                    @Override // android.media.MediaPlayer.OnCompletionListener
+    @Override
                     public final void onCompletion(MediaPlayer mediaPlayer3) {
                         try {
                             MovieHandler.movieTryStartPlayback$lambda$9$lambda$8(MovieHandler.this, mediaPlayer3);
@@ -264,7 +264,7 @@ public final class MovieHandler implements GameViewHandler {
             gameActivityBase = null;
         }
         gameActivityBase.runOnUiThread(new Runnable() { // from class: com.rockstargames.oswrapper.view.MovieHandler$$ExternalSyntheticLambda0
-            @Override // java.lang.Runnable
+    @Override
             public final void run() {
                 MovieHandler.drawMovieText$lambda$4(MovieHandler.this);
             }

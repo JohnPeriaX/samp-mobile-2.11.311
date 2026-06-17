@@ -90,13 +90,6 @@ public final class SensorHandler implements SensorEventListener, GameViewHandler
 
         float x, y, z;
 
-        /*
-         * Remap axes based on current display rotation:
-         *   ROTATION_0 / ROTATION_180  → portrait:  swap x/y, negate x
-         *   ROTATION_90 / ROTATION_270 → landscape: keep x/y as-is
-         *
-         * Original bytecode logic reconstructed from the decompiled smali.
-         */
         switch (displayRotation) {
             case 0:   // portrait
             case 2:   // reverse portrait (180°)

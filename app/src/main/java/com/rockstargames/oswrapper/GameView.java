@@ -30,8 +30,6 @@ public   class GameView extends SurfaceView implements SurfaceHolder.Callback2 {
     private  PlaylistHandler playlistHandler;
     private  SensorHandler sensorHandler;
     private  SplashScreenHandler splashScreenHandler;
-
-    /* JADX WARN: 'super' call moved to the top of the method (can break code semantics) */
     public GameView(Context context, AttributeSet attribs) {
         super(context, attribs);
 
@@ -86,25 +84,21 @@ public   class GameView extends SurfaceView implements SurfaceHolder.Callback2 {
     public   SplashScreenHandler getSplashScreenHandler() {
         return this.splashScreenHandler;
     }
-
-    @Override // android.view.View
+    @Override
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         Log.i(TAG, "[!!] onConfigurationChanged: " + newConfig);
         this.sensorHandler.updateRotation();
     }
-
-    @Override // android.view.View
+    @Override
     public boolean onGenericMotionEvent(MotionEvent event) {
         return this.inputHandler.onGenericMotionEvent(event) || super.onGenericMotionEvent(event);
     }
-
-    @Override // android.view.View, android.view.KeyEvent.Callback
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         return this.inputHandler.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
     }
-
-    @Override // android.view.View, android.view.KeyEvent.Callback
+    @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         return this.inputHandler.onKeyUp(keyCode, event) || super.onKeyUp(keyCode, event);
     }
@@ -126,14 +120,12 @@ public   class GameView extends SurfaceView implements SurfaceHolder.Callback2 {
             handler.onResume();
         }
     }
-
-    @Override // android.view.View
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
         Intrinsics.checkNotNullParameter(event, "event");
         return this.inputHandler.onTouchEvent(event) || super.onTouchEvent(event);
     }
-
-    @Override // android.view.View
+    @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
         Log.i(TAG, "[!!] onWindowFocusChanged: " + hasWindowFocus);
@@ -159,7 +151,7 @@ public   class GameView extends SurfaceView implements SurfaceHolder.Callback2 {
         }
 
     }
-    @Override // android.view.SurfaceHolder.Callback
+    @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         Intrinsics.checkNotNullParameter(holder, "holder");
         Surface surface = holder.getSurface();
@@ -168,8 +160,7 @@ public   class GameView extends SurfaceView implements SurfaceHolder.Callback2 {
         Intrinsics.checkNotNull(surface);
         gameThread.onSurfaceChanged(surface, width, height);
     }
-
-    @Override // android.view.SurfaceHolder.Callback
+    @Override
     public void surfaceCreated(SurfaceHolder holder) {
         Intrinsics.checkNotNullParameter(holder, "holder");
         Log.i(TAG, "[!!] surfaceCreated: " + holder.getSurface());
@@ -177,20 +168,17 @@ public   class GameView extends SurfaceView implements SurfaceHolder.Callback2 {
 
         GameThread.INSTANCE.onSurfaceCreated();
     }
-
-    @Override // android.view.SurfaceHolder.Callback
+    @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         Intrinsics.checkNotNullParameter(holder, "holder");
         Log.i(TAG, "[!!] surfaceDestroyed");
         GameThread.INSTANCE.onSurfaceDestroyed();
     }
-
-    @Override // android.view.SurfaceHolder.Callback2
+    @Override
     public void surfaceRedrawNeeded(SurfaceHolder holder) {
         Intrinsics.checkNotNullParameter(holder, "holder");
     }
-
-    @Override // android.view.SurfaceHolder.Callback2
+    @Override
     public void surfaceRedrawNeededAsync(SurfaceHolder holder, Runnable drawingFinished) {
         Intrinsics.checkNotNullParameter(holder, "holder");
         Intrinsics.checkNotNullParameter(drawingFinished, "drawingFinished");

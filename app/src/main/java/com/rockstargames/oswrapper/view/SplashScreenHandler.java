@@ -57,7 +57,7 @@ public final class SplashScreenHandler implements GameViewHandler {
             gameActivityBase = null;
         }
         gameActivityBase.runOnUiThread(new Runnable() { // from class: com.rockstargames.oswrapper.view.SplashScreenHandler$$ExternalSyntheticLambda3
-            @Override // java.lang.Runnable
+    @Override
             public final void run() {
                 SplashScreenHandler.show$lambda$0(SplashScreenHandler.this);
             }
@@ -96,7 +96,7 @@ public final class SplashScreenHandler implements GameViewHandler {
             gameActivityBase = null;
         }
         gameActivityBase.runOnUiThread(new Runnable() { // from class: com.rockstargames.oswrapper.view.SplashScreenHandler$$ExternalSyntheticLambda1
-            @Override // java.lang.Runnable
+    @Override
             public final void run() {
                 SplashScreenHandler.hide$lambda$1(SplashScreenHandler.this);
             }

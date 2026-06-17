@@ -502,7 +502,7 @@ public final class GameThread {
 
     private final void queueEvent(final Function0<Unit> event) {
         eventQueue.add(new Runnable() { // from class: com.rockstargames.oswrapper.GameThread$$ExternalSyntheticLambda0
-            @Override // java.lang.Runnable
+    @Override
             public final void run() {
                 GameThread.queueEvent$lambda$0(event);
             }
@@ -552,14 +552,11 @@ public final class GameThread {
 
     public void onAccelerometerChanged(final float x, final float y, final float z) {
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onAccelerometerChanged.1
-
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnAccelerometerChanged(x, y, z);
             }
@@ -572,15 +569,11 @@ public final class GameThread {
         Intrinsics.checkNotNullParameter(view, "view");
         Log.i(TAG, "[!!] onActivityCreated: " + activity + " / " + view + ": " + firstInit);
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onActivityCreated.1
-
-
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
 
 
@@ -593,13 +586,11 @@ public final class GameThread {
     public void onActivityDestroyed() {
         Log.i(TAG, "[!!] onActivityDestroyed");
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onActivityDestroyed.1
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnActivityDestroyed();
             }
@@ -610,13 +601,11 @@ public final class GameThread {
     public void onBackButtonPressed() {
         Log.i(TAG, "[!!] onBackButtonPressed");
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onBackButtonPressed.1
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnBackButtonPressed();
             }
@@ -628,15 +617,11 @@ public final class GameThread {
                                      final float z, final float rz,
                                      final float triggerL, final float triggerR) {
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onGamepadAxesChanged.1
-
-
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnGamepadAxesChanged(controllerId, x, y, z, rz, triggerL, triggerR);
             }
@@ -646,15 +631,11 @@ public final class GameThread {
 
     public void onGamepadButtonDown(final int controllerId, final int buttonId) {
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onGamepadButtonDown.1
-
-
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnGamepadButtonDown(controllerId, buttonId);
             }
@@ -664,14 +645,11 @@ public final class GameThread {
 
     public void onGamepadButtonUp(final int controllerId, final int buttonId) {
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onGamepadButtonUp.1
-
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnGamepadButtonUp(controllerId, buttonId);
             }
@@ -682,15 +660,11 @@ public final class GameThread {
     public void onGamepadCountChanged(final int count) {
         Log.i(TAG, "[!!] onGamepadCountChanged: " + count);
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onGamepadCountChanged.1
-
-
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnGamepadCountChanged(count);
             }
@@ -701,15 +675,11 @@ public final class GameThread {
     public void onHttpRequestData(final int id, final byte[] data) {
         Log.i(TAG, "[!!] onHttpReceivedData: " + id + ": " + (data != null ? data.length : null) + " bytes");
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onHttpRequestData.1
-
-
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnHttpRequestData(id, data);
             }
@@ -719,15 +689,11 @@ public final class GameThread {
 
     public void onHttpRequestError(final int id, final int statusCode) {
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onHttpRequestError.1
-
-
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnHttpRequestError(id, statusCode);
             }
@@ -738,15 +704,11 @@ public final class GameThread {
     public void onHttpRequestFinished(final int id) {
         Log.i(TAG, "[!!] onHttpConnectionFinished: " + id);
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onHttpRequestFinished.1
-
-
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnHttpRequestFinished(id);
             }
@@ -763,15 +725,11 @@ public final class GameThread {
         Intrinsics.checkNotNullParameter(headerValues, "headerValues");
         Log.i(TAG, "[!!] onHttpReceivedResponse: " + id + ": " + statusCode + ": " + statusLine);
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onHttpRequestResponse.1
-
-
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnHttpRequestResponse(id, statusCode, statusLine, headerNames, headerValues);
             }
@@ -789,7 +747,7 @@ public final class GameThread {
         Log.i(TAG, "[!!] onInitialSetup: Redirecting to External Data Path: " + dataPath);
 
         queueEvent(new Function0<Unit>() {
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
@@ -808,13 +766,11 @@ public final class GameThread {
     public void onLowMemory() {
         Log.i(TAG, "[!!] onLowMemory");
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onLowMemory.1
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnLowMemory();
             }
@@ -825,15 +781,11 @@ public final class GameThread {
     public void onNetworkChanged(final int network) {
         Log.i(TAG, "[!!] onNetworkChanged: " + network);
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onNetworkChanged.1
-
-
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnNetworkChanged(network);
             }
@@ -843,13 +795,11 @@ public final class GameThread {
     public void onPause() {
         Log.i(TAG, "[!!] onPause");
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onPause.1
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnPause();
             }
@@ -860,15 +810,11 @@ public final class GameThread {
     public void onPlaylistOpenComplete(final boolean available, final int count) {
         Log.i(TAG, "[!!] onPlaylistOpenComplete: " + available + " (" + count + ')');
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onPlaylistOpenComplete.1
-
-
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnPlaylistOpenComplete(available, count);
             }
@@ -879,13 +825,11 @@ public final class GameThread {
     public void onResume() {
         Log.i(TAG, "[!!] onResume");
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onResume.1
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnResume();
                 GameThread.INSTANCE.processPendingCallbacks();
@@ -898,13 +842,11 @@ public final class GameThread {
         Log.i(TAG, "[!!] onRockstarAccountDeletionComplete");
         notifyCallbackComplete();
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onRockstarAccountDeletionComplete.1
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnRockstarAccountDeletionComplete();
             }
@@ -916,13 +858,11 @@ public final class GameThread {
         Log.i(TAG, "[!!] onRockstarCloudDisabledComplete");
         notifyCallbackComplete();
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onRockstarCloudDisabledComplete.1
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnRockstarCloudDisabledComplete();
             }
@@ -934,14 +874,11 @@ public final class GameThread {
         Log.i(TAG, "[!!] onRockstarGateComplete: " + id + " (" + pass + ')');
         notifyCallbackComplete();
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onRockstarGateComplete.1
-
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnRockstarGateComplete(id, pass);
             }
@@ -952,15 +889,11 @@ public final class GameThread {
     public void onRockstarIdChanged(final String id) {
         Log.i(TAG, "[!!] onRockstarIdChanged");
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onRockstarIdChanged.1
-
-
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnRockstarIdChanged(id);
             }
@@ -971,13 +904,11 @@ public final class GameThread {
     public void onRockstarInitialComplete() {
         Log.i(TAG, "[!!] onRockstarInitialComplete");
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onRockstarInitialComplete.1
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnRockstarInitialComplete();
             }
@@ -988,14 +919,11 @@ public final class GameThread {
     public void onRockstarSetup(final String environment, final String id) {
         Log.i(TAG, "[!!] onRockstarSetup");
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onRockstarSetup.1
-
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnRockstarSetup(environment, id);
             }
@@ -1007,13 +935,11 @@ public final class GameThread {
         Log.i(TAG, "[!!] onRockstarSignInComplete");
         notifyCallbackComplete();
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onRockstarSignInComplete.1
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnRockstarSignInComplete();
             }
@@ -1024,13 +950,11 @@ public final class GameThread {
     public void onRockstarSignOutComplete() {
         Log.i(TAG, "[!!] onRockstarSignOutComplete");
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onRockstarSignOutComplete.1
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnRockstarSignOutComplete();
             }
@@ -1042,15 +966,11 @@ public final class GameThread {
         Intrinsics.checkNotNullParameter(surface, "surface");
         Log.i(TAG, "[!!] onSurfaceChanged: " + surface + " (" + width + 'x' + height + ')');
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onSurfaceChanged.1
-
-
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnSurfaceChanged(surface, width, height);
             }
@@ -1062,13 +982,11 @@ public final class GameThread {
     public void onSurfaceCreated() {
         Log.i(TAG, "[!!] onSurfaceCreated");
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onSurfaceCreated.1
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnSurfaceCreated();
 
@@ -1081,13 +999,11 @@ public final class GameThread {
     public void onSurfaceDestroyed() {
         Log.i(TAG, "[!!] onSurfaceDestroyed");
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onSurfaceDestroyed.1
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnSurfaceDestroyed();
             }
@@ -1098,15 +1014,11 @@ public final class GameThread {
     public void onSurfaceRedrawNeededAsync(final Runnable drawingFinished) {
         Intrinsics.checkNotNullParameter(drawingFinished, "drawingFinished");
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onSurfaceRedrawNeededAsync.1
-
-
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 ExecutorThread executorThread = GameThread.current;
                 if (executorThread == null) {
@@ -1121,15 +1033,11 @@ public final class GameThread {
 
     public void onTouchEnd(final int pointerId, final float x, final float y) {
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onTouchEnd.1
-
-
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnTouchEnd(pointerId, x, y);
             }
@@ -1139,15 +1047,11 @@ public final class GameThread {
 
     public void onTouchMove(final int pointerId, final float x, final float y) {
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onTouchMove.1
-
-
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnTouchMove(pointerId, x, y);
             }
@@ -1157,15 +1061,11 @@ public final class GameThread {
 
     public void onTouchStart(final int pointerId, final float x, final float y) {
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.onTouchStart.1
-
-
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameNative.implOnTouchStart(pointerId, x, y);
             }
@@ -1203,13 +1103,11 @@ public final class GameThread {
         }
 
         queueEvent(new Function0<Unit>() { // from class: com.rockstargames.oswrapper.GameThread.start.1
-            @Override // kotlin.jvm.functions.Function0
+    @Override
             public /* bridge */ /* synthetic */ Unit invoke() {
                 invoke2();
                 return Unit.INSTANCE;
             }
-
-            /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method */
             public final void invoke2() {
                 GameThread.INSTANCE.processPendingCallbacks();
             }

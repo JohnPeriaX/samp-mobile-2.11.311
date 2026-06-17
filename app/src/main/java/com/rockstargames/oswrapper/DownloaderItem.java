@@ -13,9 +13,6 @@ import java.util.List;
 
 import kotlin.Metadata;
 import kotlin.jvm.internal.Intrinsics;
-
-/* JADX INFO: compiled from: DownloaderActivityBase.kt */
-/* JADX INFO: loaded from: classes.dex */
 final class DownloaderItem {
     private static final String TAG = "DownloaderItem";
     private final ProgressBar barProgress;

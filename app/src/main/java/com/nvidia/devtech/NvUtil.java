@@ -2,8 +2,6 @@ package com.nvidia.devtech;
 
 import android.app.Activity;
 import java.util.HashMap;
-
-/* JADX INFO: loaded from: classes.dex */
 public class NvUtil {
 	private static NvUtil instance = new NvUtil();
 	private Activity activity = null;

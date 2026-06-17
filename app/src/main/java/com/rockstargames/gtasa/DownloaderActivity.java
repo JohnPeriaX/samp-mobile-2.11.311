@@ -7,9 +7,6 @@ import com.rockstargames.oswrapper.DownloaderPackConfig;
 import com.rockstargames.oswrapper.DownloaderPackType;
 import kotlin.Metadata;
 import kotlin.collections.CollectionsKt;
-
-/* JADX INFO: compiled from: DownloaderActivity.kt */
-/* JADX INFO: loaded from: classes.dex */
 public final class DownloaderActivity extends DownloaderActivityBase {
     private final DownloaderConfig config = new DownloaderConfig(
             R.drawable.download_background,
@@ -24,8 +21,7 @@ public final class DownloaderActivity extends DownloaderActivityBase {
 
     public DownloaderActivity() throws Exception {
     }
-
-    @Override // com.rockstargames.oswrapper.DownloaderActivityBase
+    @Override
     protected DownloaderConfig getConfig() {
         return this.config;
     }

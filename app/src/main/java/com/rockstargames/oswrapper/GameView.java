@@ -129,6 +129,9 @@ public   class GameView extends SurfaceView implements SurfaceHolder.Callback2 {
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
         Log.i(TAG, "[!!] onWindowFocusChanged: " + hasWindowFocus);
+        if (this.hasFocus == hasWindowFocus) {
+            return;
+        }
         setHasFocus(hasWindowFocus);
         if (this.hasFocus) {
             onResume();

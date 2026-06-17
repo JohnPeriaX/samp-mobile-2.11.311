@@ -1075,19 +1075,7 @@ public final class GameThread {
 
     public void start(final GamePlatformServices services) {
 
-        WeakReference<GamePlatformServices> servicesWeak;
-        GamePlatformServices gamePlatformServices;
         Intrinsics.checkNotNullParameter(services, "services");
-        ExecutorThread executorThread = current;
-        if (!Intrinsics.areEqual((executorThread == null || (servicesWeak = executorThread.getServicesWeak()) == null || (gamePlatformServices = servicesWeak.get()) == null) ? null : gamePlatformServices.activity, services.activity)) {
-            stop();
-            ExecutorThread executorThread2 = new ExecutorThread(new WeakReference(services));
-            current = executorThread2;
-            Intrinsics.checkNotNull(executorThread2);
-            executorThread2.start();
-        }
-
-
         ExecutorThread ex = current;
         GamePlatformServices existingServices = (ex != null && ex.getServicesWeak() != null)
                 ? ex.getServicesWeak().get() : null;
@@ -1095,7 +1083,7 @@ public final class GameThread {
         boolean sameActivity = (existingServices != null)
                 && existingServices.activity == services.activity;
 
-        if (!sameActivity) {
+        if (!sameActivity || !ex.isAlive()) {
             stop();
             ExecutorThread newThread = new ExecutorThread(new WeakReference<>(services));
             current = newThread;

@@ -45,16 +45,18 @@ public final class SensorHandler implements SensorEventListener, GameViewHandler
         Log.i(TAG, "[!!] enableSensors: " + sensorsActive);
         if (sensorsActive) return;
 
-        if (accelerometer != null) {
+        if (sensorManager != null && accelerometer != null) {
             sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
+            setSensorsActive(true);
         }
         updateRotation();
     }
 
     public final void disableSensors() {
         Log.i(TAG, "[!!] disableSensors: " + sensorsActive);
-        if (sensorsActive && accelerometer != null) {
+        if (sensorsActive && sensorManager != null) {
             sensorManager.unregisterListener(this);
+            setSensorsActive(false);
         }
     }
 
@@ -64,7 +66,7 @@ public final class SensorHandler implements SensorEventListener, GameViewHandler
             Display display = view.getDisplay();
             rotation = (display != null) ? display.getRotation() : 0;
         } else {
-            rotation = windowManager.getDefaultDisplay().getRotation();
+            rotation = windowManager != null ? windowManager.getDefaultDisplay().getRotation() : 0;
         }
         setDisplayRotation(rotation);
     }

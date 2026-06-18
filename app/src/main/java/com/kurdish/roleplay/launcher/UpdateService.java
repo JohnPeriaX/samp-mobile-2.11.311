@@ -11,7 +11,9 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.text.TextUtils;
 import android.util.Log;
+import android.net.Uri;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -70,6 +72,10 @@ public class UpdateService extends Service {
         super.onCreate();
 
         FirebaseRemoteConfig.getInstance().fetchAndActivate();
+
+        mUpdateFiles = new ArrayList<>();
+        mUpdateFilesName = new ArrayList<>();
+        mUpdateFilesSize = new ArrayList<>();
 
         HandlerThread handlerThread = new HandlerThread("ServiceStartArguments", 10);
         handlerThread.start();
@@ -152,6 +158,11 @@ public class UpdateService extends Service {
     {
         setUpdateStatus(UpdateActivity.UpdateStatus.CheckUpdate);
         String urlClient = FirebaseRemoteConfig.getInstance().getString("launcher_client");
+        if (!isHttpUrl(urlClient)) {
+            handleUnavailableUpdateConfig("launcher_client");
+            return;
+        }
+
         Volley.newRequestQueue(getApplicationContext()).add(new StringRequest(urlClient, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -365,6 +376,12 @@ public class UpdateService extends Service {
 
     public void startDataUpdating()
     {
+        String dataBase = FirebaseRemoteConfig.getInstance().getString("launcher_data");
+        if (!isHttpUrl(dataBase)) {
+            handleUnavailableUpdateConfig("launcher_data");
+            return;
+        }
+
         ArrayList arrayList = new ArrayList(mUpdateFiles);
         ArrayList arrayList1 = new ArrayList(mUpdateFilesName);
         ArrayList arrayList2 = new ArrayList(mUpdateFilesSize);
@@ -394,7 +411,6 @@ public class UpdateService extends Service {
             Log.d("Dev Hama", "startDataUpdating " + mUpdateGameDataSize + " " + mUpdateGameDataSizeUpdated);
 
             mDownloadingStatus = true;
-            String dataBase = FirebaseRemoteConfig.getInstance().getString("launcher_data");
             PRDownloader.download(dataBase + arrayList.get(intRef.element), string.replace(arrayList1.get(intRef.element).toString(), ""), String.valueOf(arrayList1.get(intRef.element))).build().setOnStartOrResumeListener(null).setOnPauseListener(null).setOnCancelListener(null).setOnProgressListener(new OnProgressListener() {
                 @Override
                 public void onProgress(Progress progress) {
@@ -466,6 +482,11 @@ public class UpdateService extends Service {
     public void downloadGame()
     {
         Log.d("UpdateService", "downloadGame");
+        if (!isHttpUrl(mUpdateGameURL)) {
+            handleUnavailableUpdateConfig("url_launcher");
+            return;
+        }
+
         mDownloadingStatus = true;
 
         File file = new File(GameStorage.getDownloadDirectory(this), "update.apk");
@@ -523,8 +544,8 @@ public class UpdateService extends Service {
             @Override
             public void onError(Error error) {
                 mDownloadingStatus = false;
-                downloadGame();
                 Log.d("Dev Hama", "error downloadgame");
+                handleUnavailableUpdateConfig("url_launcher download failed");
             }
         });
 
@@ -537,6 +558,35 @@ public class UpdateService extends Service {
         } while (mDownloadingStatus);
 
         mDownloadingStatus = false;
+    }
+
+    private boolean isHttpUrl(String value) {
+        if (TextUtils.isEmpty(value)) {
+            return false;
+        }
+
+        Uri uri = Uri.parse(value.trim());
+        String scheme = uri.getScheme();
+        return ("http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme))
+                && !TextUtils.isEmpty(uri.getHost());
+    }
+
+    private void handleUnavailableUpdateConfig(String key) {
+        Log.w("UpdateService", "Remote Config URL is unavailable: " + key);
+        mDownloadingStatus = false;
+        mGameStatus = UpdateActivity.GameStatus.Unknown;
+        setUpdateStatus(UpdateActivity.UpdateStatus.Undefined);
+
+        Message message = Message.obtain(mInHandler, 5);
+        message.getData().putString("status", mGameStatus.name());
+        message.replyTo = mMessenger;
+        if (mActivityMessenger != null) {
+            try {
+                mActivityMessenger.send(message);
+            } catch (RemoteException exception) {
+                Log.w("UpdateService", "Unable to report unavailable update config", exception);
+            }
+        }
     }
 
     public boolean isGameUpdateExists() {

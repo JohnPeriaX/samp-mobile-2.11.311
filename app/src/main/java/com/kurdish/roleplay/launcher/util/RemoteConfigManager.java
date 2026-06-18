@@ -27,7 +27,11 @@ public class RemoteConfigManager {
 
         remoteConfig.fetchAndActivate()
                 .addOnCompleteListener(task -> {
-                    Log.d("RemoteConfig", "Fetched & activated");
+                    if (task.isSuccessful()) {
+                        Log.d("RemoteConfig", "Fetched and activated");
+                    } else {
+                        Log.w("RemoteConfig", "Fetch failed; local values will be used");
+                    }
                 });
 
         isInitialized = true;
@@ -36,8 +40,11 @@ public class RemoteConfigManager {
     // Get parameter string
     public static String getString(String key) {
         init();
+        if (!remoteConfig.getAll().containsKey(key)) {
+            Log.w("RemoteConfig", "No local or remote value for key: " + key);
+            return "";
+        }
         String val = remoteConfig.getString(key);
-        Log.e("RC_DEBUG", key + " = " + val);
         return val;
     }
 }

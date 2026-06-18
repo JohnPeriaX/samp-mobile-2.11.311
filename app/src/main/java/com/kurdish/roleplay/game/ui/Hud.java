@@ -1,7 +1,9 @@
 package com.kurdish.roleplay.game.ui;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.kurdish.roleplay.R;
@@ -40,6 +43,8 @@ public class Hud {
     public SeekArc hud_health, hud_armour, hud_eat, hud_drink;
 
     private final Handler handler = new Handler();
+    private final RequestQueue requestQueue;
+    private final Runnable onlineRefresh = this::fetchOnline;
 
     public TextView textPlayers, PlayerId;
 
@@ -48,6 +53,7 @@ public class Hud {
 
     public Hud(Activity aactivity) {
         activity = aactivity;
+        requestQueue = Volley.newRequestQueue(aactivity.getApplicationContext());
         hud_layout = aactivity.findViewById(R.id.gamehud);
 
         if (hud_layout == null) {
@@ -87,6 +93,12 @@ public class Hud {
 
     private void fetchOnline() {
         String url = RemoteConfigManager.getString("players");
+        if (!isHttpUrl(url)) {
+            Log.w("Hud", "Skipping online-player request: Remote Config URL is unavailable");
+            scheduleOnlineRefresh(30000);
+            return;
+        }
+
         StringRequest request = new StringRequest(Request.Method.GET, url,
                 response -> {
                     try {
@@ -101,15 +113,31 @@ public class Hud {
                             Log.e("MainActivity", "JSON parse error: " + jsonException.getMessage());
                         }
                     }
-                    handler.postDelayed(this::fetchOnline, 5000);
+                    scheduleOnlineRefresh(5000);
                 },
                 error -> {
-                    Log.e("MainActivity", "Volley error: " + error.toString());
-                    handler.postDelayed(this::fetchOnline, 5000);
+                    Log.e("Hud", "Online-player request failed: " + error);
+                    scheduleOnlineRefresh(30000);
                 }
         );
 
-        Volley.newRequestQueue(activity.getApplicationContext()).add(request);
+        requestQueue.add(request);
+    }
+
+    private boolean isHttpUrl(String value) {
+        if (TextUtils.isEmpty(value)) {
+            return false;
+        }
+
+        Uri uri = Uri.parse(value.trim());
+        String scheme = uri.getScheme();
+        return ("http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme))
+                && !TextUtils.isEmpty(uri.getHost());
+    }
+
+    private void scheduleOnlineRefresh(long delayMillis) {
+        handler.removeCallbacks(onlineRefresh);
+        handler.postDelayed(onlineRefresh, delayMillis);
     }
 
     private void updateTime() {
@@ -159,4 +187,3 @@ public class Hud {
         Util.HideLayout(hud_layout, true);
     }
 }
-

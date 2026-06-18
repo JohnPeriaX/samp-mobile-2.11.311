@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,6 +46,8 @@ public class Hud {
     private final Handler handler = new Handler();
     private final RequestQueue requestQueue;
     private final Runnable onlineRefresh = this::fetchOnline;
+    private boolean paused;
+    private int visibilityBeforePause = View.GONE;
 
     public TextView textPlayers, PlayerId;
 
@@ -180,10 +183,33 @@ public class Hud {
     }
 
     public void ShowHud() {
+        if (paused) {
+            visibilityBeforePause = View.VISIBLE;
+            return;
+        }
         Util.ShowLayout(hud_layout, true);
     }
 
     public void HideHud() {
+        if (paused) {
+            visibilityBeforePause = View.GONE;
+            return;
+        }
         Util.HideLayout(hud_layout, true);
+    }
+
+    public void setPaused(boolean pause) {
+        if (paused == pause) {
+            return;
+        }
+
+        paused = pause;
+        if (pause) {
+            visibilityBeforePause = hud_layout.getVisibility();
+            hud_layout.clearFocus();
+            hud_layout.setVisibility(View.GONE);
+        } else {
+            hud_layout.setVisibility(visibilityBeforePause);
+        }
     }
 }

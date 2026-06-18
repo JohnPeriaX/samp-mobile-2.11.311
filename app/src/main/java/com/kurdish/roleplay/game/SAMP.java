@@ -143,9 +143,16 @@ public class SAMP extends GTASA implements CustomKeyboard.InputListener, HeightP
             @Override
             public void run() {
                 if (pause) {
+                    mKeyboard.HideInputLayout();
+                    mHud.setPaused(true);
+                    mSpeedometer.setPaused(true);
+                    mTab.setPaused(true);
                     mDialog.hideWithoutReset();
                     mAttachEdit.hideWithoutReset();
                 } else {
+                    mHud.setPaused(false);
+                    mSpeedometer.setPaused(false);
+                    mTab.setPaused(false);
                     if (mDialog.isShow)
                         mDialog.showWithOldContent();
                     if (mAttachEdit.isShow)

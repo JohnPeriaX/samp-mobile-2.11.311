@@ -45,6 +45,8 @@ public class Speedometer {
     private Runnable leftBlinker, rightBlinker;
 
     private boolean mKeyboardVisible = false;
+    private boolean mPaused = false;
+    private int mVisibilityBeforePause = View.GONE;
 
     public native void sendClick(int clickId);
 
@@ -412,7 +414,7 @@ public class Speedometer {
     public void UpdateSpeedInfo(int speed, int fuel, int hp, int mileage, int engine, int light, int belt, int lock) {
         Log.d("Speedometer", "UpdateSpeedInfo: speed=" + speed + ", fuel=" + fuel + ", hp=" + hp);
 
-        if (mInputLayout != null && mInputLayout.getVisibility() != View.VISIBLE && !isKeyboardVisible()) {
+        if (!mPaused && mInputLayout != null && mInputLayout.getVisibility() != View.VISIBLE && !isKeyboardVisible()) {
             Log.d("Speedometer", "Auto-showing speedometer on data update");
             ShowSpeed();
         }
@@ -442,7 +444,7 @@ public class Speedometer {
 
     public void ShowSpeed() {
         Log.d("Speedometer", "ShowSpeed called");
-        if (mInputLayout != null && !isKeyboardVisible()) {
+        if (mInputLayout != null && !mPaused && !isKeyboardVisible()) {
             Util.ShowLayout(mInputLayout, false);
             Log.d("Speedometer", "Speedometer should be visible now");
         } else {
@@ -454,6 +456,21 @@ public class Speedometer {
        // Log.d("Speedometer", "HideSpeed called");
         if (mInputLayout != null) {
             Util.HideLayout(mInputLayout, false);
+        }
+    }
+
+    public void setPaused(boolean paused) {
+        if (mPaused == paused || mInputLayout == null) {
+            return;
+        }
+
+        mPaused = paused;
+        if (paused) {
+            mVisibilityBeforePause = mInputLayout.getVisibility();
+            mInputLayout.clearFocus();
+            mInputLayout.setVisibility(View.GONE);
+        } else {
+            mInputLayout.setVisibility(mVisibilityBeforePause);
         }
     }
 

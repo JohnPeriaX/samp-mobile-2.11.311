@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tab {
+    private boolean mPaused;
+    private int mVisibilityBeforePause = View.GONE;
     public ImageView mClearImg;
     public ConstraintLayout mInputLayout;
     public TextView mOnline;
@@ -117,6 +119,10 @@ public class Tab {
     }
 
     public void show(boolean isAnim) {
+        if (mPaused) {
+            mVisibilityBeforePause = View.VISIBLE;
+            return;
+        }
         // fix doubling stats
         //NvEventQueueActivity.getInstance().hideHudButtonTab();
 
@@ -128,6 +134,21 @@ public class Tab {
         mSearch.setText("");
         setVisibleIconInSearchView("");
         Util.ShowLayout(this.mInputLayout, isAnim);
+    }
+
+    public void setPaused(boolean paused) {
+        if (mPaused == paused) {
+            return;
+        }
+
+        mPaused = paused;
+        if (paused) {
+            mVisibilityBeforePause = mInputLayout.getVisibility();
+            mInputLayout.clearFocus();
+            mInputLayout.setVisibility(View.GONE);
+        } else {
+            mInputLayout.setVisibility(mVisibilityBeforePause);
+        }
     }
 
     public void setVisibleIconInSearchView(String str) {

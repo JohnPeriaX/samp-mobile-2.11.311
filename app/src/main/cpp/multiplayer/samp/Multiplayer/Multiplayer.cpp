@@ -14,6 +14,7 @@
 #include "gta-reversed/game_sa/Models/ModelInfo.h"
 #include "gta-reversed/game_sa/Collision/Collision.h"
 #include "gta-reversed/game_sa/World.h"
+#include "gta-reversed/game_sa/Timer.h"
 
 void ApplySAMPPatchesInGame();
 void InitScripting();
@@ -339,7 +340,7 @@ void CGame::SetGravity(float fGravity)
 
 bool CGame::IsGamePaused()
 {
-	return *(uint8_t*)(g_libGTASA + 0xA1A378);
+	return CTimer::GetIsPaused();
 }
 
 bool CGame::IsGameLoaded()

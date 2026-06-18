@@ -1,167 +1,32 @@
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:020617,25:111827,55:7C3AED,80:06B6D4,100:00F5FF&height=300&section=header&text=GTA%20SA%20Mobile%202.11&fontSize=54&fontColor=F8FAFC&animation=fadeIn&fontAlignY=34&desc=CYBER%20SPACE%20SOURCE%20ARCHIVE%20%E2%80%A2%20SAMP%20MOBILE%202.11.311&descAlignY=56&descSize=17" alt="Cyber Space Header">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:050505,28:17130A,55:D4AF37,78:7A5200,100:050505&height=290&section=header&text=SAMP%20MOBILE%202.11.311&fontSize=48&fontColor=FFF3C4&animation=fadeIn&fontAlignY=35&desc=BLACK%20%2F%20GOLD%20CYBERPUNK%20SOURCE%20CONTINUATION&descAlignY=56&descSize=16" width="100%" alt="SAMP Mobile 2.11.311 black and gold cyberpunk header">
 </p>
 
 <p align="center">
-  <a href="https://github.com/JohnPeriaX/samp-mobile-2.11.311">
-    <img src="https://img.shields.io/badge/samp-mobile-2.11.311-00F5FF?style=for-the-badge&logo=github&logoColor=020617&labelColor=020617" alt="Repository Name">
-  </a>
+  <a href="#english"><img src="https://img.shields.io/badge/ENGLISH-080808?style=for-the-badge&logo=readme&logoColor=FFD65A&labelColor=080808" alt="English"></a>
+  <a href="#ภาษาไทย"><img src="https://img.shields.io/badge/ภาษาไทย-D4AF37?style=for-the-badge&logo=readme&logoColor=080808&labelColor=D4AF37" alt="ภาษาไทย"></a>
+  <a href="#build--การ-build"><img src="https://img.shields.io/badge/BUILD-151008?style=for-the-badge&logo=gradle&logoColor=FFD65A" alt="Build"></a>
+  <a href="#credits--เครดิต"><img src="https://img.shields.io/badge/CREDITS-2A1C00?style=for-the-badge&logo=github&logoColor=FFD65A" alt="Credits"></a>
 </p>
 
 <p align="center">
-  <b>Live GitHub Repository Card</b><br>
-  <sub>Values below are pulled from GitHub through Shields.io and refresh automatically.</sub>
-</p>
-
-<table align="center">
-  <tr>
-    <td align="center" colspan="5">
-      <a href="https://github.com/JohnPeriaX/samp-mobile-2.11.311"><b>🔮 samp-mobile-2.11.311</b></a><br>
-      <sub>SAMP Mobile 2.11.311</sub>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <a href="https://github.com/JohnPeriaX/samp-mobile-2.11.311">
-        <img src="https://img.shields.io/github/languages/top/JohnPeriaX/samp-mobile-2.11.311?style=for-the-badge&label=Language&logo=c&logoColor=white&color=64748B&labelColor=020617&cacheSeconds=300" alt="Top Language">
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/JohnPeriaX/samp-mobile-2.11.311/stargazers">
-        <img src="https://img.shields.io/github/stars/JohnPeriaX/samp-mobile-2.11.311?style=for-the-badge&label=Stars&logo=github&logoColor=white&color=A78BFA&labelColor=020617&cacheSeconds=300" alt="GitHub Stars">
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/JohnPeriaX/samp-mobile-2.11.311/watchers">
-        <img src="https://img.shields.io/github/watchers/JohnPeriaX/samp-mobile-2.11.311?style=for-the-badge&label=Watching&logo=github&logoColor=white&color=38BDF8&labelColor=020617&cacheSeconds=300" alt="GitHub Watchers">
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/JohnPeriaX/samp-mobile-2.11.311/forks">
-        <img src="https://img.shields.io/github/forks/JohnPeriaX/samp-mobile-2.11.311?style=for-the-badge&label=Forks&logo=github&logoColor=white&color=7C3AED&labelColor=020617&cacheSeconds=300" alt="GitHub Forks">
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/JohnPeriaX/samp-mobile-2.11.311/issues">
-        <img src="https://img.shields.io/github/issues/JohnPeriaX/samp-mobile-2.11.311?style=for-the-badge&label=Issues&logo=github&logoColor=white&color=F59E0B&labelColor=020617&cacheSeconds=300" alt="GitHub Issues">
-      </a>
-    </td>
-  </tr>
-</table>
-
-
-<h1 align="center">SAMP Mobile 2.11.311</h1>
-
-<p align="center">
-  <b>Android source snapshot for GTA San Andreas Mobile 2.11 / SAMP Mobile development.</b>
+  <img src="https://img.shields.io/badge/STATUS-EXPERIMENTAL-D4AF37?style=flat-square&labelColor=080808" alt="Experimental">
+  <img src="https://img.shields.io/badge/GTA-2.11.311-FFB000?style=flat-square&labelColor=080808" alt="GTA 2.11.311">
+  <img src="https://img.shields.io/badge/ABI-arm64--v8a-FFD65A?style=flat-square&labelColor=080808" alt="arm64-v8a">
+  <img src="https://img.shields.io/badge/AI-ASSISTED-8A6500?style=flat-square&labelColor=080808" alt="AI-assisted">
 </p>
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=900&size=22&duration=2200&pause=650&color=00F5FF&center=true&vCenter=true&width=900&lines=Booting+Android+Launcher...;Linking+Java+%E2%86%94+JNI+%E2%86%94+C%2B%2B...;Loading+SAMP+Mobile+Research+Snapshot...;Entering+Cyber+Space+Development+Mode...;Preservation+%E2%80%A2+Research+%E2%80%A2+Technical+Study" alt="Cyber Typing Animation">
+  <b>Android · Java · JNI · C++ · CMake · Gradle</b><br>
+  <sub>An unofficial research and development continuation—not a production release.</sub>
 </p>
 
 <p align="center">
-  <a href="#english"><img src="https://img.shields.io/badge/ENGLISH-020617?style=for-the-badge&logo=readme&logoColor=00F5FF" alt="English"></a>
-  <a href="#thai"><img src="https://img.shields.io/badge/THAI-111827?style=for-the-badge&logo=readme&logoColor=A78BFA" alt="Thai"></a>
-  <a href="#build"><img src="https://img.shields.io/badge/BUILD-0F172A?style=for-the-badge&logo=gradle&logoColor=38BDF8" alt="Build"></a>
-  <a href="#mission-control"><img src="https://img.shields.io/badge/MISSION_CONTROL-1E1B4B?style=for-the-badge&logo=rocket&logoColor=00F5FF" alt="Mission Control"></a>
-  <a href="#live-repository-metrics"><img src="https://img.shields.io/badge/LIVE_STATS-0F172A?style=for-the-badge&logo=github&logoColor=00F5FF" alt="Live Stats"></a>
-  <a href="#ai-development-notice"><img src="https://img.shields.io/badge/AI_ASSISTED-312E81?style=for-the-badge&logo=openai&logoColor=FFFFFF" alt="AI Assisted Development"></a>
-  <a href="#project-scope"><img src="https://img.shields.io/badge/SCOPE-BASIC_READY-0F766E?style=for-the-badge&logo=target&logoColor=FFFFFF" alt="Project Scope"></a>
-  <a href="#disclaimer"><img src="https://img.shields.io/badge/DISCLAIMER-450A0A?style=for-the-badge&logo=warning&logoColor=FCA5A5" alt="Disclaimer"></a>
+  <img src="https://capsule-render.vercel.app/api?type=rect&color=0:050505,25:D4AF37,50:FFF3C4,75:D4AF37,100:050505&height=4" width="100%" alt="Gold divider">
 </p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android">
-  <img src="https://img.shields.io/badge/Java-0EA5E9?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java">
-  <img src="https://img.shields.io/badge/C%2B%2B-7C3AED?style=for-the-badge&logo=cplusplus&logoColor=white" alt="C++">
-  <img src="https://img.shields.io/badge/JNI-06B6D4?style=for-the-badge" alt="JNI">
-  <img src="https://img.shields.io/badge/CMake-0891B2?style=for-the-badge&logo=cmake&logoColor=white" alt="CMake">
-  <img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white" alt="Gradle">
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/STATUS-RESEARCH%20SNAPSHOT-00F5FF?style=flat-square" alt="Research Snapshot">
-  <img src="https://img.shields.io/badge/PRODUCTION-NOT%20READY-F43F5E?style=flat-square" alt="Not Production Ready">
-  <img src="https://img.shields.io/badge/SDK-36-38BDF8?style=flat-square" alt="SDK 36">
-  <img src="https://img.shields.io/badge/NDK-26.2.11394342-A78BFA?style=flat-square" alt="NDK">
-  <img src="https://img.shields.io/badge/ABI-armv7%20%7C%20arm64-22D3EE?style=flat-square" alt="ABI">
-</p>
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=androidstudio,java,cpp,cmake,gradle,github&theme=dark" alt="Tech Icons">
-</p>
-
-<a id="live-repository-metrics"></a>
-
-## 📡 Live Repository Metrics
-
-<p align="center">
-  <a href="https://github.com/JohnPeriaX/samp-mobile-2.11.311/stargazers">
-    <img src="https://img.shields.io/github/stars/JohnPeriaX/samp-mobile-2.11.311?style=for-the-badge&label=Stars&logo=github&color=00F5FF&labelColor=020617&cacheSeconds=300" alt="GitHub Stars">
-  </a>
-  <a href="https://github.com/JohnPeriaX/samp-mobile-2.11.311/watchers">
-    <img src="https://img.shields.io/github/watchers/JohnPeriaX/samp-mobile-2.11.311?style=for-the-badge&label=Watching&logo=github&color=38BDF8&labelColor=020617&cacheSeconds=300" alt="GitHub Watchers">
-  </a>
-  <a href="https://github.com/JohnPeriaX/samp-mobile-2.11.311/forks">
-    <img src="https://img.shields.io/github/forks/JohnPeriaX/samp-mobile-2.11.311?style=for-the-badge&label=Forks&logo=github&color=A78BFA&labelColor=020617&cacheSeconds=300" alt="GitHub Forks">
-  </a>
-  <a href="https://github.com/JohnPeriaX/samp-mobile-2.11.311/issues">
-    <img src="https://img.shields.io/github/issues/JohnPeriaX/samp-mobile-2.11.311?style=for-the-badge&label=Issues&logo=github&color=F59E0B&labelColor=020617&cacheSeconds=300" alt="GitHub Issues">
-  </a>
-</p>
-
-<p align="center">
-  <a href="https://github.com/JohnPeriaX/samp-mobile-2.11.311/pulls">
-    <img src="https://img.shields.io/github/issues-pr/JohnPeriaX/samp-mobile-2.11.311?style=for-the-badge&label=Pull%20Requests&logo=github&color=7C3AED&labelColor=020617&cacheSeconds=300" alt="GitHub Pull Requests">
-  </a>
-  <a href="https://github.com/JohnPeriaX/samp-mobile-2.11.311/commits/main">
-    <img src="https://img.shields.io/github/last-commit/JohnPeriaX/samp-mobile-2.11.311?style=for-the-badge&label=Last%20Commit&logo=git&color=22D3EE&labelColor=020617&cacheSeconds=300" alt="GitHub Last Commit">
-  </a>
-  <a href="https://github.com/JohnPeriaX/samp-mobile-2.11.311/graphs/contributors">
-    <img src="https://img.shields.io/github/contributors/JohnPeriaX/samp-mobile-2.11.311?style=for-the-badge&label=Contributors&logo=github&color=06B6D4&labelColor=020617&cacheSeconds=300" alt="GitHub Contributors">
-  </a>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/github/repo-size/JohnPeriaX/samp-mobile-2.11.311?style=flat-square&label=Repo%20Size&color=00F5FF&labelColor=020617&cacheSeconds=300" alt="Repository Size">
-  <img src="https://img.shields.io/github/languages/top/JohnPeriaX/samp-mobile-2.11.311?style=flat-square&label=Top%20Language&color=A78BFA&labelColor=020617&cacheSeconds=300" alt="Top Language">
-  <img src="https://img.shields.io/github/license/JohnPeriaX/samp-mobile-2.11.311?style=flat-square&label=License&color=38BDF8&labelColor=020617&cacheSeconds=300" alt="License">
-</p>
-
-<p align="center">
-  <sub>Auto-updated from GitHub via Shields.io. This is the closest README-safe realtime mode; GitHub and Shields image cache may delay changes briefly.</sub>
-</p>
-
----
-
-<p align="center">
-  <a href="https://github.com/JohnPeriaX/samp-mobile-2.11.311">
-    <img src="https://img.shields.io/badge/Open%20Repository-020617?style=for-the-badge&logo=github&logoColor=00F5FF" alt="Open Repository">
-  </a>
-  <img src="https://img.shields.io/github/commit-activity/m/JohnPeriaX/samp-mobile-2.11.311?style=for-the-badge&label=Monthly%20Commits&logo=git&color=00F5FF&labelColor=020617&cacheSeconds=300" alt="Monthly Commit Activity">
-  <img src="https://img.shields.io/github/last-commit/JohnPeriaX/samp-mobile-2.11.311?style=for-the-badge&label=Last%20Commit&logo=git&color=22D3EE&labelColor=020617&cacheSeconds=300" alt="Last Commit">
-</p>
-
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=rect&color=0:00F5FF,30:7C3AED,70:111827,100:020617&height=5&section=footer" width="100%" alt="Neon Divider">
-</p>
-
-<a id="mission-control"></a>
-
-## 🛰️ Mission Control
-
-<table>
-  <tr>
-    <td align="center"><b>PROJECT</b><br><code>SAMP Mobile 2.11.311</code></td>
-    <td align="center"><b>MODE</b><br><code>Research Snapshot</code></td>
-    <td align="center"><b>ENGINE LAYER</b><br><code>Java / JNI / C++</code></td>
-    <td align="center"><b>STATUS</b><br><code>Experimental</code></td>
-  </tr>
-</table>
 
 > [!IMPORTANT]
-> This repository is a development and preservation reference. It is unofficial, unfinished, and not production-ready.
+> **Credit boundary:** the imported source snapshot at commit [`54eef844`](https://github.com/JohnPeriaX/samp-mobile-2.11.311/commit/54eef844e7b1ee48c8530855b695ebe8d67d0201) is treated as the upstream baseline associated with **xdatsec** and the legacy contributors named below. Work after that checkpoint is the **JohnPeriaX continuation**. The upstream Git history was not included in the import, so this repository does not claim more precise authorship than the available evidence supports.
 
 ---
 
@@ -169,145 +34,223 @@
 
 # English
 
-## ✦ Overview
+## Project overview
 
-**SAMP Mobile 2.11.311** is an Android source snapshot for a **GTA SA Mobile 2.11 / SAMP Mobile** development project.
+**SAMP Mobile 2.11.311** is an Android source snapshot and an ongoing technical continuation for **GTA: San Andreas Mobile 2.11 / SAMP Mobile**. It contains the Android launcher, Java runtime layer, JNI bridge, native C++ game/SAMP systems, resources, assets, and native dependencies required for research and further development.
 
-It is maintained as a **development, research, preservation, and technical reference** archive. The repository includes Android launcher code, Java source, JNI/native bridge code, C++ game/SAMP code, assets, resources, and native library integration.
+This repository is unofficial, experimental, and unfinished. It should be used as a development reference—not as a verified production-ready release.
 
----
+## Source lineage and ownership boundary
 
-<a id="ai-development-notice"></a>
+The repository deliberately separates the imported baseline from later work:
 
-## ✦ AI-Assisted Development Notice
+| Layer | Evidence boundary | Attribution |
+| --- | --- | --- |
+| Upstream baseline | Initial imported snapshot: `54eef844` | Associated with **xdatsec**, while preserving **Alyn SAMP**, **x1y2z**, and other legacy credits found in the source |
+| Continued development | Every repository commit after `54eef844` | Directed and maintained by **JohnPeriaX**, with AI-assisted implementation and review |
+| Third-party components | Vendor libraries, GTA-related interfaces, assets, and external dependencies | Remain the property/work of their respective authors and rights holders |
 
-> [!NOTE]
-> This repository is developed primarily through an AI-assisted workflow.
+### What the upstream baseline already contained
 
-This source archive is maintained as an experimental development project where most research, planning, code generation, refactoring, fixes, commits, and repository updates may be performed with the assistance of AI tools.
+At the import checkpoint, the project already provided:
 
-**JohnPeriaX** acts mainly as the project owner, operator, and prompt/skill provider. The role is to provide direction, requirements, prompts, review context, and development goals while allowing the AI workflow to analyze, implement, revise, and improve the project as independently as possible.
+- Android launcher and Gradle project structure
+- Java game/runtime wrappers and Android resources
+- JNI/native bridge and CMake integration
+- Existing C++ SAMP/game framework, networking, GUI, hooks, pools, and vendor code
+- Native libraries, assets, and GTA 2.11.311-oriented project configuration
 
-The current AI-assisted workflow uses **ChatGPT** as a main development assistant. In the future, other AI models, agents, or automation tools may also be used to support development.
+These foundations are **not claimed as original JohnPeriaX work**. They remain credited to the upstream source lineage and their respective contributors.
 
-Because AI-generated or AI-assisted work can contain mistakes, incomplete logic, incorrect assumptions, security issues, or unstable behavior, all important code, technical information, build output, and runtime behavior should be manually reviewed and tested before use.
+### Where the JohnPeriaX continuation begins
 
-This project should be treated as an **experimental research snapshot**, not a production-ready release. Before using, modifying, redistributing, or deploying anything from this repository, please verify the code, test the build, inspect dependencies, review native libraries/assets, and confirm that the project is suitable for your own environment.
+The continuation begins immediately after `54eef844`. Verified work recorded in this repository includes:
 
----
+- Added and stabilized PC-like **3D text label**, **pickup**, **actor**, and **menu pool** lifecycles
+- Refactored the legacy FPS path and improved frame pacing with display refresh-rate awareness
+- Fixed far-distance remote-ped visibility
+- Removed obsolete 32-bit native paths and aligned active native work with **GTA 2.11 arm64**
+- Preserved SA-MP authentication word behavior on arm64
+- Reworked building-removal matching, object draw distance, forced rendering, camera hooks, and renderer behavior
+- Updated GTA 2.11.311 Java wrappers, application metadata, lifecycle handling, and touch-slot stability
+- Hardened HUD polling/input behavior and handled unavailable Firebase update configuration
+- Improved 2.11 patch organization, repository documentation, and Git hygiene
 
-<a id="project-scope"></a>
+This list describes committed continuation work only. It does not transfer ownership of the imported baseline or third-party code to JohnPeriaX.
 
-## ✦ Development Target & Project Scope
+## Development status
 
-> [!IMPORTANT]
-> The goal of this project is to let the AI-assisted workflow bring the source to a basic usable state, similar in structure and purpose to common SAMP Mobile source bases such as 1.08, 2.0, or 2.10.
+| Area | Status | Notes |
+| --- | :---: | --- |
+| Android launcher | Present | Experimental launcher/runtime integration |
+| Java / JNI bridge | Active | Continued alignment with GTA 2.11.311 |
+| Native C++ core | Active | arm64-oriented hooks, patches, pools, and renderer work |
+| Multiplayer systems | In progress | Several systems exist but still require runtime validation |
+| Production release | Not ready | Bugs, crashes, incomplete paths, and device-specific issues may remain |
 
-This repository is intended to reach a **basic ready-to-use foundation** for development, study, testing, and further modification. It may provide the essential structure, build setup, runtime flow, and source organization expected from a typical SRC archive.
+## AI-assisted development notice
 
-However, it should not be expected to match every feature, private fix, optimization, compatibility layer, or commercial-level completeness found in expensive privately sold source packages. Some systems may be simplified, incomplete, experimental, unstable, or still waiting for future improvement.
+JohnPeriaX is the repository owner, project operator, and development director. Prompts, requirements, test evidence, and technical direction are provided by JohnPeriaX; AI tools may assist with analysis, implementation, refactoring, documentation, commits, and validation.
 
-The AI workflow will continue improving the project until the basic foundation is considered complete enough for the intended research and development purpose. After that point, updates may slow down, pause, or stop unless new prompts, requirements, fixes, or development resources are provided.
+AI-assisted changes can still contain incorrect assumptions, incomplete logic, security issues, or runtime regressions. Review and test all important changes before use or redistribution.
 
-If commits stop appearing or the repository becomes quiet for several days, please understand that development has probably paused because the available AI token budget has run out. In simple terms: **no commits may simply mean no tokens left.**
+## Technical profile
 
----
+| Item | Current value |
+| --- | --- |
+| Package namespace | `com.kurdish.roleplay` |
+| Minimum SDK | `28` |
+| Target / Compile SDK | `36` / `36` |
+| NDK | `26.2.11394342` |
+| Native build | CMake through Gradle |
+| Active ABI | `arm64-v8a` |
+| Project state | Experimental research snapshot |
 
-## ✦ Core Modules
-
-<table>
-  <tr>
-    <td align="center"><b>Android</b><br>Launcher Project<br><br>✅ Present</td>
-    <td align="center"><b>Java</b><br>Runtime Layer<br><br>✅ Present</td>
-    <td align="center"><b>JNI</b><br>Native Bridge<br><br>✅ Present</td>
-    <td align="center"><b>C++</b><br>Game / SAMP Layer<br><br>✅ Present</td>
-  </tr>
-  <tr>
-    <td align="center"><b>Assets</b><br>Resources<br><br>✅ Present</td>
-    <td align="center"><b>Native Libs</b><br>Binary Layer<br><br>✅ Present</td>
-    <td align="center"><b>Storage</b><br>Shared Path Work<br><br>⚙️ In Progress</td>
-    <td align="center"><b>Release</b><br>Production Build<br><br>❌ Not Ready</td>
-  </tr>
-</table>
-
----
-
-## ✦ Tech Profile
-
-| Item                | Value                      |
-| ------------------- | -------------------------- |
-| Package namespace   | `com.kurdish.roleplay`     |
-| Minimum SDK         | `28`                       |
-| Target SDK          | `36`                       |
-| Compile SDK         | `36`                       |
-| NDK version         | `26.2.11394342`            |
-| Native build system | `CMake`                    |
-| Supported ABI       | `armeabi-v7a`, `arm64-v8a` |
-
----
-
-## ✦ Runtime Flow
-
-```text
-┌─────────────────────────┐
-│   Android Launcher      │
-└───────────┬─────────────┘
-            │
-            ▼
-┌─────────────────────────┐
-│   Java Runtime Layer    │
-└───────────┬─────────────┘
-            │
-            ▼
-┌─────────────────────────┐
-│   JNI Native Bridge     │
-└───────────┬─────────────┘
-            │
-            ▼
-┌─────────────────────────┐
-│   C++ Game / SAMP Core  │
-└───────────┬─────────────┘
-            │
-            ▼
-┌─────────────────────────┐
-│ Shared Game Storage Path│
-└─────────────────────────┘
-```
-
-Recent project work focuses on a shared game storage location between Android Java and native C++ so game files, settings, launcher data, and SAMP-related files resolve through the same base path.
-
----
-
-## ✦ Repository Layout
+## Repository structure
 
 ```text
 .
-├── app/
-│   └── src/main/
-│       ├── assets/      Game and launcher assets
-│       ├── cpp/         Native C++ / JNI source
-│       ├── java/        Android Java source
-│       ├── jniLibs/     Native library binaries
-│       └── res/         Android resources
-├── gradle/              Gradle wrapper files
-├── build.gradle         Root Gradle config
-├── settings.gradle      Android project settings
+├── app/src/main/
+│   ├── assets/       Game and launcher assets
+│   ├── cpp/          JNI, native C++, SAMP, hooks, and vendor code
+│   ├── java/         Android launcher and game runtime code
+│   ├── jniLibs/      Native binary dependencies
+│   └── res/          Android resources
+├── gradle/           Gradle wrapper
+├── build.gradle      Root build configuration
+├── settings.gradle   Android project settings
 └── README.md
 ```
 
+## Known limitations
+
+- Runtime behavior has not been validated on every Android device or OS version
+- Some hooks and patches may still be incomplete or version-sensitive
+- Native crashes, visual issues, and multiplayer incompatibilities may remain
+- Included third-party/native material must be reviewed before redistribution
+- No production-readiness or compatibility guarantee is provided
+
 ---
 
-<a id="build"></a>
+<a id="ภาษาไทย"></a>
 
-## ✦ Build
+# ภาษาไทย
 
-Use the Gradle wrapper from the repository root:
+## ภาพรวมโปรเจกต์
 
-```powershell
-.\gradlew.bat assembleDebug
+**SAMP Mobile 2.11.311** เป็น source snapshot และโปรเจกต์พัฒนาต่อยอดเชิงเทคนิคสำหรับ **GTA: San Andreas Mobile 2.11 / SAMP Mobile** บน Android ภายในประกอบด้วย Android launcher, Java runtime, JNI bridge, native C++ game/SAMP systems, resources, assets และ native dependencies สำหรับการศึกษาและพัฒนาต่อ
+
+Repository นี้เป็นโปรเจกต์ไม่เป็นทางการ อยู่ในสถานะทดลองและยังไม่สมบูรณ์ ควรใช้เป็นแหล่งอ้างอิงสำหรับการพัฒนา ไม่ใช่ release ที่ยืนยันว่าพร้อมใช้งานจริง
+
+## ที่มาของ Source และเส้นแบ่งผลงาน
+
+Repository นี้แยก source ต้นฉบับกับงานพัฒนาต่ออย่างชัดเจน:
+
+| ส่วนงาน | เส้นแบ่งที่ตรวจสอบได้ | เครดิต |
+| --- | --- | --- |
+| Source ต้นฉบับ | Snapshot แรกที่นำเข้าใน commit `54eef844` | เชื่อมโยงกับ **xdatsec** พร้อมคงเครดิตเดิมของ **Alyn SAMP**, **x1y2z** และผู้มีส่วนร่วมรายอื่นที่ปรากฏใน source |
+| งานพัฒนาต่อ | ทุก commit หลัง `54eef844` | ควบคุมทิศทางและดูแลโดย **JohnPeriaX** พร้อมกระบวนการพัฒนาแบบ AI-assisted |
+| Third-party | Vendor libraries, GTA interfaces, assets และ dependencies ภายนอก | เป็นผลงานหรือทรัพย์สินของผู้สร้างและผู้ถือสิทธิ์แต่ละราย |
+
+### ต้นฉบับมีอะไรอยู่แล้ว
+
+ณ จุดที่นำเข้า source ต้นฉบับมีพื้นฐานเหล่านี้อยู่แล้ว:
+
+- โครงสร้าง Android launcher และ Gradle project
+- Java game/runtime wrappers และ Android resources
+- JNI/native bridge และ CMake integration
+- C++ SAMP/game framework, networking, GUI, hooks, pools และ vendor code ที่มีอยู่เดิม
+- Native libraries, assets และการตั้งค่าโปรเจกต์ที่วางไว้สำหรับ GTA 2.11.311
+
+ส่วนพื้นฐานเหล่านี้ **ไม่ถูกอ้างว่าเป็นผลงานต้นฉบับของ JohnPeriaX** และยังคงเครดิตให้ upstream source กับผู้มีส่วนร่วมเดิมตามหลักฐานที่มี
+
+### งานของ JohnPeriaX เริ่มจากตรงไหน
+
+งานพัฒนาต่อเริ่มหลัง commit `54eef844` โดยงานที่มีหลักฐานใน commit history ของ repository นี้ประกอบด้วย:
+
+- เพิ่มและปรับเสถียรภาพระบบ **3D text label**, **pickup**, **actor** และ **menu pool** ให้มี lifecycle ใกล้เคียง PC
+- Refactor ระบบ FPS เดิม ปรับ frame pacing และตรวจ refresh rate ของหน้าจอ
+- แก้ปัญหา remote ped หายเมื่ออยู่ระยะไกล
+- ถอด native path แบบ 32-bit ที่ไม่เหมาะกับเวอร์ชันนี้ และปรับงานหลักให้ตรงกับ **GTA 2.11 arm64**
+- รักษาพฤติกรรม SA-MP authentication word บน arm64
+- ปรับระบบลบสิ่งปลูกสร้าง ระยะวาด object การบังคับ render camera hooks และ renderer
+- ปรับ Java wrappers, application metadata, lifecycle และ touch slot ให้เข้ากับ GTA 2.11.311
+- ป้องกัน HUD polling/input ที่ไม่ถูกต้อง และรองรับกรณี Firebase update configuration ใช้งานไม่ได้
+- จัดระเบียบ 2.11 patches, เอกสาร repository และ Git hygiene
+
+รายการนี้กล่าวถึงเฉพาะงานต่อยอดที่ commit แล้ว ไม่ได้โอนเครดิตหรือความเป็นเจ้าของ source ต้นฉบับและ third-party code มาเป็นของ JohnPeriaX
+
+## สถานะการพัฒนา
+
+| ส่วน | สถานะ | หมายเหตุ |
+| --- | :---: | --- |
+| Android launcher | มีอยู่ | การเชื่อมต่อ launcher/runtime ยังอยู่ในขั้นทดลอง |
+| Java / JNI bridge | กำลังพัฒนา | ปรับให้ตรงกับ GTA 2.11.311 ต่อเนื่อง |
+| Native C++ core | กำลังพัฒนา | เน้น arm64, hooks, patches, pools และ renderer |
+| Multiplayer systems | ยังไม่สมบูรณ์ | หลายระบบมีอยู่แล้วแต่ยังต้องทดสอบ runtime |
+| Production release | ยังไม่พร้อม | อาจยังมี bug, crash และปัญหาเฉพาะอุปกรณ์ |
+
+## ประกาศการพัฒนาแบบ AI-assisted
+
+**JohnPeriaX** เป็นเจ้าของ repository ผู้ควบคุมโปรเจกต์และกำหนดทิศทางการพัฒนา โดยเป็นผู้ให้ prompt, requirement, หลักฐานการทดสอบ และแนวทางทางเทคนิค ส่วน AI tools อาจช่วยวิเคราะห์ เขียนหรือแก้ code, refactor, จัดทำเอกสาร, commit และตรวจสอบผลลัพธ์
+
+งานที่พัฒนาด้วย AI อาจมี assumption ผิด logic ไม่ครบ ปัญหาด้านความปลอดภัย หรือ runtime regression ผู้ใช้ควร review และทดสอบส่วนสำคัญทั้งหมดก่อนนำไปใช้หรือแจกจ่ายต่อ
+
+## ข้อมูลทางเทคนิค
+
+| รายการ | ค่าปัจจุบัน |
+| --- | --- |
+| Package namespace | `com.kurdish.roleplay` |
+| Minimum SDK | `28` |
+| Target / Compile SDK | `36` / `36` |
+| NDK | `26.2.11394342` |
+| Native build | CMake ผ่าน Gradle |
+| ABI ที่ใช้งาน | `arm64-v8a` |
+| สถานะโปรเจกต์ | Experimental research snapshot |
+
+## โครงสร้าง Repository
+
+```text
+.
+├── app/src/main/
+│   ├── assets/       Asset ของเกมและ launcher
+│   ├── cpp/          JNI, native C++, SAMP, hooks และ vendor code
+│   ├── java/         Android launcher และ game runtime code
+│   ├── jniLibs/      Native binary dependencies
+│   └── res/          Android resources
+├── gradle/           Gradle wrapper
+├── build.gradle      Root build configuration
+├── settings.gradle   Android project settings
+└── README.md
 ```
 
-Recommended environment:
+## ข้อจำกัดที่ควรทราบ
+
+- ยังไม่ได้ยืนยัน runtime ครบทุกอุปกรณ์และ Android ทุกเวอร์ชัน
+- Hooks และ patches บางส่วนอาจยังไม่ครบหรือขึ้นอยู่กับ game version
+- อาจยังมี native crash, ปัญหาภาพ และ multiplayer incompatibility
+- ต้องตรวจสอบสิทธิ์ของ third-party/native material ก่อนนำไปแจกจ่าย
+- ไม่มีการรับประกันความพร้อมใช้งานจริงหรือความเข้ากันได้
+
+---
+
+<a id="build--การ-build"></a>
+
+# Build / การ Build
+
+Run from the repository root / รันจาก root ของ repository:
+
+```powershell
+.\gradlew.bat assembleDebug --no-daemon
+```
+
+For native-only validation / สำหรับตรวจสอบ native code โดยตรง:
+
+```powershell
+.\gradlew.bat ':app:buildCMakeDebug[arm64-v8a]' --no-daemon --console=plain
+```
+
+Recommended environment / สภาพแวดล้อมที่แนะนำ:
 
 ```text
 Android Studio
@@ -319,203 +262,34 @@ Compatible JDK
 
 ---
 
-## ✦ Known Condition
+<a id="credits--เครดิต"></a>
 
-* Bugs and crashes may still exist
-* Some systems may be incomplete
-* Android compatibility may require fixes
-* Storage path behavior may change between commits
-* Build setup may require manual adjustment
+# Credits / เครดิต
 
----
-
-<a id="thai"></a>
-
-# ภาษาไทย
-
-## ✦ ภาพรวมโปรเจกต์
-
-**SAMP Mobile 2.11.311** เป็น source snapshot สำหรับโปรเจกต์ **GTA SA Mobile 2.11 / SAMP Mobile** บน Android
-
-Repository นี้ถูกเก็บไว้เพื่อเป็นแหล่งอ้างอิงด้าน **การพัฒนา การวิจัย การเก็บรักษา และการศึกษาเชิงเทคนิค** ภายในมี Android launcher, Java source, JNI/native bridge, C++ game/SAMP code, assets, resources และ native library integration
-
----
-
-<a id="ai-development-notice-th"></a>
-
-## ✦ ประกาศเกี่ยวกับการพัฒนาโดย AI
+| Name | Credit preserved for |
+| --- | --- |
+| **Rockstar Games** | GTA: San Andreas and related trademarks, assets, interfaces, and intellectual property |
+| **xdatsec** | Upstream source baseline associated with the imported snapshot |
+| **Alyn SAMP** | Legacy SAMP Mobile credit preserved from the imported source |
+| **x1y2z** | Legacy/native GTA-reversed work explicitly credited in source comments |
+| **Other contributors** | Vendor libraries, dependencies, research, and source work retained in this repository |
+| **JohnPeriaX** | Project direction, maintenance, and continuation after baseline commit `54eef844` |
+| **AI-assisted workflow** | Analysis and implementation support under JohnPeriaX's requirements and review |
 
 > [!NOTE]
-> Repository นี้ถูกพัฒนาโดยใช้กระบวนการทำงานร่วมกับ AI เป็นหลัก
-
-Source archive นี้เป็นโปรเจกต์ทดลองที่ให้ AI มีบทบาทหลักในการช่วยวิเคราะห์ วางแผน เขียนโค้ด refactor แก้ไขปัญหา commit / push และปรับปรุง repository ตามแนวทางที่ได้รับจาก prompt, skill และ requirement ที่กำหนดไว้
-
-**JohnPeriaX** มีบทบาทหลักในฐานะเจ้าของโปรเจกต์ ผู้ควบคุมทิศทาง และผู้ให้ prompt / skill / requirement โดยไม่ได้เป็นผู้เขียนหรือแก้ไขทุกส่วนของ source code ด้วยตนเองทั้งหมด แต่ปล่อยให้ workflow ของ AI วิเคราะห์ พัฒนา แก้ไข และปรับปรุงโปรเจกต์ด้วยตัวเองให้มากที่สุด
-
-Workflow ปัจจุบันใช้ **ChatGPT** เป็นผู้ช่วยหลักในการพัฒนา และในอนาคตอาจมี AI model, AI agent หรือ automation tool อื่นเข้ามาช่วยพัฒนาเพิ่มเติมได้
-
-เนื่องจากงานที่สร้างหรือแก้ไขด้วย AI อาจมีข้อผิดพลาด logic ไม่สมบูรณ์ assumption ที่ไม่ถูกต้อง ปัญหาด้าน security หรือพฤติกรรมที่ไม่เสถียร ผู้ใช้งานควรตรวจสอบข้อมูลสำคัญ ตรวจ review code และทดสอบ build / runtime behavior ด้วยตนเองก่อนนำไปใช้งาน
-
-โปรเจกต์นี้ควรถูกมองเป็น **experimental research snapshot** ไม่ใช่ production-ready release ก่อนนำ source code ไปใช้งานจริง แก้ไขต่อ แจกจ่าย หรือนำไป deploy ควรตรวจสอบโค้ด ทดสอบ build ตรวจ dependency ตรวจ native library / asset และประเมินความเหมาะสมกับ environment ของตนเองก่อนเสมอ
+> If a contributor or source attribution is incomplete, open an issue with verifiable evidence. The goal is to correct and preserve credit—not to remove or replace legitimate ownership.
 
 ---
 
-<a id="project-scope-th"></a>
-
-## ✦ เป้าหมายการพัฒนาและขอบเขตของโปรเจกต์
-
-> [!IMPORTANT]
-> เป้าหมายของโปรเจกต์นี้คือให้ AI-assisted workflow พัฒนา source ให้พร้อมใช้งานในระดับพื้นฐาน คล้ายแนวทางของ SRC ทั่วไป เช่น 1.08, 2.0 หรือ 2.10
-
-Repository นี้ตั้งใจให้เป็น **พื้นฐานที่พร้อมสำหรับการใช้งานเบื้องต้น** สำหรับการพัฒนา การศึกษา การทดสอบ และการนำไปปรับแต่งต่อ โดยอาจมีโครงสร้างหลัก build setup, runtime flow และการจัดวาง source ตามรูปแบบที่คาดหวังจาก SRC ทั่วไป
-
-อย่างไรก็ตาม ไม่ควรคาดหวังว่าโปรเจกต์นี้จะรองรับครบทุกระบบ มี private fix ทุกจุด มี optimization ทุกส่วน หรือสมบูรณ์เทียบเท่า source package เชิงพาณิชย์ราคาแพงที่มีการซื้อขายกันแบบส่วนตัว บางระบบอาจยังเป็นแบบพื้นฐาน ทดลอง ใช้งานได้บางส่วน ไม่เสถียร หรือรอการพัฒนาต่อในอนาคต
-
-AI workflow จะพยายามพัฒนาโปรเจกต์นี้ไปจนถึงระดับพื้นฐานที่ถือว่าเพียงพอต่อเป้าหมายด้าน research และ development เมื่อถึงจุดนั้น การอัปเดตอาจช้าลง หยุดชั่วคราว หรือหยุดพัฒนา จนกว่าจะมี prompt, requirement, bug report, แนวทางแก้ไข หรือทรัพยากรสำหรับพัฒนาต่อเพิ่มเติม
-
-ถ้าวันไหน commit ไม่อัปเดต หรือ repository เงียบหายไปหลายวัน โปรดเข้าใจไว้ก่อนว่า development อาจหยุดพักเพราะ token สำหรับใช้งาน AI หมดแล้ว พูดง่าย ๆ คือ **ไม่มี commit อาจแปลว่า token หมด**
-
----
-
-## ✦ แกนหลักของโปรเจกต์
-
-<table>
-  <tr>
-    <td align="center"><b>Android</b><br>Launcher Project<br><br>✅ มีอยู่</td>
-    <td align="center"><b>Java</b><br>Runtime Layer<br><br>✅ มีอยู่</td>
-    <td align="center"><b>JNI</b><br>Native Bridge<br><br>✅ มีอยู่</td>
-    <td align="center"><b>C++</b><br>Game / SAMP Layer<br><br>✅ มีอยู่</td>
-  </tr>
-  <tr>
-    <td align="center"><b>Assets</b><br>Resources<br><br>✅ มีอยู่</td>
-    <td align="center"><b>Native Libs</b><br>Binary Layer<br><br>✅ มีอยู่</td>
-    <td align="center"><b>Storage</b><br>Shared Path Work<br><br>⚙️ กำลังพัฒนา</td>
-    <td align="center"><b>Release</b><br>Production Build<br><br>❌ ยังไม่พร้อม</td>
-  </tr>
-</table>
-
----
-
-## ✦ ข้อมูลเทคนิค
-
-| รายการ              | ค่า                        |
-| ------------------- | -------------------------- |
-| Package namespace   | `com.kurdish.roleplay`     |
-| Minimum SDK         | `28`                       |
-| Target SDK          | `36`                       |
-| Compile SDK         | `36`                       |
-| NDK version         | `26.2.11394342`            |
-| Native build system | `CMake`                    |
-| ABI ที่รองรับ       | `armeabi-v7a`, `arm64-v8a` |
-
----
-
-## ✦ โครงสร้างการทำงาน
-
-```text
-┌─────────────────────────┐
-│   Android Launcher      │
-└───────────┬─────────────┘
-            │
-            ▼
-┌─────────────────────────┐
-│   Java Runtime Layer    │
-└───────────┬─────────────┘
-            │
-            ▼
-┌─────────────────────────┐
-│   JNI Native Bridge     │
-└───────────┬─────────────┘
-            │
-            ▼
-┌─────────────────────────┐
-│   C++ Game / SAMP Core  │
-└───────────┬─────────────┘
-            │
-            ▼
-┌─────────────────────────┐
-│ Shared Game Storage Path│
-└─────────────────────────┘
-```
-
-งานแก้ล่าสุดเน้นให้ Android Java และ native C++ ใช้ตำแหน่ง game storage กลางร่วมกัน เพื่อให้ไฟล์เกม settings, launcher data และข้อมูล SAMP ใช้ base path เดียวกัน
-
----
-
-## ✦ โครงสร้าง Repository
-
-```text
-.
-├── app/
-│   └── src/main/
-│       ├── assets/      asset ของเกมและ launcher
-│       ├── cpp/         native C++ / JNI source
-│       ├── java/        Android Java source
-│       ├── jniLibs/     native library binaries
-│       └── res/         Android resources
-├── gradle/              ไฟล์ Gradle wrapper
-├── build.gradle         root Gradle config
-├── settings.gradle      Android project settings
-└── README.md
-```
-
----
-
-## ✦ วิธี Build
-
-ใช้ Gradle wrapper จาก root ของ repository:
-
-```powershell
-.\gradlew.bat assembleDebug
-```
-
-สภาพแวดล้อมที่แนะนำ:
-
-```text
-Android Studio
-Android SDK Platform 36
-Android NDK 26.2.11394342
-CMake จาก Android SDK tools
-JDK ที่เข้ากันได้
-```
-
----
-
-## ✦ สถานะที่ควรทราบ
-
-* อาจยังมีบั๊กและ crash
-* บางระบบอาจยังไม่สมบูรณ์
-* Android compatibility อาจต้องแก้เพิ่ม
-* Storage path อาจเปลี่ยนตาม commit
-* Build setup อาจต้องปรับเองบางส่วน
-
----
-
-## 🏆 Credits
-
-Credits are preserved by name only:
-
-```text
-Rockstar Games
-Alyn SAMP
-x1y2z
-xdatsec
-Other contributors
-```
-
----
-
-<a id="disclaimer"></a>
-
-## 📜 Disclaimer / ข้อจำกัดความรับผิดชอบ
+# Disclaimer / ข้อจำกัดความรับผิดชอบ
 
 > [!CAUTION]
-> Grand Theft Auto: San Andreas, original game assets, source materials, trademarks, logos, and related intellectual property belong to **Rockstar Games** and their respective rights holders.
+> Grand Theft Auto: San Andreas, its original assets, trademarks, logos, and related intellectual property belong to **Rockstar Games** and their respective rights holders.
 
-This repository does not claim ownership of Rockstar Games materials and does not claim full authorship of all SAMP/mobile-related code.
+This repository does not claim ownership of Rockstar Games material, the imported upstream baseline, or third-party dependencies. No license file is currently provided by this repository; do not assume permission to redistribute protected material solely because it is present here.
 
-Repository นี้ไม่ได้อ้างสิทธิ์ความเป็นเจ้าของใน material ของ Rockstar Games และไม่ได้อ้างว่าเป็นผู้เขียน SAMP/mobile code ทั้งหมด
+Repository นี้ไม่ได้อ้างสิทธิ์ใน material ของ Rockstar Games, source ต้นฉบับที่นำเข้ามา หรือ third-party dependencies และปัจจุบัน repository ไม่มีไฟล์ license จึงไม่ควรตีความว่าการมีไฟล์อยู่ใน repository เท่ากับได้รับอนุญาตให้นำ material ที่มีลิขสิทธิ์ไปแจกจ่ายต่อ
 
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:020617,35:111827,70:7C3AED,100:00F5FF&height=170&section=footer" alt="Cyber Space Footer">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:050505,28:7A5200,55:D4AF37,78:17130A,100:050505&height=170&section=footer" width="100%" alt="Black and gold cyberpunk footer">
 </p>

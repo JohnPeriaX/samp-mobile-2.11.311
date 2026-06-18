@@ -29,7 +29,38 @@ void CColStore::EnsureCollisionIsInMemory(const CVector* pos)
    CHook::CallFunction<void>(g_libGTASA + 0x3C26B8, pos);
 }
 
+/*
+รอ MAP 2.11: CColStore::AddColSlot
+int32 CColStore::AddColSlot(const char* name)
+{
+    return CHook::CallFunction<int32>("_ZN9CColStore10AddColSlotEPKc", name);
+}
+*/
+
 void CColStore::Initialise()
 {
     CHook::CallFunction<void>(g_libGTASA + 0x3C1828);
+
+    /*
+    รอ MAP 2.11: CColStore::Initialise จาก sasamp-main
+    bool& ms_bCollisionNeeded = *(bool*)(g_libGTASA + 0x9760B8);
+
+    const auto rect = CRect(-3000.0F, -3000.0F, 3000.0F, 3000.0F);
+    ms_bCollisionNeeded = false;
+
+    if (!ms_pColPool)
+        ms_pColPool = new CColPool(TOTAL_COL_MODEL_IDS, "CollisionFiles");
+
+    AddColSlot("generic");
+    ms_pQuadTree = new CQuadTreeNode(rect, 3);
+    */
 }
+
+/*
+รอ MAP 2.11: CColStore::InjectHooks
+void CColStore::InjectHooks()
+{
+    CHook::Write(g_libGTASA + 0x850CD0, &ms_pColPool);
+    CHook::Write(g_libGTASA + 0x851EA0, &ms_pQuadTree);
+}
+*/

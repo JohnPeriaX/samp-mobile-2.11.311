@@ -10,11 +10,8 @@
 
 struct ColDef {
     CRect  m_Area;
-    uint32 field_10;
-    uint32 field_14;
-    uint32 field_18;
-    uint32 field_1C;
-    uint16 field_20;
+    /* เพิ่มจาก sasamp-main: ColDef::name */
+    char name[18];
     int16  m_nModelIdStart;
     int16  m_nModelIdEnd;
     uint16 m_nRefCount;
@@ -29,6 +26,13 @@ struct ColDef {
 VALIDATE_SIZE(ColDef, 0x2C);
 
 typedef CPool<ColDef> CColPool;
+
+/*
+รอ MAP 2.11: CColStore::ms_pColPool / ms_pQuadTree / InjectHooks
+static inline CColPool* ms_pColPool;
+static inline CQuadTreeNode* ms_pQuadTree;
+static void InjectHooks();
+*/
 
 class CColStore {
 public:

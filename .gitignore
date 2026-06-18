@@ -1,53 +1,89 @@
-# Android / Gradle
+# Gradle and Android build output
 .gradle/
-build/
-app/build/
-.externalNativeBuild/
-.cxx/
-captures/
+**/build/
+**/.cxx/
+**/.externalNativeBuild/
+**/captures/
+**/generated/
+**/intermediates/
+**/outputs/
 
-# Android Studio / IntelliJ
+# Android Studio / IntelliJ local state
+.idea/
 *.iml
-.idea/caches/
-.idea/libraries/
-.idea/modules.xml
-.idea/workspace.xml
-.idea/navEditor.xml
-.idea/assetWizardSettings.xml
+*.ipr
+*.iws
+out/
 
-# Local environment
+# Machine-local Android configuration
 local.properties
-.DS_Store
-Thumbs.db
+lint-cache/
+.kotlin/
 
-# Signing / private keys
-app/keys/
-*.jks
-*.keystore
-*.pem
-*.key
-
-# Build outputs
+# Packaged and compiled Android output
 *.apk
 *.aab
 *.ap_
-app/debug/
-app/release/
+*.dex
+*.class
 
-# Archives / large local packages
-*.zip
-*.rar
-*.7z
-*.tar
-*.gz
-/GTA_2.11.311-OP.zip
-/app/src/main/cpp.zip
-
-# Logs
-*.log
-crashlytics-build.properties
-
-# Native temporary files
+# CMake / Ninja generated files and native object output
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+compile_commands.json
+.ninja_deps
+.ninja_log
+build.ninja
+rules.ninja
 *.o
 *.obj
+*.lo
+*.d
+*.dep
 *.so.dbg
+
+# Signing credentials and private keys
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.pem
+*.key
+*.der
+app/keys/
+keystore.properties
+signing.properties
+
+# Logs, reports, crash dumps and profiling captures
+*.log
+*.hprof
+*.trace
+*.dump
+*.dmp
+crashlytics-build.properties
+
+# Editor backups and temporary files
+*.tmp
+*.temp
+*.bak
+*.orig
+*.rej
+*.swp
+*.swo
+*~
+~$*
+.#*
+
+# Operating-system metadata
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Archives are intentionally NOT ignored. Source/reference archives such as
+# .zip, .7z, .rar, .tar and .gz may be committed when they belong to the project.

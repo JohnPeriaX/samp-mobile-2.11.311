@@ -1,40 +1,88 @@
-# Normalize text files
+# Normalize text in the repository; explicit rules below set checkout endings.
 * text=auto
+.gitattributes  text eol=lf
+.gitignore      text eol=lf
 
-# Source files use LF
-*.c text eol=lf
-*.cc text eol=lf
-*.cpp text eol=lf
-*.cxx text eol=lf
-*.h text eol=lf
-*.hpp text eol=lf
-*.hh text eol=lf
-*.java text eol=lf
-*.kt text eol=lf
-*.gradle text eol=lf
-*.cmake text eol=lf
-CMakeLists.txt text eol=lf
-*.xml text eol=lf
-*.json text eol=lf
-*.md text eol=lf
+# Source code and build configuration use LF.
+*.c             text eol=lf
+*.cc            text eol=lf
+*.cpp           text eol=lf
+*.cxx           text eol=lf
+*.h             text eol=lf
+*.hh            text eol=lf
+*.hpp           text eol=lf
+*.inl           text eol=lf
+*.java          text eol=lf
+*.kt            text eol=lf
+*.kts           text eol=lf
+*.gradle        text eol=lf
+*.properties    text eol=lf
+*.cmake         text eol=lf
+CMakeLists.txt  text eol=lf
+Makefile        text eol=lf
+*.mk            text eol=lf
+*.xml           text eol=lf
+*.json          text eol=lf
+*.json5         text eol=lf
+*.yaml          text eol=lf
+*.yml           text eol=lf
+*.toml          text eol=lf
+*.ini           text eol=lf
+*.cfg           text eol=lf
+*.conf          text eol=lf
+*.pro           text eol=lf
+*.txt           text eol=lf
+*.md            text eol=lf
+*.rst           text eol=lf
+*.lst           text eol=lf
+*.patch         text eol=lf
+*.diff          text eol=lf
+*.csv           text eol=lf
+*.sql           text eol=lf
+*.sh            text eol=lf
 
-# Windows scripts use CRLF
-*.bat text eol=crlf
-*.cmd text eol=crlf
-*.ps1 text eol=crlf
+# Windows command scripts require CRLF.
+*.bat           text eol=crlf
+*.cmd           text eol=crlf
+*.ps1           text eol=crlf
+*.sln           text eol=crlf
+*.vcxproj       text eol=crlf
+*.filters       text eol=crlf
 
-# Binary assets
-*.png binary
-*.jpg binary
-*.jpeg binary
-*.webp binary
-*.gif binary
-*.ico binary
-*.ttf binary
-*.otf binary
-*.so binary
-*.a binary
-*.jar binary
-*.zip binary
-*.apk binary
-*.aab binary
+# Images, fonts, audio and video.
+*.png           binary
+*.jpg           binary
+*.jpeg          binary
+*.webp          binary
+*.gif           binary
+*.bmp           binary
+*.ico           binary
+*.ttf           binary
+*.otf           binary
+*.wav           binary
+*.mp3           binary
+*.ogg           binary
+*.flac          binary
+*.mp4           binary
+*.webm          binary
+
+# Android, Java and native binary dependencies/artifacts.
+*.jar           binary
+*.aar           binary
+*.so            binary
+*.a             binary
+*.lib           binary
+*.dll           binary
+*.exe           binary
+*.apk           binary
+*.aab           binary
+
+# Project/reference archives are allowed in Git and must not be line-normalized.
+*.zip           binary
+*.7z            binary
+*.rar           binary
+*.tar           binary
+*.gz            binary
+*.tgz           binary
+*.bz2           binary
+*.xz            binary

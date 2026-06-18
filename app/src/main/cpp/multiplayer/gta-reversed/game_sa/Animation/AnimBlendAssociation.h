@@ -86,7 +86,16 @@ struct SClumpAnimAssoc {
     int16                m_nAnimId;
     uint16               m_nFlags; // TODO: use bitfield
 
-    float GetBlendAmount(float weight) { return IsPartial() ? m_fBlendAmount : m_fBlendAmount * weight; }
+    /* เพิ่มจาก sasamp-main: GetBlendAmount / GetBlendDelta / SetBlendDelta / SetBlendAmount */
+    float GetBlendAmount(float weight = 1.f) {
+        return IsPartial() ? m_fBlendAmount : m_fBlendAmount * weight;
+    }
+
+    float GetBlendDelta() const { return m_fBlendDelta; }
+
+    void SetBlendDelta(float value) { m_fBlendDelta = value; }
+
+    void SetBlendAmount(float value) { m_fBlendAmount = value; }
     [[nodiscard]] bool IsRunning()        const { return (m_nFlags & ANIMATION_STARTED) != 0; }
     [[nodiscard]] bool IsRepeating()      const { return (m_nFlags & ANIMATION_LOOPED) != 0; }
     [[nodiscard]] bool IsPartial()        const { return (m_nFlags & ANIMATION_PARTIAL) != 0; }
@@ -147,6 +156,11 @@ public:
     void SetSpeed(float speed) {
         m_fSpeed = speed;
     }
+
+    /* เพิ่มจาก sasamp-main: GetCurrentTime / GetTimeProgress */
+    float GetCurrentTime() const { return m_fCurrentTime; }
+
+    float GetTimeProgress() const;
 
     auto GetNodes() { return std::span{ &m_pNodeArray, m_nNumBlendNodes }; }
     void SetDefaultFinishCallback() { SetFinishCallback(CDefaultAnimCallback::DefaultAnimCB, nullptr); }

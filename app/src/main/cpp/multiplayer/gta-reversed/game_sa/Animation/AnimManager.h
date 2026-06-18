@@ -6,6 +6,8 @@
 */
 #pragma once
 
+#include <string_view>
+
 #include "AnimationStyleDescriptor.h"
 
 #include "AnimBlendAssociation.h"
@@ -55,6 +57,9 @@ public:
     static const char* GetAnimGroupName(AssocGroupId groupId);
     static const char* GetAnimBlockName(AssocGroupId groupId);
     static AssocGroupId GetAnimationGroupId(const char* name);
+
+    /* เพิ่มจาก sasamp-main: GetAnimationGroupIdByName */
+    static AssocGroupId GetAnimationGroupIdByName(std::string_view name);
     static CAnimBlendStaticAssociation* GetAnimAssociation(AssocGroupId groupId, AnimationId animId);
     static CAnimBlendStaticAssociation* GetAnimAssociation(AssocGroupId groupId, const char* animName);
     static int32 GetNumRefsToAnimBlock(int32 index);
@@ -81,6 +86,12 @@ public:
 
     /// NOTSA. Get random gangtalk anim
     static AnimationId GetRandomGangTalkAnim();
+
+    /* เพิ่มจาก sasamp-main: GetAssocGroupDefs */
+    static auto GetAssocGroupDefs() {
+        return std::span<AnimAssocDefinition>(ms_aAnimAssocDefinitions.data(),
+                                              (size_t) ms_numAnimAssocDefinitions);
+    }
 private:
     static inline void LoadAnimFile_ANPK(RwStream* stream, bool compress, const char (*uncompressedAnims)[32]);
     static inline void LoadAnimFile_ANP23(RwStream* stream, bool compress, bool isANP3);

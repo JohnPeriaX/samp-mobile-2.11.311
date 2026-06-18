@@ -173,6 +173,18 @@ AssocGroupId CAnimManager::GetAnimationGroupId(const char* name) {
     return AssocGroupId::ANIM_GROUP_DEFAULT;
 }
 
+/* เพิ่มจาก sasamp-main: GetAnimationGroupIdByName */
+AssocGroupId CAnimManager::GetAnimationGroupIdByName(std::string_view name) {
+    size_t i = 0;
+    for (const auto &def: GetAssocGroupDefs()) {
+        if (def.groupName == name) {
+            return static_cast<AssocGroupId>(i);
+        }
+        ++i;
+    }
+    return AssocGroupId::ANIM_GROUP_DEFAULT;
+}
+
 // 0x4D3A40
 CAnimBlendAssociation* CAnimManager::CreateAnimAssociation(AssocGroupId groupId, AnimationId animId) {
     return ms_aAnimAssocGroups[groupId].CopyAnimation(animId);
@@ -319,7 +331,8 @@ void CAnimManager::CreateAnimAssocGroups() {
         RpClump* clump = nullptr;
         if (def->modelIndex != MODEL_INVALID) {
             auto model = CModelInfo::GetModelInfo(def->modelIndex);
-            clump = CHook::CallFunction<RpClump*>(*(uintptr_t*)(model->vtable + 0x58), model);
+            /* เพิ่มจาก sasamp-main: CallVTableFunctionByNum */
+            clump = CHook::CallVTableFunctionByNum<RpClump *>(model, 11);
             RpAnimBlendClumpInit(clump);
         }
 
@@ -538,7 +551,8 @@ void CAnimManager::LoadAnimFiles() {
     RwStreamClose(stream, nullptr);
 
     ms_aAnimAssocGroups = new CAnimBlendAssocGroup[ms_numAnimAssocDefinitions];
-    return CHook::CallFunction<void>(g_libGTASA + 0x372D6C);
+    /* เพิ่มจาก sasamp-main: CreateAnimAssocGroups */
+    CreateAnimAssocGroups();
 }
 
 // 0x0033E650

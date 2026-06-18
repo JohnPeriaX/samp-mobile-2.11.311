@@ -34,6 +34,9 @@ public:
     // Returns length of 2d vector
     float Magnitude2D() const;
 
+    /* เพิ่มจาก sasamp-main: MagnitudeSqr2D */
+    float MagnitudeSqr2D() const { return x * x + y * y; }
+
     // Normalises a vector in-place
     void Normalise();
 
@@ -254,6 +257,11 @@ float DotProduct(CVector* v1, CVector* v2);
 CVector CrossProduct(const CVector& a, const CVector& b);
 float DotProduct(const CVector& v1, const CVector& v2);
 float DotProduct2D(const CVector& v1, const CVector& v2);
+
+/* เพิ่มจาก sasamp-main: DotProduct2D */
+inline float DotProduct2D(const CVector2D &v1, const CVector2D &v2) {
+    return v1.x * v2.x + v1.y * v2.y;
+}
 static CVector Normalized(CVector v) { v.Normalise(); return v; }
 static CVector ProjectVector(const CVector& what, const CVector& onto) {
     return onto * (DotProduct(what, onto) / onto.SquaredMagnitude());

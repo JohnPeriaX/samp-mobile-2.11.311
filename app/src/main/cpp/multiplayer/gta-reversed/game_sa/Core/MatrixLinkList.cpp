@@ -7,6 +7,11 @@ CMatrixLinkList gMatrixList;
 void CMatrixLinkList::InjectHooks()
 {
     CHook::Write(g_libGTASA + 0xA01668, &gMatrixList);
+
+    /*
+    รอ MAP 2.11: CMatrixLinkList::InjectHooks
+    CHook::Write(g_libGTASA + 0x84CD98, &gMatrixList);
+    */
 //    RH_ScopedClass(CMatrixLinkList);
 //    RH_ScopedCategory("Core");
 //

@@ -16,6 +16,11 @@ CMatrix gDummyMatrix;
 void CMatrix::InjectHooks()
 {
     CHook::Write(g_libGTASA + 0x83A380, &numMatrices);
+
+    /*
+    รอ MAP 2.11: CMatrix::InjectHooks
+    CHook::Write(g_libGTASA + 0x84D910, &numMatrices);
+    */
 }
 
 CMatrix::CMatrix(const CMatrix& matrix) {
@@ -225,6 +230,24 @@ void CMatrix::RotateZ(float angle)
     m_forward = rotMat * m_forward;
     m_up =      rotMat * m_up;
     m_pos =     rotMat * m_pos;
+}
+
+/* เพิ่มจาก sasamp-main: RotateFromDegrees */
+void CMatrix::RotateFromDegrees(CVector &rot) {
+    if (rot.x != 0.0f) {
+        auto axis = CVector::XAxisVector();
+        RwMatrixRotate(reinterpret_cast<RwMatrix *>(this), &axis, rot.x);
+    }
+
+    if (rot.y != 0.0f) {
+        auto axis = CVector::YAxisVector();
+        RwMatrixRotate(reinterpret_cast<RwMatrix *>(this), &axis, rot.y);
+    }
+
+    if (rot.z != 0.0f) {
+        auto axis = CVector::ZAxisVector();
+        RwMatrixRotate(reinterpret_cast<RwMatrix *>(this), &axis, rot.z);
+    }
 }
 
 // rotate on 3 axes

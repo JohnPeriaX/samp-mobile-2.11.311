@@ -122,6 +122,8 @@ public:
     void RotateY(float angle);
     void RotateZ(float angle);
     void Rotate(CVector rotation); // rotate on 3 axes
+    /* เพิ่มจาก sasamp-main: RotateFromDegrees */
+    void RotateFromDegrees(CVector &rot);
     void Reorthogonalise();
     void CopyToRwMatrix(RwMatrix* matrix) const; // similar to UpdateRW(RwMatrixTag *)
     void SetRotate(const CQuaternion& quat);
@@ -176,6 +178,16 @@ public:
         RwMatrix ret;
         CopyToRwMatrix(&ret);
         return ret;
+    }
+
+    /* เพิ่มจาก sasamp-main: TransformPoint */
+    CVector TransformPoint(CVector pt) const {
+        return TransformVector(pt) + m_pos;
+    }
+
+    /* เพิ่มจาก sasamp-main: TransformVector */
+    CVector TransformVector(CVector v) const {
+        return v.x * m_right + v.y * m_forward + v.z * m_up;
     }
 
     // operators and classes that aren't defined as part of class, but it's much easier to get them working with access to class private fields

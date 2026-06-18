@@ -26,7 +26,7 @@
 </p>
 
 > [!IMPORTANT]
-> **Credit boundary:** the imported source snapshot at commit [`54eef844`](https://github.com/JohnPeriaX/samp-mobile-2.11.311/commit/54eef844e7b1ee48c8530855b695ebe8d67d0201) is treated as the upstream baseline associated with **xdatsec** and the legacy contributors named below. Work after that checkpoint is the **JohnPeriaX continuation**. The upstream Git history was not included in the import, so this repository does not claim more precise authorship than the available evidence supports.
+> **Verified continuation boundary:** branch [`xdatsec/GTA_2.11.311:XS`](https://github.com/xdatsec/GTA_2.11.311/commits/XS/) ends at [`c7266cf`](https://github.com/xdatsec/GTA_2.11.311/commit/c7266cf5f8f1e3216fa51b289d238baf7d4ded49), while its final code-changing commit is [`a488cd5`](https://github.com/xdatsec/GTA_2.11.311/commit/a488cd5cc5d60bf4d62a53822ba516d559af3900). JohnPeriaX imported a reorganized snapshot as [`54eef844`](https://github.com/JohnPeriaX/samp-mobile-2.11.311/commit/54eef844e7b1ee48c8530855b695ebe8d67d0201) and began committed continuation work at [`ab5e026f`](https://github.com/JohnPeriaX/samp-mobile-2.11.311/commit/ab5e026f3823bc6c7ca614fd86c7a2098e6b38ae). The two repositories do not share preserved parent history, so these checkpoints describe provenance without claiming an exact Git fork relationship.
 
 ---
 
@@ -46,25 +46,35 @@ The repository deliberately separates the imported baseline from later work:
 
 | Layer | Evidence boundary | Attribution |
 | --- | --- | --- |
-| Upstream baseline | Initial imported snapshot: `54eef844` | Associated with **xdatsec**, while preserving **Alyn SAMP**, **x1y2z**, and other legacy credits found in the source |
-| Continued development | Every repository commit after `54eef844` | Directed and maintained by **JohnPeriaX**, with AI-assisted implementation and review |
+| Upstream code baseline | `xdatsec/XS` through `a488cd5` | Code development by **xdatsec / CYBERX** and earlier contributors |
+| Upstream branch tip | `c7266cf` | Final `XS` checkpoint; commits after `a488cd5` update README, credits, and disclaimer only |
+| Local import checkpoint | `54eef844` | Reorganized snapshot imported into this repository by **JohnPeriaX**; not an ancestry-preserving fork commit |
+| Continued development | `ab5e026f` and later | Directed and maintained by **JohnPeriaX**, with AI-assisted implementation and review |
 | Third-party components | Vendor libraries, GTA-related interfaces, assets, and external dependencies | Remain the property/work of their respective authors and rights holders |
 
-### What the upstream baseline already contained
+### How far the xdatsec `XS` branch progressed
 
-At the import checkpoint, the project already provided:
+The public `XS` history shows the following upstream scope before this continuation:
 
-- Android launcher and Gradle project structure
-- Java game/runtime wrappers and Android resources
-- JNI/native bridge and CMake integration
-- Existing C++ SAMP/game framework, networking, GUI, hooks, pools, and vendor code
-- Native libraries, assets, and GTA 2.11.311-oriented project configuration
+| Upstream checkpoint | Recorded progress |
+| --- | --- |
+| `6d255cc` → `31d9878` | Initial Android project work, storage/downloader changes, GTA 2.11.311 setup, and merge with the Kurdish Roleplay base |
+| `7eb1b83` | Partial migration to GTA 2.11.311 |
+| `c04870c` → `c5422f3` | CStreaming/intro, crash, fire-instant-hit, and related investigation; some items remained explicitly marked TODO |
+| `f8068cd` | Reduced active pools to vehicle/player at that stage |
+| `91a2567` → `5b171b6` | Weapon-audio investigation plus matrix and RakNet crash work; some matrix work still required verification |
+| `a4bafeb` | Static-matrix allocation crash investigation remained marked for checking |
+| `cf46976` | FPS patch |
+| `a488cd5` | Reloading bug fix—the last code-changing commit on `XS` |
+| `cb940b0` → `c7266cf` | README, source clarification, credits, and disclaimer updates only |
+
+At that point the source already included the Android/Gradle project, Java runtime wrappers, JNI/CMake integration, native C++ SAMP/game framework, networking, GUI, hooks, selected pools, vendor code, native libraries, and assets. The upstream history also documents unfinished or verification-required areas; this README does not present those TODO items as completed fixes.
 
 These foundations are **not claimed as original JohnPeriaX work**. They remain credited to the upstream source lineage and their respective contributors.
 
 ### Where the JohnPeriaX continuation begins
 
-The continuation begins immediately after `54eef844`. Verified work recorded in this repository includes:
+The source was imported and reorganized in local checkpoint `54eef844`. The first committed continuation change is `ab5e026f` (`feat(3dtext): add PC-like 3DText label system`). Verified work after that point includes:
 
 - Added and stabilized PC-like **3D text label**, **pickup**, **actor**, and **menu pool** lifecycles
 - Refactored the legacy FPS path and improved frame pacing with display refresh-rate awareness
@@ -148,25 +158,35 @@ Repository นี้แยก source ต้นฉบับกับงานพ�
 
 | ส่วนงาน | เส้นแบ่งที่ตรวจสอบได้ | เครดิต |
 | --- | --- | --- |
-| Source ต้นฉบับ | Snapshot แรกที่นำเข้าใน commit `54eef844` | เชื่อมโยงกับ **xdatsec** พร้อมคงเครดิตเดิมของ **Alyn SAMP**, **x1y2z** และผู้มีส่วนร่วมรายอื่นที่ปรากฏใน source |
-| งานพัฒนาต่อ | ทุก commit หลัง `54eef844` | ควบคุมทิศทางและดูแลโดย **JohnPeriaX** พร้อมกระบวนการพัฒนาแบบ AI-assisted |
+| Code baseline ต้นฉบับ | `xdatsec/XS` ถึง `a488cd5` | งานพัฒนา code โดย **xdatsec / CYBERX** และผู้มีส่วนร่วมก่อนหน้า |
+| จุดสิ้นสุด branch ต้นฉบับ | `c7266cf` | Commit ล่าสุดของ `XS`; หลัง `a488cd5` เปลี่ยนเฉพาะ README, credits และ disclaimer |
+| จุดนำเข้าใน repository นี้ | `54eef844` | **JohnPeriaX** นำ snapshot ที่จัดโครงสร้างใหม่เข้ามา โดยไม่ได้รักษา parent history แบบ Git fork |
+| งานพัฒนาต่อ | `ab5e026f` เป็นต้นไป | ควบคุมทิศทางและดูแลโดย **JohnPeriaX** พร้อมกระบวนการพัฒนาแบบ AI-assisted |
 | Third-party | Vendor libraries, GTA interfaces, assets และ dependencies ภายนอก | เป็นผลงานหรือทรัพย์สินของผู้สร้างและผู้ถือสิทธิ์แต่ละราย |
 
-### ต้นฉบับมีอะไรอยู่แล้ว
+### xdatsec พัฒนาถึงจุดไหน
 
-ณ จุดที่นำเข้า source ต้นฉบับมีพื้นฐานเหล่านี้อยู่แล้ว:
+จาก public history ของ branch `XS` ขอบเขตงานต้นฉบับก่อนนำมาต่อยอดมีดังนี้:
 
-- โครงสร้าง Android launcher และ Gradle project
-- Java game/runtime wrappers และ Android resources
-- JNI/native bridge และ CMake integration
-- C++ SAMP/game framework, networking, GUI, hooks, pools และ vendor code ที่มีอยู่เดิม
-- Native libraries, assets และการตั้งค่าโปรเจกต์ที่วางไว้สำหรับ GTA 2.11.311
+| Upstream checkpoint | งานที่บันทึกไว้ |
+| --- | --- |
+| `6d255cc` → `31d9878` | เริ่ม Android project, ปรับ storage/downloader, ตั้งค่า GTA 2.11.311 และ merge กับฐาน Kurdish Roleplay |
+| `7eb1b83` | ย้ายระบบไป GTA 2.11.311 บางส่วน ยังไม่ใช่ migration ที่สมบูรณ์ |
+| `c04870c` → `c5422f3` | งาน CStreaming/intro, crash, fire-instant-hit และการตรวจหาปัญหาที่เกี่ยวข้อง โดยบางรายการยังระบุ TODO ไว้ชัดเจน |
+| `f8068cd` | ลด pool ที่ใช้งานในช่วงนั้นให้เหลือ vehicle/player |
+| `91a2567` → `5b171b6` | ตรวจปัญหาเสียงอาวุธ และแก้ matrix/RakNet crash โดย matrix บางส่วนยังต้องตรวจสอบต่อ |
+| `a4bafeb` | งานตรวจ crash ของ static-matrix allocation ยังระบุว่าต้องตรวจสอบ |
+| `cf46976` | เพิ่ม FPS patch |
+| `a488cd5` | แก้ reloading bug และเป็น commit สุดท้ายของ branch `XS` ที่เปลี่ยน code |
+| `cb940b0` → `c7266cf` | ปรับ README, ชี้แจงที่มา source, credits และ disclaimer เท่านั้น |
+
+ณ จุดนั้น source มีโครงสร้าง Android/Gradle, Java runtime wrappers, JNI/CMake, native C++ SAMP/game framework, networking, GUI, hooks, pools บางส่วน, vendor code, native libraries และ assets อยู่แล้ว และยังมีงาน TODO หรือส่วนที่ต้องตรวจสอบตาม commit history จึงไม่ควรนับส่วนเหล่านั้นว่า xdatsec ทำเสร็จสมบูรณ์แล้ว
 
 ส่วนพื้นฐานเหล่านี้ **ไม่ถูกอ้างว่าเป็นผลงานต้นฉบับของ JohnPeriaX** และยังคงเครดิตให้ upstream source กับผู้มีส่วนร่วมเดิมตามหลักฐานที่มี
 
 ### งานของ JohnPeriaX เริ่มจากตรงไหน
 
-งานพัฒนาต่อเริ่มหลัง commit `54eef844` โดยงานที่มีหลักฐานใน commit history ของ repository นี้ประกอบด้วย:
+Source ถูกนำเข้าและจัดโครงสร้างใหม่ที่ checkpoint `54eef844` ส่วน code งานต่อยอด commit แรกคือ `ab5e026f` (`feat(3dtext): add PC-like 3DText label system`) หลังจากนั้นจึงมีงานที่ตรวจสอบได้ดังนี้:
 
 - เพิ่มและปรับเสถียรภาพระบบ **3D text label**, **pickup**, **actor** และ **menu pool** ให้มี lifecycle ใกล้เคียง PC
 - Refactor ระบบ FPS เดิม ปรับ frame pacing และตรวจ refresh rate ของหน้าจอ
@@ -269,11 +289,11 @@ Compatible JDK
 | Name | Credit preserved for |
 | --- | --- |
 | **Rockstar Games** | GTA: San Andreas and related trademarks, assets, interfaces, and intellectual property |
-| **xdatsec** | Upstream source baseline associated with the imported snapshot |
+| **xdatsec / CYBERX** | Upstream `XS` development through code commit `a488cd5` and branch checkpoint `c7266cf` |
 | **Alyn SAMP** | Legacy SAMP Mobile credit preserved from the imported source |
 | **x1y2z** | Legacy/native GTA-reversed work explicitly credited in source comments |
 | **Other contributors** | Vendor libraries, dependencies, research, and source work retained in this repository |
-| **JohnPeriaX** | Project direction, maintenance, and continuation after baseline commit `54eef844` |
+| **JohnPeriaX** | Snapshot import/reorganization at `54eef844`; project direction, maintenance, and committed continuation beginning at `ab5e026f` |
 | **AI-assisted workflow** | Analysis and implementation support under JohnPeriaX's requirements and review |
 
 > [!NOTE]

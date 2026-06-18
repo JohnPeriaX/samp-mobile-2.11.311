@@ -871,13 +871,10 @@ void CPedDamageResponseCalculator__ComputeDamageResponse_hook(CPedDamageResponse
 }
 
 void (*CRenderer_ScanWorld)();
+static void ApplyPcLikeCameraDrawDistanceState();
 
 static void RequestPcLikeFarLodStreamingAroundCamera()
 {
-    static uint32_t s_requestFrame = 0;
-    if ((++s_requestFrame & 3U) != 0U)
-        return;
-
     if (CStreaming::ms_disableStreaming || CRenderer::m_loadingPriority)
         return;
 
@@ -893,6 +890,7 @@ static void RequestPcLikeFarLodStreamingAroundCamera()
 
 void CRenderer_ScanWorld_hook()
 {
+    ApplyPcLikeCameraDrawDistanceState();
     CRenderer_ScanWorld();
     RequestPcLikeFarLodStreamingAroundCamera();
 }
@@ -903,14 +901,35 @@ static void ApplyPcLikeCameraDrawDistanceState()
 {
     CCamera& TheCamera = *reinterpret_cast<CCamera*>(g_libGTASA + 0x9F86F8);
 
+    float remotePedDrawDistance = 70.0f;
+    if (pNetGame && pNetGame->m_pNetSet &&
+        std::isfinite(pNetGame->m_pNetSet->fNameTagDrawDistance) &&
+        pNetGame->m_pNetSet->fNameTagDrawDistance > 0.0f)
+    {
+        remotePedDrawDistance = pNetGame->m_pNetSet->fNameTagDrawDistance;
+        if (remotePedDrawDistance > 1000.0f)
+            remotePedDrawDistance = 1000.0f;
+    }
+
+    constexpr float kPcPedLodBaseDistance = 60.0f;
+    constexpr float kPcDoubledSquaredDistanceScale = 1.41421356237f;
+    const float requiredLodMultiplier =
+        remotePedDrawDistance / (kPcPedLodBaseDistance * kPcDoubledSquaredDistanceScale);
+
     if (TheCamera.m_fLODDistMultiplier < 1.0f)
         TheCamera.m_fLODDistMultiplier = 1.0f;
+    if (TheCamera.m_fLODDistMultiplier < requiredLodMultiplier)
+        TheCamera.m_fLODDistMultiplier = requiredLodMultiplier;
     if (TheCamera.GenerationDistMultiplier < 1.0f)
         TheCamera.GenerationDistMultiplier = 1.0f;
 
     if (TheCamera.m_pRwCamera) {
-        RwCameraSetFarClipPlane(TheCamera.m_pRwCamera, 2000.0f);
-        CVisibilityPlugins::ms_pCameraPosn = reinterpret_cast<RwV3d*>(&TheCamera.GetPosition());
+        // PC SA-MP UpdateFarClippingPlane defaults to 1250, clamps down to
+        // 700 in close/fade cases, and keeps 1400 as the backing max value.
+        constexpr float kPcSampFarClip = 1250.0f;
+        CRenderer::ms_fFarClipPlane = kPcSampFarClip;
+        RwCameraSetFarClipPlane(TheCamera.m_pRwCamera, kPcSampFarClip);
+        CVisibilityPlugins::SetRenderWareCamera(TheCamera.m_pRwCamera);
     }
 }
 
@@ -959,92 +978,10 @@ static void RenderSampFarObjectsAfterWorld()
     }
 }
 
-
-static bool IsPcLikeRemotePedRenderCandidate(CRemotePlayer* remotePlayer, CPlayerPed* playerPed, CPedGTA* ped)
-{
-    if (!remotePlayer || !playerPed || !ped)
-        return false;
-
-    const uint8_t state = remotePlayer->GetState();
-    if (state == PLAYER_STATE_NONE || state == PLAYER_STATE_WASTED)
-        return false;
-
-    const float distance = ped->GetDistanceFromCamera();
-    return std::isfinite(distance) && distance >= 70.0f && distance <= 1000.0f;
-}
-
-static void RenderPcLikeRemotePlayersAfterWorld()
-{
-    if (!pNetGame || !pNetGame->GetPlayerPool())
-        return;
-
-    CPlayerPool* playerPool = pNetGame->GetPlayerPool();
-    for (PLAYERID playerId = 0; playerId < MAX_PLAYERS; ++playerId)
-    {
-        CRemotePlayer* remotePlayer = playerPool->GetAt(playerId);
-        if (!remotePlayer)
-            continue;
-
-        CPlayerPed* playerPed = remotePlayer->GetPlayerPed();
-        CPedGTA* ped = playerPed ? playerPed->m_pPed : nullptr;
-        if (!IsPcLikeRemotePedRenderCandidate(remotePlayer, playerPed, ped))
-            continue;
-
-        remotePlayer->ApplyPcLikeFarRenderState();
-
-        if (!ped->m_pRwObject || !ped->IsAdded())
-            continue;
-
-        const bool oldDistanceFade = ped->m_bDistanceFade;
-        const bool oldOffscreen = ped->m_bOffscreen;
-        const bool oldBeingRendered = ped->m_bImBeingRendered;
-        const bool oldDontRender = ped->bDontRender;
-        const bool oldCullExtraFarAway = ped->bCullExtraFarAway;
-        const bool oldRenderPedInCar = ped->bRenderPedInCar;
-        const float oldPedLodDist = CVisibilityPlugins::ms_pedLodDist;
-        const float oldPedFadeDist = CVisibilityPlugins::ms_pedFadeDist;
-
-        ped->m_bIsVisible = true;
-        ped->m_bDistanceFade = false;
-        ped->m_bOffscreen = false;
-        ped->m_bImBeingRendered = true;
-        ped->bDontRender = false;
-        ped->bCullExtraFarAway = false;
-        ped->bRenderPedInCar = true;
-
-        // RenderOneNonRoad still goes through the ped atomic renderer. Native
-        // SetRenderWareCamera keeps the mobile ped LOD low, so temporarily
-        // raise both ped LOD limits only for this SA-MP remote-player pass.
-        constexpr float kForcedRemotePedDrawDistance = 1000.0f;
-        constexpr float kForcedRemotePedDrawDistanceSq =
-            kForcedRemotePedDrawDistance * kForcedRemotePedDrawDistance;
-        if (CVisibilityPlugins::ms_pedLodDist < kForcedRemotePedDrawDistanceSq)
-            CVisibilityPlugins::ms_pedLodDist = kForcedRemotePedDrawDistanceSq;
-        if (CVisibilityPlugins::ms_pedFadeDist < kForcedRemotePedDrawDistanceSq)
-            CVisibilityPlugins::ms_pedFadeDist = kForcedRemotePedDrawDistanceSq;
-
-        // Reuse the 2.11 verified render path already used for far SAMP objects.
-        // This fixes the PC mismatch where nametag/healthbar are visible but the
-        // remote ped model itself disappears when the mobile renderer culls it.
-        CHook::CallFunction<void>(g_libGTASA + 0x48C31C, reinterpret_cast<CEntityGTA*>(ped));
-        CHook::CallFunction<void>(g_libGTASA + 0x4B5430, reinterpret_cast<CEntityGTA*>(ped));
-
-        ped->m_bDistanceFade = oldDistanceFade;
-        ped->m_bOffscreen = oldOffscreen;
-        ped->m_bImBeingRendered = oldBeingRendered;
-        ped->bDontRender = oldDontRender;
-        ped->bCullExtraFarAway = oldCullExtraFarAway;
-        ped->bRenderPedInCar = oldRenderPedInCar;
-        CVisibilityPlugins::ms_pedLodDist = oldPedLodDist;
-        CVisibilityPlugins::ms_pedFadeDist = oldPedFadeDist;
-    }
-}
-
 void CRenderer_RenderEverythingBarRoads_hook() {
-	CRenderer_RenderEverythingBarRoads();
     ApplyPcLikeCameraDrawDistanceState();
+	CRenderer_RenderEverythingBarRoads();
 	RenderSampFarObjectsAfterWorld();
-	RenderPcLikeRemotePlayersAfterWorld();
 }
 
 #include "gta-reversed/game_sa/Pickups.h"

@@ -4,6 +4,8 @@
 
 #include "VisibilityPlugins.h"
 #include "vendor/patch/patch.h"
+#include "Camera.h"
+#include <cmath>
 
 namespace {
 constexpr uintptr_t kMsCameraPosnGot = 0x83C940;
@@ -17,6 +19,25 @@ void CVisibilityPlugins::Initialise() {
 
 void CVisibilityPlugins::SetRenderWareCamera(RwCamera* camera) {
     CHook::CallFunction<void>(g_libGTASA + 0x605790, camera);
+
+    if (!camera || !RwCameraGetFrame(camera))
+        return;
+
+    CCamera& TheCamera = *reinterpret_cast<CCamera*>(g_libGTASA + 0x9F86F8);
+
+    ms_pCameraPosn = RwMatrixGetPos(RwFrameGetMatrix(RwCameraGetFrame(camera)));
+
+    float lodDistMultiplier = TheCamera.m_fLODDistMultiplier;
+    if (!std::isfinite(lodDistMultiplier) || lodDistMultiplier < 1.0f)
+        lodDistMultiplier = 1.0f;
+
+    const float pedLodDist = lodDistMultiplier * 60.0f;
+    const float pedFadeDist = lodDistMultiplier * 70.0f;
+
+    // PC CVisibilityPlugins::SetRenderWareCamera doubles the squared ped
+    // limits after applying TheCamera.m_fLODDistMultiplier.
+    ms_pedLodDist = pedLodDist * pedLodDist * 2.0f;
+    ms_pedFadeDist = pedFadeDist * pedFadeDist * 2.0f;
 }
 
 RpAtomic* CVisibilityPlugins::RenderPedCB(RpAtomic* atomic) {

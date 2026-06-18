@@ -2,6 +2,9 @@
 #include "samp/main.h"
 #include <string.h>
 #include <dlfcn.h>
+#include <cstdlib>
+#include <string>
+#include <unordered_map>
 #include <asm/unistd.h>
 #include <unistd.h>
 #include <ctype.h>
@@ -29,13 +32,17 @@
 #define SET_TO(__a1, __a2) *(void**)&(__a1) = (void*)(__a2)
 
 #include "shadowhook.h"
-#include "asm32.h"
+#ifdef __aarch64__
 #include "asm64.h"
-#include "vendor/patch/Gloss.h"
+#else
+#include "asm32.h"
+#endif
+#include "Gloss.h"
 
 class CHook {
 public:
-    static inline void* lib;
+    static inline void* lib = nullptr;
+    static inline GHandle gloss = nullptr;
 
 public:
 
@@ -57,7 +64,15 @@ public:
     }
 
     static void InitHookStuff() {
-        lib = dlopen("libGame.so", RTLD_LAZY);
+        lib = dlopen("libGame.so", RTLD_NOW);
+        gloss = GlossOpen("libGame.so");
+
+        if (!lib) {
+            FLog("[WARN]: dlopen(libGame.so) failed, symbol lookup will use Gloss only");
+        }
+        if (!gloss) {
+            FLog("[WARN]: GlossOpen(libGame.so) failed, symbol lookup will use dlsym only");
+        }
     }
 
     static void UnFuck(uintptr_t ptr, uint64_t len = PAGE_SIZE) {
@@ -147,13 +162,31 @@ public:
 
     static uintptr_t getSym(const char* sym)
     {
+        static std::unordered_map<std::string, uintptr_t> sym_cache;
 
-        auto res = (uintptr_t)dlsym(lib, sym);
+        auto it = sym_cache.find(sym);
+        if (it != sym_cache.end()) {
+            return it->second;
+        }
+
+        uintptr_t res = 0;
+        if (lib) {
+            res = reinterpret_cast<uintptr_t>(dlsym(lib, sym));
+        }
+        if (!res && gloss) {
+            res = GlossSymbol(gloss, sym, nullptr);
+        }
+        if (!res && g_libGTASA) {
+            res = GlossSymbolEx(g_libGTASA, sym, nullptr);
+        }
+
         if(res == 0) {
-            FLog("[ERROR]: Failed to search for libraries: %s", sym);
+            FLog("[ERROR]: Failed to find libGame.so symbol: %s", sym);
             exit(0);
             return 0;
         }
+
+        sym_cache.emplace(sym, res);
         return res;
     }
 
@@ -179,22 +212,7 @@ public:
 
     template <typename Ret, typename... Args>
     static Ret CallFunction(const char* sym, Args... args) {
-        static std::unordered_map<std::string, uintptr_t> addr_map;
-
-        auto it = addr_map.find(sym);
-        uintptr_t addr;
-
-        if (it == addr_map.end()) {
-            addr = (uintptr_t)dlsym(lib, sym);
-            if (addr == 0) {
-                FLog("[ERROR]: Function not found: %s", sym);
-                exit(0);
-            }
-            addr_map[sym] = addr;
-        } else {
-            addr = it->second;
-        }
-
+        const uintptr_t addr = getSym(sym);
         return ((Ret(*)(Args...))(addr))(args...);
     }
 

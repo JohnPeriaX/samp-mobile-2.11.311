@@ -17,6 +17,7 @@ class CRenderer {
 public:
     static inline bool ms_bRenderOutsideTunnels;
     static inline bool m_loadingPriority;
+    static inline float ms_fFarClipPlane;
 
     static inline CEntityGTA* ms_aVisibleEntityPtrs[MAX_VISIBLE_ENTITY_PTRS];
     static inline int32 ms_nNoOfVisibleEntities;

@@ -87,6 +87,15 @@ void CVehicleModelInfo::CVehicleStructure::operator delete(void* data)
     m_pInfoPool->Delete(reinterpret_cast<CVehicleStructure*>(data));
 }
 
+
+extern void readVehiclesAudioSettings();
+void (*CVehicleModelInfo_SetupCommonData)();
+void CVehicleModelInfo_SetupCommonData_hook()
+{
+    CVehicleModelInfo_SetupCommonData();
+    readVehiclesAudioSettings();
+}
+
 void CVehicleModelInfo::InjectHooks() {
     //CHook::Write(g_libGTASA + 0x851A18, &ms_pLightsTexture);
     //CHook::Write(g_libGTASA + 0x84E440, &ms_pLightsOnTexture);
@@ -94,6 +103,9 @@ void CVehicleModelInfo::InjectHooks() {
 
     //CHook::InstallPLT(g_libGTASA + 0x83DEE0, &SetEditableMaterials);
     //CHook::InstallPLT(g_libGTASA + 0x849D10, &ResetEditableMaterials);
+
+    /* เพิ่มจาก sasamp-main: readVehiclesAudioSettings */
+    CHook::InlineHook("_ZN17CVehicleModelInfo15SetupCommonDataEv", &CVehicleModelInfo_SetupCommonData_hook, &CVehicleModelInfo_SetupCommonData);
 
 //    CVehicleStructure::m_pInfoPool = new CPool<CVehicleStructure>(CModelInfo::NUM_VEHICLE_MODEL_INFOS, "VehicleStruct");
 //

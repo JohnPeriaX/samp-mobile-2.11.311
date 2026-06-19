@@ -4,6 +4,9 @@
 
 #pragma once
 
+#include <list>
+#include <utility>
+
 #include "ClumpModelInfo.h"
 #include "gta-reversed/game_sa/Enums/eVehicleClass.h"
 #include "gta-reversed/game_sa/Core/Quaternion.h"

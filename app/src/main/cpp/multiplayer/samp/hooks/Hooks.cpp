@@ -35,8 +35,8 @@
 #include "samp/Graphics/ES2VertexBuffer.h"
 #include "samp/Graphics/RQ_Commands.h"
 #include "samp/Graphics/RQShader.h"
-#include "samp/Multiplayer/MobileMenu.h"
-#include "gta-reversed/game_sa/MobileSettings.h"
+#include "gta-reversed/game_sa/Mobile/MobileMenu/MobileMenu.h"
+#include "gta-reversed/game_sa/Mobile/MobileSettings/MobileSettings.h"
 ///skip for now later if above is already converted
 extern UI* pUI;
 extern CGame* pGame;
@@ -1902,6 +1902,8 @@ void InjectHooks()
     CVisibilityPlugins::InjectHooks();
     CTouchInterface::InjectHooks(); //
     CWidgetGta::InjectHooks();
+    CMobileMenu::InjectHooks();
+    CMobileSettings::InjectHooks();
     CGame::InjectHooks();
     CSprite2d::InjectHooks();
     CStreamingInfo::InjectHooks();

@@ -4,7 +4,7 @@
 
 #include "RealTimeShadowManager.h"
 #include "vendor/patch/patch.h"
-#include "gta-reversed/game_sa/MobileSettings.h"
+#include "gta-reversed/game_sa/Mobile/MobileSettings/MobileSettings.h"
 #include "gta-reversed/game_sa/Entity/CPedGTA.h"
 
 void CRealTimeShadowManager::Init() {

@@ -10,6 +10,7 @@
 #include "gta-reversed/game_sa/Core/EntryInfoList.h"
 #include "gta-reversed/game_sa/RealTimeShadow.h"
 #include "gta-reversed/game_sa/Core/Quaternion.h"
+#include "gta-reversed/game_sa/Collision/ColPoint.h"
 
 struct CPhysical : public CEntityGTA {
     float       m_fPrevDistFromCam;
@@ -94,6 +95,10 @@ struct CPhysical : public CEntityGTA {
     CRealTimeShadow*       m_pShadowData;
 
 public:
+    static inline float DAMPING_LIMIT_IN_FRAME = 0.25f;
+    static inline float DAMPING_LIMIT_OF_SPRING_FORCE = 0.999f;
+
+public:
     CPhysical();
     ~CPhysical() override;
 
@@ -118,6 +123,19 @@ public:
     void ApplyMoveForce(float x, float y, float z);
     void ApplyMoveForce(CVector force);
     void ApplyTurnForce(CVector force, CVector point);
+
+    /* เพิ่มจาก sasamp-main: Physical helpers */
+    void ApplyForce(CVector vecForce, CVector point, bool bUpdateTurnSpeed);
+    bool ApplySpringDampening(float fDampingForce, float fSpringForceDampingLimit, CVector& direction, CVector& collisionPoint, CVector& collisionPos);
+    bool ApplySpringCollisionAlt(float fSuspensionForceLevel, CVector& direction, CVector& collisionPoint, float fSpringLength, float fSuspensionBias, CVector& normal, float& fSpringForceDampingLimit);
+    void ApplyFrictionForce(CVector vecMoveForce, CVector point);
+    void ApplyFrictionMoveForce(CVector moveForce);
+    bool ApplyFriction(CPhysical* entity, float fFriction, CColPoint& colPoint);
+    void ResetFrictionMoveSpeed() { m_vecFrictionMoveSpeed = CVector(); }
+    void ResetFrictionTurnSpeed() { m_vecFrictionTurnSpeed = CVector(); }
+    float GetMass(const CVector& pos, const CVector& dir) {
+        return 1.0f / (CrossProduct(pos, dir).SquaredMagnitude() / m_fTurnMass + 1.0f / m_fMass);
+    }
 };
 
 static_assert(sizeof(CPhysical) == 0x198, "Invalid size CPhysical");

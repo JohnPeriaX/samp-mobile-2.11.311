@@ -7,6 +7,7 @@
 #include "CPhysical.h"
 #include "gta-reversed/game_sa/common.h"
 #include "gta-reversed/game_sa/Enums/eVehicleType.h"
+#include "gta-reversed/game_sa/Enums/eVehicleDummy.h"
 #include "gta-reversed/game_sa/tHandlingData.h"
 #include "gta-reversed/game_sa/Entity/CPhysical.h"
 #include "gta-reversed/game_sa/Enums/eVehicleHandlingFlags.h"
@@ -341,6 +342,12 @@ public:
 
     void AddVehicleUpgrade(int32 modelId);
     void RemoveVehicleUpgrade(int32 upgradeModelIndex);
+
+    /* เพิ่มจาก sasamp-main: Vehicle helpers */
+    bool UsesSiren();
+    bool IsLawEnforcementVehicle() const;
+    bool DoTailLightEffect(int32_t lightId, CMatrix* matVehicle, int isRight, int forcedOff, uint32_t nLightFlags, int lightsOn);
+    void DoHeadLightBeam(eVehicleDummy dummyId, CMatrix* matrix, bool isRight);
 };
 
 VALIDATE_SIZE(CVehicleGTA, 0x758);

@@ -11,6 +11,8 @@
 #include "gta-reversed/game_sa/Models/ModelInfo.h"
 #include "gta-reversed/game_sa/References.h"
 #include "gta-reversed/game_sa/Pools.h"
+#include "gta-reversed/game_sa/Collision/ColModel.h"
+#include "gta-reversed/game_sa/Entity/CVehicleGTA.h"
 
 extern CGame* pGame;
 
@@ -118,6 +120,85 @@ float CEntityGTA::GetDistanceFromPoint(float X, float Y, float Z) const
 void CEntityGTA::SetCollisionChecking(bool bCheck)
 {
     m_bCollisionProcessed = bCheck;
+}
+
+/* เพิ่มจาก sasamp-main: Entity helpers */
+bool CEntityGTA::IsVisible()
+{
+    if (!m_pRwObject || !m_bIsVisible)
+        return false;
+
+    return GetIsOnScreen();
+}
+
+bool CEntityGTA::GetIsOnScreen()
+{
+    return CHook::CallFunction<bool>(g_libGTASA + 0x48C1D8, this);
+}
+
+bool CEntityGTA::GetIsTouching(CEntityGTA* entity)
+{
+    CVector thisVec;
+    GetBoundCentre(thisVec);
+
+    CVector otherVec;
+    entity->GetBoundCentre(otherVec);
+
+    auto fThisRadius = CModelInfo::GetModelInfo(m_nModelIndex)->GetColModel()->GetBoundRadius();
+    auto fOtherRadius = CModelInfo::GetModelInfo(entity->m_nModelIndex)->GetColModel()->GetBoundRadius();
+
+    return (thisVec - otherVec).Magnitude() <= (fThisRadius + fOtherRadius);
+}
+
+CColModel* CEntityGTA::GetColModel() const
+{
+    if (IsVehicle()) {
+        const auto veh = static_cast<const CVehicleGTA*>(this);
+        if (veh->m_vehicleSpecialColIndex > -1) {
+            return &CVehicleGTA::m_aSpecialColModel[veh->m_vehicleSpecialColIndex];
+        }
+    }
+
+    return CModelInfo::GetModelInfo(m_nModelIndex)->GetColModel();
+}
+
+CVector CEntityGTA::TransformFromObjectSpace(const CVector& offset)
+{
+    return GetMatrix().TransformPoint(offset);
+}
+
+CVector* CEntityGTA::TransformFromObjectSpace(CVector& outPos, const CVector& offset)
+{
+    outPos = TransformFromObjectSpace(offset);
+    return &outPos;
+}
+
+CVector* CEntityGTA::GetBoundCentre(CVector* outCentre)
+{
+    return TransformFromObjectSpace(*outCentre, GetColModel()->GetBoundCenter());
+}
+
+void CEntityGTA::GetBoundCentre(CVector& outCentre)
+{
+    TransformFromObjectSpace(outCentre, GetColModel()->GetBoundCenter());
+}
+
+CVector CEntityGTA::GetBoundCentre()
+{
+    CVector v;
+    GetBoundCentre(v);
+    return v;
+}
+
+CCollisionData* CEntityGTA::GetColData()
+{
+    return GetColModel()->m_pColData;
+}
+
+bool CEntityGTA::DoesNotCollideWithFlyers()
+{
+    auto mi = CModelInfo::GetModelInfo(m_nModelIndex);
+    return mi->SwaysInWind() || mi->bDontCollideWithFlyer;
 }
 
 void CEntityGTA::UpdateRpHAnim() {

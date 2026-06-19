@@ -172,6 +172,96 @@ void CPedGTA::GiveWeapon(int iWeaponID, int iAmmo)
 }
 
 
+
+/* เพิ่มจาก sasamp-main: Ped helpers */
+int CPedGTA::GetSampSeatId()
+{
+    if (!pVehicle)
+        return -1;
+
+    if (pVehicle->pDriver == this) return 0;
+
+    if (pVehicle->m_apPassengers[0] == this) return 1;
+    if (pVehicle->m_apPassengers[1] == this) return 2;
+    if (pVehicle->m_apPassengers[2] == this) return 3;
+    if (pVehicle->m_apPassengers[3] == this) return 4;
+    if (pVehicle->m_apPassengers[4] == this) return 5;
+    if (pVehicle->m_apPassengers[5] == this) return 6;
+    if (pVehicle->m_apPassengers[6] == this) return 7;
+
+    return -1;
+}
+
+void CPedGTA::ClearAimFlag()
+{
+    CHook::CallFunction<void>(g_libGTASA + 0x5891E8, this);
+}
+
+void CPedGTA::ClearLookFlag()
+{
+    CHook::CallFunction<void>(g_libGTASA + 0x589220, this);
+}
+
+bool CPedGTA::CanUseTorsoWhenLooking() const
+{
+    return CHook::CallFunction<bool>(g_libGTASA + 0x587C64, this);
+}
+
+bool CPedGTA::IsPlayer() const
+{
+    return CHook::CallFunction<bool>(g_libGTASA + 0x5874B8, this);
+}
+
+void CPedGTA::SetPedState(ePedState pedState)
+{
+    CHook::CallFunction<void>(g_libGTASA + 0x58A0DC, this, pedState);
+}
+
+void CPedGTA::SetMoveState(eMoveState moveState)
+{
+    CHook::CallFunction<void>(g_libGTASA + 0x588DD0, this, moveState);
+}
+
+eWeaponSkill CPedGTA::GetWeaponSkill(eWeaponType weaponType)
+{
+    return CHook::CallFunction<eWeaponSkill>(g_libGTASA + 0x58E358, this, weaponType);
+}
+
+eWeaponSkill CPedGTA::GetWeaponSkill()
+{
+    return CHook::CallFunction<eWeaponSkill>(g_libGTASA + 0x589598, this);
+}
+
+void CPedGTA::GetTransformedBonePosition(RwV3d& inOutPos, ePedBones boneId, bool updateSkinBones)
+{
+    CHook::CallFunction<void>(g_libGTASA + 0x58A7B4, this, &inOutPos, static_cast<uint32>(boneId), updateSkinBones);
+}
+
+int32 CPedGTA::GetWeaponSlot(eWeaponType weaponType)
+{
+    return CHook::CallFunction<int32>(g_libGTASA + 0x58DC8C, this, weaponType);
+}
+
+void CPedGTA::SetAmmo(eWeaponType weaponType, uint32 ammo)
+{
+    CHook::CallFunction<void>(g_libGTASA + 0x58DE1C, this, weaponType, ammo);
+}
+
+void CPedGTA::SetCurrentWeapon(int32 slot)
+{
+    CHook::CallFunction<void>(g_libGTASA + 0x58DCAC, this, slot);
+}
+
+void CPedGTA::SetCurrentWeapon(eWeaponType weaponType)
+{
+    SetCurrentWeapon(GetWeaponSlot(weaponType));
+}
+
+bool CPedGTA::DoGunFlash(int32 duration, bool isLeftHand)
+{
+    return CHook::CallFunction<bool>(g_libGTASA + 0x58E1C0, this, duration, isLeftHand);
+}
+
 void CPedGTA::RemoveFromVehicle()
 {
     if(!IsInVehicle())

@@ -32,6 +32,12 @@ void CPlayerPedGta::ReApplyMoveAnims() {
 }
 
 
+/* เพิ่มจาก sasamp-main: GetWeaponRadiusOnScreen */
+float CPlayerPedGta::GetWeaponRadiusOnScreen()
+{
+    return CHook::CallFunction<float>(g_libGTASA + 0x5B8F2C, this);
+}
+
 // --- hooks
 
 void ReApplyMoveAnims_hook(CPlayerPedGta* thiz) {

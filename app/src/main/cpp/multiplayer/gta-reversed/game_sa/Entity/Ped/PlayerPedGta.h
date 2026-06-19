@@ -30,6 +30,9 @@ public:
     bool Load_Reversed();
     bool Save_Reversed();
 
+    /* เพิ่มจาก sasamp-main: GetWeaponRadiusOnScreen */
+    float GetWeaponRadiusOnScreen();
+
 //    void ProcessControl() override;
 //    bool Load() override;
 //    bool Save() override;

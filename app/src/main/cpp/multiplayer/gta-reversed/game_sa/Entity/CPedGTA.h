@@ -10,6 +10,7 @@
 #include "gta-reversed/game_sa/Enums/eMoveState.h"
 #include "gta-reversed/game_sa/StoredCollPoly.h"
 #include "gta-reversed/game_sa/Enums/ePedType.h"
+#include "gta-reversed/game_sa/Enums/ePedBones.h"
 #include "gta-reversed/game_sa/Enums/eWeaponType.h"
 #include "gta-reversed/game_sa/Enums/eWeaponSkill.h"
 #include "gta-reversed/game_sa/Enums/AnimationEnums.h"
@@ -327,6 +328,23 @@ public:
     bool IsExitingVehicle();
 
     void GiveWeapon(int iWeaponID, int iAmmo);
+
+    /* เพิ่มจาก sasamp-main: Ped helpers */
+    int GetSampSeatId();
+    void ClearAimFlag();
+    void ClearLookFlag();
+    bool CanUseTorsoWhenLooking() const;
+    bool IsPlayer() const;
+    void SetPedState(ePedState pedState);
+    void SetMoveState(eMoveState moveState);
+    eWeaponSkill GetWeaponSkill(eWeaponType weaponType);
+    eWeaponSkill GetWeaponSkill();
+    void GetTransformedBonePosition(RwV3d& inOutPos, ePedBones boneId, bool updateSkinBones = false);
+    int32 GetWeaponSlot(eWeaponType weaponType);
+    void SetAmmo(eWeaponType weaponType, uint32 ammo);
+    void SetCurrentWeapon(int32 slot);
+    void SetCurrentWeapon(eWeaponType weaponType);
+    bool DoGunFlash(int32 duration, bool isLeftHand);
 
     void RemoveFromVehicle();
 };

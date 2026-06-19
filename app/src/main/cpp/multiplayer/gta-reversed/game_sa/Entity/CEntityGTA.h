@@ -17,6 +17,8 @@
 #include "gta-reversed/game_sa/Enums/eModelID.h"
 
 class CPedGTA;
+class CColModel;
+class CCollisionData;
 
 struct CEntityGTA : public CPlaceable{
 public:
@@ -127,6 +129,19 @@ public:
     float GetDistanceFromPoint(float X, float Y, float Z) const;
 
     void SetCollisionChecking(bool bCheck);
+
+    /* เพิ่มจาก sasamp-main: Entity helpers */
+    bool IsVisible();
+    bool GetIsOnScreen();
+    bool GetIsTouching(CEntityGTA* entity);
+    CVector GetBoundCentre();
+    void GetBoundCentre(CVector& outCentre);
+    CVector* GetBoundCentre(CVector* outCentre);
+    CColModel* GetColModel() const;
+    CCollisionData* GetColData();
+    CVector TransformFromObjectSpace(const CVector& offset);
+    CVector* TransformFromObjectSpace(CVector& outPos, const CVector& offset);
+    bool DoesNotCollideWithFlyers();
 
     void UpdateRpHAnim();
 

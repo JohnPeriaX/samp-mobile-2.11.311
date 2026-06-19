@@ -10,6 +10,9 @@
 #include "gta-reversed/game_sa/Models/ModelInfo.h"
 #include "gta-reversed/game_sa/Entity/CPedGTA.h"
 #include "gta-reversed/game_sa/Entity/CEntityGTA.h"
+#include <cmath>
+#include <iterator>
+#include "gta-reversed/game_sa/Camera.h"
 
 void CVehicleGTA::RenderDriverAndPassengers() {
     if(IsRCVehicleModelID())
@@ -216,6 +219,113 @@ bool CVehicle__DoTailLightEffect(CVehicleGTA* thisVehicle, int32_t lightId, CMat
         );
     }
     return true;
+}
+
+
+/* เพิ่มจาก sasamp-main: Vehicle helpers */
+bool CVehicleGTA::DoTailLightEffect(int32_t lightId, CMatrix* matVehicle, int isRight, int forcedOff, uint32_t nLightFlags, int lightsOn)
+{
+    return CVehicle__DoTailLightEffect(this, lightId, matVehicle, isRight, forcedOff, nLightFlags, lightsOn);
+}
+
+void CVehicleGTA::DoHeadLightBeam(eVehicleDummy dummyId, CMatrix* matrix, bool isRight)
+{
+    uint8_t r = 0xFF, g = 0xFF, b = 0xFF;
+
+    auto mi = CModelInfo::GetVehicleModelInfo(m_nModelIndex);
+    CVector pointModelSpace = mi->GetModelDummyPosition(static_cast<eVehicleDummy>(2 * dummyId));
+    if (dummyId == DUMMY_LIGHT_REAR_MAIN && pointModelSpace.IsZero())
+        return;
+
+    CVector point = matrix->GetPosition() + matrix->TransformVector(pointModelSpace);
+    if (!isRight) {
+        point -= 2.0f * pointModelSpace.x * matrix->GetRight();
+    }
+
+    static CCamera& TheCamera = *reinterpret_cast<CCamera*>(g_libGTASA + 0x9F86F8);
+    const CVector pointToCamDir = Normalized(TheCamera.GetPosition() - point);
+    const auto alpha = static_cast<uint8>((1.0f - std::fabs(DotProduct(pointToCamDir, matrix->GetForward()))) * 45.0f);
+
+    RwRenderStateSet(rwRENDERSTATEZWRITEENABLE,         RWRSTATE(FALSE));
+    RwRenderStateSet(rwRENDERSTATEZTESTENABLE,          RWRSTATE(TRUE));
+    RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE,    RWRSTATE(TRUE));
+    RwRenderStateSet(rwRENDERSTATESRCBLEND,             RWRSTATE(rwBLENDSRCALPHA));
+    RwRenderStateSet(rwRENDERSTATEDESTBLEND,            RWRSTATE(rwBLENDINVSRCALPHA));
+    RwRenderStateSet(rwRENDERSTATESHADEMODE,            RWRSTATE(rwSHADEMODEGOURAUD));
+    RwRenderStateSet(rwRENDERSTATETEXTURERASTER,        RWRSTATE(NULL));
+    RwRenderStateSet(rwRENDERSTATECULLMODE,             RWRSTATE(rwCULLMODECULLNONE));
+    RwRenderStateSet(rwRENDERSTATEALPHATESTFUNCTION,    RWRSTATE(rwALPHATESTFUNCTIONGREATER));
+    RwRenderStateSet(rwRENDERSTATEALPHATESTFUNCTIONREF, RWRSTATE(FALSE));
+
+    const float angleMult = 0.15f;
+    const CVector lightNormal = Normalized(matrix->GetForward() - matrix->GetUp() * angleMult);
+    const CVector lightRight = Normalized(CrossProduct(lightNormal, pointToCamDir));
+    const CVector lightPos = point - matrix->GetForward() * 0.1f;
+
+    const CVector posn[] = {
+        lightPos - lightRight * 0.05f,
+        lightPos + lightRight * 0.05f,
+        lightPos + lightNormal * 3.0f - lightRight * 0.5f,
+        lightPos + lightNormal * 3.0f + lightRight * 0.5f,
+        lightPos + lightNormal * 0.2f
+    };
+    const uint8 alphas[] = { alpha, alpha, 0, 0, alpha };
+
+    RxObjSpace3DVertex vertices[5];
+    for (auto i = 0u; i < std::size(vertices); i++) {
+        const RwRGBA color = { r, g, b, alphas[i] };
+        RxObjSpace3DVertexSetPreLitColor(&vertices[i], &color);
+        RxObjSpace3DVertexSetPos(&vertices[i], &posn[i]);
+    }
+
+    if (RwIm3DTransform(vertices, std::size(vertices), nullptr, rwIM3D_VERTEXRGBA | rwIM3D_VERTEXXYZ)) {
+        RxVertexIndex indices[] = { 0, 1, 4, 1, 3, 4, 2, 3, 4, 0, 2, 4 };
+        RwIm3DRenderIndexedPrimitive(rwPRIMTYPETRILIST, indices, std::size(indices));
+        RwIm3DEnd();
+    }
+
+    RwRenderStateSet(rwRENDERSTATETEXTURERASTER,         RWRSTATE(FALSE));
+    RwRenderStateSet(rwRENDERSTATEZWRITEENABLE,          RWRSTATE(TRUE));
+    RwRenderStateSet(rwRENDERSTATEZTESTENABLE,           RWRSTATE(TRUE));
+    RwRenderStateSet(rwRENDERSTATESRCBLEND,              RWRSTATE(rwBLENDSRCALPHA));
+    RwRenderStateSet(rwRENDERSTATEDESTBLEND,             RWRSTATE(rwBLENDINVSRCALPHA));
+    RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE,     RWRSTATE(FALSE));
+    RwRenderStateSet(rwRENDERSTATECULLMODE,              RWRSTATE(rwCULLMODECULLNONE));
+}
+
+bool CVehicleGTA::UsesSiren()
+{
+    switch (m_nModelIndex) {
+        case MODEL_FIRETRUK:
+        case MODEL_AMBULAN:
+        case MODEL_MRWHOOP:
+            return true;
+        case MODEL_RHINO:
+            return false;
+        default:
+            return IsLawEnforcementVehicle() != false;
+    }
+}
+
+bool CVehicleGTA::IsLawEnforcementVehicle() const
+{
+    switch (m_nModelIndex) {
+        case MODEL_ENFORCER:
+        case MODEL_PREDATOR:
+        case MODEL_RHINO:
+        case MODEL_BARRACKS:
+        case MODEL_FBIRANCH:
+        case MODEL_COPBIKE:
+        case MODEL_FBITRUCK:
+        case MODEL_COPCARLA:
+        case MODEL_COPCARSF:
+        case MODEL_COPCARVG:
+        case MODEL_COPCARRU:
+        case MODEL_SWATVAN:
+            return true;
+        default:
+            return false;
+    }
 }
 
 void CVehicleGTA::InjectHooks() {

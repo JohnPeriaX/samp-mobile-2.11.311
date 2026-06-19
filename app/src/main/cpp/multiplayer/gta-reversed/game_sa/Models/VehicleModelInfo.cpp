@@ -26,6 +26,12 @@ void CVehicleModelInfo::CVehicleModelInfo__SetClump(RpClump* clump)
 //    SetCarCustomPlate();
 }
 
+/* เพิ่มจาก sasamp-main: CVehicleModelInfo::GetModelType */
+ModelInfoType CVehicleModelInfo::GetModelType()
+{
+    return ModelInfoType::MODEL_INFO_VEHICLE;
+}
+
 void CVehicleModelInfo::CVehicleModelInfo__DeleteRwObject()
 {
     delete m_pVehicleStruct;

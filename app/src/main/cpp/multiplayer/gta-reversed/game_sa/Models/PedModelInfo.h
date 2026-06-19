@@ -24,6 +24,10 @@ public:
     int16_t     m_FirstVoice;
     int16_t     m_LastVoice;
     int16_t     m_NextVoice;
+
+public:
+    /* เพิ่มจาก sasamp-main: CPedModelInfo::GetModelType */
+    ModelInfoType GetModelType();
 };
 
 

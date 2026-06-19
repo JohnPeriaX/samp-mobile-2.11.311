@@ -26,3 +26,9 @@ RwFrame* CClumpModelInfo::GetFrameFromName(RpClump* clump, const char* name)
 //    RwFrameForAllChildren(RpClumpGetFrame(clump), FindFrameFromNameCB, &searchInfo);
 //    return searchInfo.m_pFrame;
 }
+
+/* เพิ่มจาก sasamp-main: CClumpModelInfo::GetModelType */
+ModelInfoType CClumpModelInfo::GetModelType()
+{
+    return ModelInfoType::MODEL_INFO_CLUMP;
+}

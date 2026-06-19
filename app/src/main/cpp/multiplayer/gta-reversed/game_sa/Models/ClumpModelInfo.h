@@ -17,6 +17,9 @@ struct CClumpModelInfo : public CBaseModelInfo {
     };
 
 public:
+    /* เพิ่มจาก sasamp-main: CClumpModelInfo::GetModelType */
+    ModelInfoType GetModelType();
+
     // Added vtable methods
     void CClumpModelInfo__SetClump(RpClump* clump);
     void CClumpModelInfo__DeleteRwObject();

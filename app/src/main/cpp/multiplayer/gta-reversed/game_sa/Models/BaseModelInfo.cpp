@@ -20,3 +20,19 @@ int32 CBaseModelInfo::GetAnimFileIndex() {
 void CBaseModelInfo::DeleteRwObject() {
     CHook::CallFunction<void>(*(uintptr_t*)(vtable + 0x48), this);
 }
+
+/* เพิ่มจาก sasamp-main: model info cast helpers */
+CAtomicModelInfo* CBaseModelInfo::AsAtomicModelInfoPtr()
+{
+    return nullptr;
+}
+
+CDamageAtomicModelInfo* CBaseModelInfo::AsDamageAtomicModelInfoPtr()
+{
+    return nullptr;
+}
+
+CLodAtomicModelInfo* CBaseModelInfo::AsLodAtomicModelInfoPtr()
+{
+    return nullptr;
+}

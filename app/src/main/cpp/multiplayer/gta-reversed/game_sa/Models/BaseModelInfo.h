@@ -113,6 +113,11 @@ public:
     int32 GetAnimFileIndex();
     void DeleteRwObject();
 
+    /* เพิ่มจาก sasamp-main: model info cast helpers */
+    CAtomicModelInfo* AsAtomicModelInfoPtr();
+    CDamageAtomicModelInfo* AsDamageAtomicModelInfoPtr();
+    CLodAtomicModelInfo* AsLodAtomicModelInfoPtr();
+
     void SetModelName(const char* modelName) { m_nKey = CKeyGen::GetUppercaseKey(modelName); }
     void SetTexDictionary(const char* txdName, const char *dbName);
 

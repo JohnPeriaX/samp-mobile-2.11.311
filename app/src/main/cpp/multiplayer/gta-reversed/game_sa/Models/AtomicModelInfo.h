@@ -8,7 +8,9 @@
 
 
 struct CAtomicModelInfo : public CBaseModelInfo {
-
+public:
+    CAtomicModelInfo* AsAtomicModelInfoPtr();
+    ModelInfoType GetModelType();
 };
 
 

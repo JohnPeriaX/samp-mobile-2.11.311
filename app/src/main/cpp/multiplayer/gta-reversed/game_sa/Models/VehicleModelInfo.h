@@ -145,6 +145,9 @@ public:
 public:
     static void InjectHooks();
 
+    /* เพิ่มจาก sasamp-main: CVehicleModelInfo::GetModelType */
+    ModelInfoType GetModelType();
+
     // vt
     void CVehicleModelInfo__DeleteRwObject();
     void CVehicleModelInfo__SetClump(RpClump* clump);
@@ -179,11 +182,14 @@ static inline RwSurfaceProperties gLightSurfProps {5.0, 0.0, 1.0};
 static inline RwSurfaceProperties gLightOffSurfProps {0.0, 0.0, 1.0};
 
 
-static inline std::list<std::pair<uint32*, uint32>> gStoredMaterials;
+static inline std::list<std::pair<uintptr*, uintptr>> gStoredMaterials;
 template <typename Addr>
 static inline void AddStoredMaterial(Addr addr)
 {
-    gStoredMaterials.emplace_back(reinterpret_cast<uint32*>(addr), *reinterpret_cast<uint32*>(addr));
+    gStoredMaterials.emplace_back(
+        reinterpret_cast<uintptr*>(addr),
+        *reinterpret_cast<uintptr*>(addr)
+    );
 }
 
 

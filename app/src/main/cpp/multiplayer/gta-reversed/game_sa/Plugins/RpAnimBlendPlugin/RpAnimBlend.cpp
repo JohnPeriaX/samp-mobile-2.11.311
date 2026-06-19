@@ -26,16 +26,7 @@ CAnimBlendAssociation* RpAnimBlendClumpAddAssociation(RpClump* clump, CAnimBlend
 
 // 0x4D6BE0
 CAnimBlendAssociation* RpAnimBlendClumpExtractAssociations(RpClump* clump) {
-    int *v1; // r1
-    int v2; // r3
-    int result; // r0
-
-    v1 = *(int **)(clump + ClumpOffset);
-    v2 = *v1;
-    *v1 = 0;
-    result = v2 - 4;
-    *(uint32_t *)(v2 + 4) = 0;
-    return reinterpret_cast<CAnimBlendAssociation *>(result);
+    return CHook::CallFunction<CAnimBlendAssociation*>(g_libGTASA + 0x37678C, clump);
 }
 
 // 0x4D64A0
@@ -76,18 +67,7 @@ CAnimBlendAssociation* RpAnimBlendClumpGetAssociation(RpClump* clump, uint32 ani
 
 // 0x4D15E0
 CAnimBlendAssociation* RpAnimBlendClumpGetFirstAssociation(RpClump* clump) {
-    int *v4; // r4
-    int result; // r0
-
-    v4 = *(int **)(clump + ClumpOffset);
-    result = RpAnimBlendClumpIsInitialized(clump);
-    if ( result )
-    {
-        result = *v4;
-        if ( *v4 )
-            result -= 4;
-    }
-    return reinterpret_cast<CAnimBlendAssociation *>(result);
+    return CHook::CallFunction<CAnimBlendAssociation*>(g_libGTASA + 0x371B84, clump);
 }
 
 // 0x4D6A70

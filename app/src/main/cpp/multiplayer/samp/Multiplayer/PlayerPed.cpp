@@ -8,6 +8,7 @@
 #include "gta-reversed/game_sa/Streaming.h"
 #include "gta-reversed/game_sa/World.h"
 #include "gta-reversed/game_sa/Models/ModelInfo.h"
+#include "gta-reversed/game_sa/Plugins/RpAnimBlendPlugin/RpAnimBlend.h"
 
 extern CGame* pGame;
 extern CNetGame* pNetGame;
@@ -395,9 +396,7 @@ bool CPlayerPed::IsPlayingAnimation(int iIndex)
     }
     const char* pNameAnim = strchr(pAnim, ':') + 1;
 
-    //RpAnimBlendClumpGetAssociation(RpClump *,char const*)	000000000046AAF4
-    uintptr_t blendAssoc = ((uintptr_t(*)(RpClump* clump, const char* szName))(g_libGTASA + 0x3763C8))
-            (m_pPed->m_pRwClump, pNameAnim);	// RpAnimBlendClumpGetAssociation
+    auto* blendAssoc = RpAnimBlendClumpGetAssociation(m_pPed->m_pRwClump, pNameAnim);
 
     if (blendAssoc)
     {
@@ -1100,19 +1099,9 @@ void CPlayerPed::GetBoneMatrix(RwMatrix* matOut, int iBoneID)
 // 0.3.7
 void CPlayerPed::ClumpUpdateAnimations(float step, int flag)
 {
-    //unuse 32bit code but can later be use
-    /*
-    uintptr_t pRwObj;
-
-    if (m_pPed)
-    {
-        pRwObj = reinterpret_cast<uintptr_t>(m_pPed->m_pRwObject);
-        if (pRwObj) {
-            // RpAnimBlendClumpUpdateAnimations
-            ((void (*)(uintptr_t, float, int))(g_libGTASA + 0x38BF00 + 1))(pRwObj, step, flag);
-        }
+    if (m_pPed && m_pPed->m_pRwClump) {
+        RpAnimBlendClumpUpdateAnimations(m_pPed->m_pRwClump, step, flag != 0);
     }
-     */
 }
 bool g_customFire = false;
 extern uint32_t (*CWeapon__FireInstantHit)(CWeapon* thiz, CPedGTA* pFiringEntity, CVector* vecOrigin, CVector* muzzlePosn, CEntityGTA* targetEntity, CVector *target, CVector* originForDriveBy, int arg6, int muzzle);

@@ -93,10 +93,10 @@ bool CTaskManager::HasTaskSecondary(const CTask* task) {
     return false;
 }
 //
-//// 0x681850
-//void CTaskManager::Flush() {
-//    ApplyToRootTasks(DeleteTaskAndNull);
-//}
+// 0x681850
+void CTaskManager::Flush() {
+    ApplyToRootTasks(DeleteTaskAndNull);
+}
 
 void CTaskManager::FlushImmediately() {
     ApplyToRootTasks([this](CTask*& task) {

@@ -175,9 +175,27 @@ bool CPlayerPed::IsAPassenger()
 // 0.3.7
 void CPlayerPed::RemoveFromVehicleAndPutAt(float fX, float fY, float fZ)
 {
-    if(!m_pPed || !m_pPed->pVehicle) return;
+    if (!m_pPed || !m_pPed->pVehicle || !m_pPed->m_pIntelligence) return;
 
-    m_pPed->m_pIntelligence->m_TaskMgr.FlushImmediately();
+    CVehicleGTA* vehicle = m_pPed->pVehicle;
+    m_pPed->m_pIntelligence->m_TaskMgr.Flush();
+
+    if (vehicle->pDriver == m_pPed) {
+        vehicle->pDriver = nullptr;
+    } else {
+        for (CPedGTA*& passenger : vehicle->m_apPassengers) {
+            if (passenger == m_pPed) {
+                passenger = nullptr;
+                if (vehicle->m_nNumPassengers > 0) {
+                    --vehicle->m_nNumPassengers;
+                }
+                break;
+            }
+        }
+    }
+
+    m_pPed->pVehicle = nullptr;
+    m_pPed->bInVehicle = false;
 
     CVector p = CVector(fX, fY, fZ);
     m_pPed->SetPosn(p);

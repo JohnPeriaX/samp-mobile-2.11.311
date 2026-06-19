@@ -29,13 +29,11 @@ void CColStore::EnsureCollisionIsInMemory(const CVector* pos)
    CHook::CallFunction<void>(g_libGTASA + 0x3C26B8, pos);
 }
 
-/*
-รอ MAP 2.11: CColStore::AddColSlot
+/* เพิ่มจาก sasamp-main: CColStore::AddColSlot */
 int32 CColStore::AddColSlot(const char* name)
 {
-    return CHook::CallFunction<int32>("_ZN9CColStore10AddColSlotEPKc", name);
+    return CHook::CallFunction<int32>(g_libGTASA + 0x3C1964, name);
 }
-*/
 
 void CColStore::Initialise()
 {

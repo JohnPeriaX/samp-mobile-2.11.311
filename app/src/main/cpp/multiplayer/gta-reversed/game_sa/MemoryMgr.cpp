@@ -3,7 +3,9 @@
 //
 
 #include <cstdlib>
+#include <memory>
 #include "MemoryMgr.h"
+#include "gta-reversed/game_sa/Memory/MemoryHeap.h"
 #include "gta-reversed/game_sa/common.h"
 #include "vendor/patch/patch.h"
 

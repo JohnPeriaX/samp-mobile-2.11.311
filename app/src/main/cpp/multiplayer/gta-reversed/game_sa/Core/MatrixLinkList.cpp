@@ -6,7 +6,7 @@ CMatrixLinkList gMatrixList;
 
 void CMatrixLinkList::InjectHooks()
 {
-    CHook::Write(g_libGTASA + 0xA01668, &gMatrixList);
+    CHook::Write(g_libGTASA + 0x83A370, &gMatrixList);
 
     /*
     รอ MAP 2.11: CMatrixLinkList::InjectHooks

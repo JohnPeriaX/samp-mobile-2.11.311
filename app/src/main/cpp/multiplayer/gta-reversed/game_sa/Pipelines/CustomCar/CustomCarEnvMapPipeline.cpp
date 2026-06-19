@@ -94,17 +94,14 @@ RpMaterial* CCustomCarEnvMapPipeline__CustomPipeMaterialSetup(RpMaterial* materi
 }
 
 void CCustomCarEnvMapPipeline::InjectHooks() {
-    //missng
-   // CHook::InlineHook(g_libGTASA + 0x2CC144, &openglWorldSectorAllInOnePipelineInit_hooked, &openglWorldSectorAllInOnePipelineInit);
-    //CHook::InlineHook(g_libGTASA + 0x2CB7C8, &openglAtomicAllInOnePipelineInit_hooked, &openglAtomicAllInOnePipelineInit);
+    /* เพิ่มจาก sasamp-main: CCustomCarEnvMapPipeline::InjectHooks */
+    CHook::InlineHook(g_libGTASA + 0x7423C4, &openglWorldSectorAllInOnePipelineInit_hooked, &openglWorldSectorAllInOnePipelineInit);
+    CHook::InlineHook(g_libGTASA + 0x741A7C, &openglAtomicAllInOnePipelineInit_hooked, &openglAtomicAllInOnePipelineInit);
 
-    //CHook::Redirect("_ZN24CCustomCarEnvMapPipeline23CustomPipeMaterialSetupEP10RpMaterialPv", &CCustomCarEnvMapPipeline__CustomPipeMaterialSetup);
-
-  //  CHook::Write(g_libGTASA + 0x84ABB0, &ObjPipeline);
-
-   // CHook::Write(g_libGTASA + 0x84B558, &m_gEnvMapPipeMatDataPool);
-   // CHook::Write(g_libGTASA + 0x84B2B0, &m_gEnvMapPipeAtmDataPool);
-   // CHook::Write(g_libGTASA + 0x84EB58, &m_gSpecMapPipeMatDataPool);
+    CHook::Write(g_libGTASA + 0x8377B0, &ObjPipeline);
+    CHook::Write(g_libGTASA + 0x8377A8, &m_gEnvMapPipeMatDataPool);
+    CHook::Write(g_libGTASA + 0x8377E8, &m_gEnvMapPipeAtmDataPool);
+    CHook::Write(g_libGTASA + 0x8377F0, &m_gSpecMapPipeMatDataPool);
 }
 
 RwBool CCustomCarEnvMapPipeline::CustomPipeInstanceCB(void *object, RxOpenGLMeshInstanceData *instanceData, const RwBool instanceDLandVA, const RwBool reinstance) {

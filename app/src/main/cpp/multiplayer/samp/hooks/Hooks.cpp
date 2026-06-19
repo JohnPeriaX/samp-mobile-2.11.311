@@ -1902,6 +1902,8 @@ void InjectHooks()
     CVisibilityPlugins::InjectHooks();
     CTouchInterface::InjectHooks(); //
     CWidgetGta::InjectHooks();
+    CCustomCarEnvMapPipeline::InjectHooks();
+    CCustomBuildingDNPipeline::InjectHooks();
     CMobileMenu::InjectHooks();
     CMobileSettings::InjectHooks();
     CGame::InjectHooks();

@@ -12,6 +12,7 @@
 #include "vendor/imgui/imconfig.h"
 
 #include "samp/Audio/AudioStream.h"
+#include "gta-reversed/game_sa/Render/Sprite.h"
 extern CAudioStream* pAudioStream;
 
 extern CNetGame *pNetGame;
@@ -178,8 +179,7 @@ void SpeakerList::Draw(CVector* vec, float fDist)
 	TagPos.z += 0.25f + (fDist * 0.0475f);
 
     CVector Out;
-	// CSprite::CalcScreenCoors
-	((void (*)(CVector*, CVector*, float*, float*, bool, bool))(g_libGTASA + 0x5F449C))(&TagPos, &Out, 0, 0, 0, 0);
+	CSprite::CalcScreenCoors(TagPos, &Out, nullptr, nullptr, false, false);
 
 	if(Out.z < 1.0f)
 		return;

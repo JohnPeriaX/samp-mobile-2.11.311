@@ -6,6 +6,7 @@
 #include "samp/UI/PlayerTags.h"
 #include "samp/Utils/CUtil.h"
 #include "gta-reversed/game_sa/World.h"
+#include "gta-reversed/game_sa/Render/Sprite.h"
 
 extern CGame* pGame;
 extern CNetGame* pNetGame;
@@ -101,8 +102,7 @@ void CPlayerTags::Draw(ImGuiRenderer* renderer, CVector* vec, const char* szNick
 	vecTagPos.z += 0.25f + (fDist * 0.0475f);
 
 	CVector vecOut;
-	// CSprite::CalcScreenCoors
-	((void (*)(CVector*, CVector*, float*, float*, bool, bool))(g_libGTASA + 0x5F449C))(&vecTagPos, &vecOut, 0, 0, 0, 0);
+	CSprite::CalcScreenCoors(vecTagPos, &vecOut, nullptr, nullptr, false, false);
 
 	if (vecOut.z < 1.0f) return;
 

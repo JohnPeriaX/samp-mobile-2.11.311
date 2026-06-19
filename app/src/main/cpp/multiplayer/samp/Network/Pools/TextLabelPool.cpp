@@ -6,6 +6,7 @@
 #include "samp/GUI/uisettings.h"
 #include "samp/Multiplayer/AimStuff.h"
 #include "gta-reversed/game_sa/World.h"
+#include "gta-reversed/game_sa/Render/Sprite.h"
 #include "vendor/encoding/encoding.h"
 
 #include <algorithm>
@@ -24,19 +25,12 @@ namespace
     constexpr float kLosRecheckDistanceSq = 1.0f;
     constexpr size_t kMaxTextLabelLine = 2048;
 
-    using CalcScreenCoorsFn = void (*)(CVector*, CVector*, float*, float*, bool, bool);
-
-    // 2.11 libGame.so.lst:
-    // _ZN7CSprite15CalcScreenCoorsERK5RwV3dPS0_PfS4_bb = 0x5F449C
-    constexpr uintptr_t kCSpriteCalcScreenCoors_211 = 0x5F449C;
-
     bool ProjectWorldToScreen(const CVector& worldPos, CVector& screenPos)
     {
         if (!g_libGTASA) return false;
 
         screenPos = CVector{0.0f, 0.0f, 0.0f};
-        reinterpret_cast<CalcScreenCoorsFn>(g_libGTASA + kCSpriteCalcScreenCoors_211)(
-            const_cast<CVector*>(&worldPos), &screenPos, nullptr, nullptr, false, false);
+        CSprite::CalcScreenCoors(worldPos, &screenPos, nullptr, nullptr, false, false);
 
         return screenPos.z >= kMinScreenZ;
     }

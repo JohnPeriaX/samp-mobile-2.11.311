@@ -4,6 +4,7 @@
 #include "gta-reversed/game_sa/RenderWare/RenderWare.h"
 #include "samp/GUI/gui.h"
 #include "PlayerBubblePool.h"
+#include "gta-reversed/game_sa/Render/Sprite.h"
 
 extern CNetGame *pNetGame;
 //extern CChatWindow *pChatWindow;
@@ -161,11 +162,7 @@ void CPlayerBubblePool::Draw(ImGuiRenderer* renderer)
 
                                 CVector Out;
 
-                                // CSprite::CalcScreenCoors
-                                //(( void (*)(CVector*, CVector*, float*, float*, bool, bool))(g_GTASAAdr+0x54EEC0+1))(&TagPos, &Out, 0, 0, 0, 0);
-                                // CSprite::CalcScreenCoors
-                                ((void (*)(CVector *, CVector *, float *, float *, bool, bool)) (
-                                        g_libGTASA + 0x5F449C))(&TagPos, &Out, 0, 0, 0, 0);
+                                CSprite::CalcScreenCoors(TagPos, &Out, nullptr, nullptr, false, false);
 
                                 if (Out.z < 1.0f) {
                                     return;

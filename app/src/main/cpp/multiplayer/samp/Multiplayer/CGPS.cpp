@@ -9,6 +9,7 @@
 #include "samp/Network/LocalPlayer.h"
 #include <algorithm>
 #include <cmath>
+#include "gta-reversed/game_sa/Render/Sprite.h"
 
 extern CNetGame* pNetGame;
 extern UI *pUI;
@@ -375,9 +376,7 @@ void GPS::RenderMarker() {
     targetPos.z += 0.25f + (camDist * 0.0475f);
 
     CVector vecScreen;
-    ((void (*)(CVector*, CVector*, float*, float*, bool, bool))(g_libGTASA + 0x5F449C))(
-            &targetPos, &vecScreen, 0, 0, 0, 0
-    );
+    CSprite::CalcScreenCoors(targetPos, &vecScreen, nullptr, nullptr, false, false);
 
     if (vecScreen.z < 1.0f) return;
 

@@ -1092,3 +1092,14 @@ RpWorld* RpWorldAddLight(RpWorld* world, RpLight* light);
 RpWorld* RpWorldRemoveLight(RpWorld* world, RpLight* light);
 RwBool RpAtomicDestroy(RpAtomic* atomic);
 void RpClumpGtaCancelStream();
+
+RwTexDictionary* RwTexDictionaryForAllTextures(RwTexDictionary* dict, RwTextureCallBack fpCallBack, void* data);
+RwBool RwTexDictionaryDestroy(RwTexDictionary* dict);
+RwTexture* RwTexDictionaryRemoveTexture(RwTexture* texture);
+RpMaterial* RpMaterialSetTexture(RpMaterial* material, RwTexture* texture);
+RpClump* RpClumpRemoveAtomic(RpClump* clump, RpAtomic* atomic);
+RpAtomic* RpAtomicSetFrame(RpAtomic* atomic, RwFrame* frame);
+RwBool RpAtomicInstance(RpAtomic* atomic);
+RwFrame* RwFrameTransform(RwFrame* frame, const RwMatrix* transform, RwOpCombineType combineOp);
+RpClump* RpClumpStreamRead(RwStream* stream);
+RpAtomic* RpAtomicClone(RpAtomic* atomic);

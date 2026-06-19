@@ -55,3 +55,23 @@ RwMatrix* RwMatrixTranslate(RwMatrix *matrix, const RwV3d *translation, RwOpComb
 {
     return CHook::CallFunction<RwMatrix*>("_Z17RwMatrixTranslateP11RwMatrixTagPK5RwV3d15RwOpCombineType", matrix, translation, combineOp);
 }
+
+/* เพิ่มจาก sasamp-main: RwV3dTransformVector */
+RwV3d* RwV3dTransformVector(RwV3d* vectorOut, const RwV3d* vectorIn, const RwMatrix* matrix) {
+    return CHook::CallFunction<RwV3d*>(g_libGTASA + 0x762DBC, vectorOut, vectorIn, matrix);
+}
+
+/* เพิ่มจาก sasamp-main: RwV3dNormalize */
+RwReal RwV3dNormalize(RwV3d* out, const RwV3d* in) {
+    return CHook::CallFunction<RwReal>(g_libGTASA + 0x76296C, out, in);
+}
+
+/* เพิ่มจาก sasamp-main: RwMatrixMultiply */
+RwMatrix* RwMatrixMultiply(RwMatrix* matrixOut, const RwMatrix* matrixIn1, const RwMatrix* matrixIn2) {
+    return CHook::CallFunction<RwMatrix*>(g_libGTASA + 0x75E784, matrixOut, matrixIn1, matrixIn2);
+}
+
+/* เพิ่มจาก sasamp-main: RwStreamFindChunk */
+RwBool RwStreamFindChunk(RwStream* stream, RwUInt32 type, RwUInt32* lengthOut, RwUInt32* versionOut) {
+    return CHook::CallFunction<RwBool>(g_libGTASA + 0x75CD04, stream, type, lengthOut, versionOut);
+}

@@ -2,6 +2,7 @@
 #include "rphanim.h"
 #include "gta-reversed/game_sa/common.h"
 #include "vendor/patch/patch.h"
+#include <cassert>
 
 void RpHAnimHierarchySetFreeListCreateParams(RwInt32 blockSize, RwInt32 numBlocksToPrealloc) {
     CHook::CallFunction<void>(g_libGTASA + 0x77DA60, blockSize, numBlocksToPrealloc);
@@ -101,4 +102,11 @@ RwBool RpHAnimFrameSetID(RwFrame* frame, RwInt32 id) {
 
 RwInt32 RpHAnimFrameGetID(RwFrame* frame) {
     return CHook::CallFunction<RwInt32>(g_libGTASA + 0x77EB98, frame);
+}
+
+/* เพิ่มจาก sasamp-main: RpHAnimHierarchyGetNodeMatrix */
+RwMatrix* RpHAnimHierarchyGetNodeMatrix(RpHAnimHierarchy* hierarchy, RwInt32 nodeID) {
+    const auto index = RpHAnimIDGetIndex(hierarchy, nodeID);
+    assert(index >= 0 && index < hierarchy->numNodes);
+    return &RpHAnimHierarchyGetMatrixArray(hierarchy)[index];
 }

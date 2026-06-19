@@ -283,3 +283,5 @@ RwBool RpHAnimKeyFrameStreamWrite(const RtAnimAnimation* animation, RwStream* st
 RwInt32 RpHAnimKeyFrameStreamGetSize(const RtAnimAnimation* animation); // 0x7C65B0
 RwBool RpHAnimFrameSetID(RwFrame* frame, RwInt32 id); // 0x7C5170
 RwInt32 RpHAnimFrameGetID(RwFrame* frame); // 0x7C5190
+
+RwMatrix* RpHAnimHierarchyGetNodeMatrix(RpHAnimHierarchy* hierarchy, RwInt32 nodeID);

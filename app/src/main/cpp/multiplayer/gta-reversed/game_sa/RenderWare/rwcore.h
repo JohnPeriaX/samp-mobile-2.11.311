@@ -582,6 +582,15 @@ static_assert(sizeof(RwTexture) == 0x68);
 /* Type ID */
 #define rwTEXDICTIONARY 6
 
+typedef struct RwTexDictionary RwTexDictionary;
+
+struct RwTexDictionary
+{
+    RwObject            object;
+    RwLinkList          texturesInDict;
+    RwLLLink            lInInstance;
+};
+
 /* Mipmap Name generation - maximum number of RwChar characters which can
  * be appended to the root name.
  */
@@ -906,6 +915,8 @@ typedef RxObjSpace3DLitVertex RwIm3DVertex;
  */
 typedef RwIm2DVertex RxScrSpace2DVertex;
 
+typedef RwFrame *(*RwFrameCallBack)(RwFrame *frame, void *data);
+
 /****************************************************************************
  Object-space 3D unlit vertex macros
  */
@@ -979,3 +990,6 @@ RwFrame* RwFrameOrthoNormalize(RwFrame* frame);
 RwTexture* RwTextureSetName(RwTexture* texture, const RwChar* name);
 RwBool RwTextureSetFindCallBack(RwTextureCallBackFind callBack);
 RwBool RwTextureSetReadCallBack(RwTextureCallBackRead callBack);
+RwBool RsCameraBeginUpdate(RwCamera* camera);
+RwFrame* RwFrameForAllChildren(RwFrame* frame, RwFrameCallBack callBack, void* data);
+RwFrame* RwFrameScale(RwFrame* frame, const RwV3d* scale, RwOpCombineType combineOp);

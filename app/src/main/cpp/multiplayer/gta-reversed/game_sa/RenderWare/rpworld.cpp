@@ -62,3 +62,53 @@ RwBool RpAtomicDestroy(RpAtomic* atomic) {
 void RpClumpGtaCancelStream() {
     CHook::CallFunction<void>(g_libGTASA + 0x5FF320);
 }
+
+/* เพิ่มจาก sasamp-main: RwTexDictionaryRemoveTexture */
+RwTexture* RwTexDictionaryRemoveTexture(RwTexture* texture) {
+    return CHook::CallFunction<RwTexture*>(g_libGTASA + 0x76CD10, texture);
+}
+
+/* เพิ่มจาก sasamp-main: RwTexDictionaryForAllTextures */
+RwTexDictionary* RwTexDictionaryForAllTextures(RwTexDictionary* dict, RwTextureCallBack fpCallBack, void* data) {
+    return CHook::CallFunction<RwTexDictionary*>(g_libGTASA + 0x76C914, dict, fpCallBack, data);
+}
+
+/* เพิ่มจาก sasamp-main: RwTexDictionaryDestroy */
+RwBool RwTexDictionaryDestroy(RwTexDictionary* dict) {
+    return CHook::CallFunction<RwBool>(g_libGTASA + 0x76C858, dict);
+}
+
+/* เพิ่มจาก sasamp-main: RpMaterialSetTexture */
+RpMaterial* RpMaterialSetTexture(RpMaterial* material, RwTexture* texture) {
+    return CHook::CallFunction<RpMaterial*>(g_libGTASA + 0x74B6D4, material, texture);
+}
+
+/* เพิ่มจาก sasamp-main: RpClumpRemoveAtomic */
+RpClump* RpClumpRemoveAtomic(RpClump* clump, RpAtomic* atomic) {
+    return CHook::CallFunction<RpClump*>(g_libGTASA + 0x747A20, clump, atomic);
+}
+
+/* เพิ่มจาก sasamp-main: RpAtomicSetFrame */
+RpAtomic* RpAtomicSetFrame(RpAtomic* atomic, RwFrame* frame) {
+    return CHook::CallFunction<RpAtomic*>(g_libGTASA + 0x7473B0, atomic, frame);
+}
+
+/* เพิ่มจาก sasamp-main: RpAtomicInstance */
+RwBool RpAtomicInstance(RpAtomic* atomic) {
+    return CHook::CallFunction<RwBool>(g_libGTASA + 0x749068, atomic);
+}
+
+/* เพิ่มจาก sasamp-main: RwFrameTransform */
+RwFrame* RwFrameTransform(RwFrame* frame, const RwMatrix* transform, RwOpCombineType combineOp) {
+    return CHook::CallFunction<RwFrame*>(g_libGTASA + 0x768BB8, frame, transform, combineOp);
+}
+
+/* เพิ่มจาก sasamp-main: RpClumpStreamRead */
+RpClump* RpClumpStreamRead(RwStream* stream) {
+    return CHook::CallFunction<RpClump*>(g_libGTASA + 0x7488E0, stream);
+}
+
+/* เพิ่มจาก sasamp-main: RpAtomicClone */
+RpAtomic* RpAtomicClone(RpAtomic* atomic) {
+    return CHook::CallFunction<RpAtomic*>(g_libGTASA + 0x747550, atomic);
+}

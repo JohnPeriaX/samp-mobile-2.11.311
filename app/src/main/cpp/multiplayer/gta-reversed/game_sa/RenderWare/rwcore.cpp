@@ -118,3 +118,17 @@ RwBool RwTextureSetFindCallBack(RwTextureCallBackFind callBack) {
 RwBool RwTextureSetReadCallBack(RwTextureCallBackRead callBack) {
     return CHook::CallFunction<RwBool>(g_libGTASA + 0x76C648, callBack);
 }
+/* เพิ่มจาก sasamp-main: RsCameraBeginUpdate */
+RwBool RsCameraBeginUpdate(RwCamera* camera) {
+    return CHook::CallFunction<RwBool>(g_libGTASA + 0x607378, camera);
+}
+
+/* เพิ่มจาก sasamp-main: RwFrameForAllChildren */
+RwFrame* RwFrameForAllChildren(RwFrame* frame, RwFrameCallBack callBack, void* data) {
+    return CHook::CallFunction<RwFrame*>(g_libGTASA + 0x768A0C, frame, callBack, data);
+}
+
+/* เพิ่มจาก sasamp-main: RwFrameScale */
+RwFrame* RwFrameScale(RwFrame* frame, const RwV3d* scale, RwOpCombineType combineOp) {
+    return CHook::CallFunction<RwFrame*>(g_libGTASA + 0x768B2C, frame, scale, combineOp);
+}

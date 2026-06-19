@@ -10,6 +10,8 @@
 #include "gta-reversed/game_sa/Events/EventGroup.h"
 
 class CTaskSimpleJetPack;
+class CTaskSimpleUseGun;
+class CTaskSimpleDuck;
 
 class CPedIntelligence
 {
@@ -49,6 +51,8 @@ public:
     void ProcessAfterPreRender();
 
     CTaskSimpleJetPack* GetTaskJetPack();
+    CTaskSimpleUseGun* GetTaskUseGun();
+    CTaskSimpleDuck* GetTaskDuck(bool bIgnoreCheckingForSimplestActiveTask = true);
 };
 VALIDATE_SIZE(CPedIntelligence, 0x440);
 

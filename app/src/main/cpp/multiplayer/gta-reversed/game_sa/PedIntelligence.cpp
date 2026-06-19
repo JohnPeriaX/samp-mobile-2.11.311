@@ -212,3 +212,17 @@ void CPedIntelligence::InjectHooks() {
 void CPedIntelligence::ProcessAfterPreRender() {
     CHook::CallFunction<void>(g_libGTASA + 0x5B24AC, this);
 }
+
+/* เพิ่มจาก sasamp-main: GetTaskDuck */
+CTaskSimpleDuck* CPedIntelligence::GetTaskDuck(bool bIgnoreCheckingForSimplestActiveTask) {
+    return CHook::CallFunction<CTaskSimpleDuck*>(g_libGTASA + 0x5B14F4, this, bIgnoreCheckingForSimplestActiveTask);
+}
+
+/* เพิ่มจาก sasamp-main: GetTaskUseGun */
+CTaskSimpleUseGun* CPedIntelligence::GetTaskUseGun() {
+    CTask* task = m_TaskMgr.GetTaskSecondary(TASK_SECONDARY_ATTACK);
+    if (task && task->GetTaskType() == TASK_SIMPLE_USE_GUN)
+        return reinterpret_cast<CTaskSimpleUseGun*>(task);
+
+    return nullptr;
+}

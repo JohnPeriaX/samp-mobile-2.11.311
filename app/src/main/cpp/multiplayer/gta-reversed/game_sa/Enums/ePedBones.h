@@ -48,5 +48,8 @@ enum ePedBones : int16 {
     BONE_L_BREAST    = 302,
     BONE_R_BREAST    = 301,
 
-    BONE_NUM = 303
+    BONE_NUM = 303,
+
+    /* เพิ่มจาก sasamp-main: MAX_BONE_NUM */
+    MAX_BONE_NUM = 32
 };
